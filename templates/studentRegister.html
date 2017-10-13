@@ -1,0 +1,75 @@
+{% extends "layout.html" %}
+{% block body %} 
+<nav class="navbar navbar-default">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-2">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Website Name</a>
+        </div>
+      </div><!-- /.container -->
+    </nav><!-- /.navbar -->
+    
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <h1>Register Student</h1>
+
+            <form method=POST action="">
+
+                <!-- Student Details -->
+                <!--
+                <div class="form-group">
+                    <select>
+                        <option value="" disabled selected>Select your school</option>
+                        <option value="Maynooth">Maynooth</option>
+                        <option value="Kilcock">Kilcock</option>
+                    </select>
+                </div>
+                
+                
+                <div class="form-group">
+                    <label for="InputName">Name</label>
+                    <input type="text" class="form-control" name="name" placeholder="First Name">
+                </div>
+
+                <div class="form-group">
+                    <label for="InputSurname">Last Name</label>
+                    <input type="text" class="form-control" name="surname" placeholder="Last Name">
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">Register</button>
+                -->
+
+                <!-- Questions Babras 1 -->
+
+                <div class="form-group">
+                    <h3>Braclet</h3>
+                    <label for="question1">Emily has broken her favourite bracelet. The broken bracelet now looks like this:</label>
+                    <img src="/static/img/BracletQuestion.jpg">
+                    <h5><b>Question</h5>
+                    <h5>Which of the following four bracelets shows what the bracelet looked like when it was whole?</h5>
+                    <img src="/static/img/BracletAnswerA.jpg">
+                    <img src="/static/img/BracletAnswerB.jpg">
+                    <img src="/static/img/BracletAnswerC.jpg">
+                    <img src="/static/img/BracletAnswerD.jpg">
+                    
+                    <input type="text" class="form-control" name="q1" placeholder="Please enter your answer">
+                </div>
+
+                <div class="form-group">
+                    <label for="question2">question2</label>
+                    <input type="text" class="form-control" name="q2" placeholder="answer2">
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">Register</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
