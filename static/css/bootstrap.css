@@ -6758,4 +6758,8 @@ button.close {
     display: none !important;
   }
 }
+
+.glyphicon.glyphicon-log-out {
+  font-size: 100px;
+}
 /*# sourceMappingURL=bootstrap.css.map */
