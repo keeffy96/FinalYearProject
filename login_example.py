@@ -1,5 +1,6 @@
-from flask import Flask, render_template, url_for, request, session, redirect
+from flask import Flask, render_template, url_for, request, session, redirect, send_file
 from flask_pymongo import PyMongo
+from bson import ObjectId
 import bcrypt
 import random
 
@@ -12,17 +13,17 @@ mongo = PyMongo(app)
 
 @app.route('/')
 def home():
-    return render_template('home.html')
+    return render_template('home_page/home.html')
 
 @app.route('/signIn')
 def signIn():
     if 'email' in session:
         email = session['email']
         return redirect(url_for('profile'))
-
-    #elif 'user_id' in session:
-     #   user_id = session['user_id']
-      #  return redirect(url_for('profile'))
+    
+    elif 'user_id' in session:
+        user_id = session['user_id']
+        return redirect(url_for('profile'))
 
     else:
         return render_template('user_authentication/signIn.html')
@@ -30,11 +31,17 @@ def signIn():
 @app.route('/login', methods=['POST'])
 def login():
     users = mongo.db.users
-    login_instructor = users.find_one({'email' : request.form['email']})
+    login = users.find_one({'email' : request.form['email']})
+    login1 = users.find_one({'user_id' : request.form['email']})
 
-    if login_instructor:
-        if bcrypt.hashpw(request.form['pass'].encode('utf-8'), login_instructor['password']) == login_instructor['password'] :
+    if login:
+        if bcrypt.hashpw(request.form['pass'].encode('utf-8'), login['password']) == login['password'] :
             session['email'] = request.form['email']
+            return redirect(url_for('signIn'))
+
+    if login1:
+        if bcrypt.hashpw(request.form['pass'].encode('utf-8'), login1['password']) == login1['password'] :
+            session['user_id'] = request.form['email']
             return redirect(url_for('signIn'))
 
     return 'Invalid email/password combination'
@@ -42,7 +49,8 @@ def login():
 @app.route('/logout')
 def logout():
     session.pop('email', None)
-    return render_template('home.html')
+    session.pop('user_id', None)
+    return render_template('home_page/home.html')
 
 @app.route('/register', methods=['POST', 'GET'])
 def register():
@@ -78,8 +86,8 @@ def studentRegister():
         approved = 0
         user_id = random.randint(1,1000) 
         users.insert({'user_type': user_type, 'school': school, 'name': name, 'surname': surname, 'approved':approved, 'user_id':user_id, 'password' : hashpass})
-        #session['user_id'] = user_id
-        #return redirect(url_for('signIn'))
+        session['user_id'] = user_id
+        return redirect(url_for('signIn'))
 
     return render_template('user_authentication/studentRegister.html')
 
@@ -99,22 +107,23 @@ def studentBabrasTest1():
 
 @app.route('/profile')
 def profile():
+    users = mongo.db.users
     if 'email' in session:
-        users = mongo.db.users
         name = users.find_one({'email':session['email']})['name']
         surname = users.find_one({'email':session['email']})['surname']
-
-        #loops db and gets all instances where approved is 0
         student = [item for item in users.find({'approved': 0})]
         instructorSchool = users.find_one({'email':session['email']})['school']
-
         keys = ['name', 'surname', 'user_id']
+        student = [student[1].get(key) for key in keys]        
+        return render_template('profile_page/profile.html', name=name, surname=surname, student=student, instructorSchool=instructorSchool)
 
-        student = [student[0].get(key) for key in keys]
+    elif 'user_id' in session:
+        name = users.find_one({'user_id':session['user_id']})['name']
+        surname = users.find_one({'user_id':session['user_id']})['surname']
+        return render_template('profile_page/profile.html', name=name, surname=surname)
 
-        return render_template('profile.html', name=name, surname=surname, student=student, instructorSchool=instructorSchool)
-
-    return redirect(url_for('signIn')) 
+    else:
+        return redirect(url_for('signIn')) 
 
 @app.route('/editProfile', methods=['POST', 'GET'])
 def editProfile():
@@ -125,19 +134,55 @@ def editProfile():
         users.update_one({'email':session['email']}, {'$set': {'name': name, 'surname': surname}})
         return redirect(url_for('profile'))
     
-    return render_template('editProfile.html')
+    return render_template('profile_page/editProfile.html')
 
 @app.route('/approveStudent', methods=['POST'])
 def approveStudent():
     users = mongo.db.users
     studentRadio = request.form['studentRadio']
     #student = [item for item in users.find({'approved': 0})]
-    result = users.update_one({'user_id': 265}, {'$set': {'approved' : 0}})
+
+    #student = [item for item in users.find({'approved': 0})]
+    result = users.update_one({'school': 469}, {'$set': {'approved' : 0}})
 
     return redirect(url_for('profile'))
 
 
+@app.route('/file-downloads/')
+def file_downloads():
+    return render_template('testTest.html')
+    
+@app.route('/return-filez/')
+def return_file():
+    return send_file('static/img/PleaseWork.pptx', attachment_filename='powerpoint.pptx')
 
+@app.route('/UsersPage')
+def UsersPage():
+    users = mongo.db.users
+    name = users.find_one({'email':session['email']})['name']
+    surname = users.find_one({'email':session['email']})['surname']
+    school = users.find_one({'email':session['email']})['school']
+    userTable = users.find({'school':school, 'user_type': 'student'})
+    return render_template('profile_page/UsersPage.html', name=name, surname=surname, userTable=userTable)
+
+@app.route('/update')
+def update():
+    users = mongo.db.users
+    userid = request.args.get("_id")
+    users.update_one({'_id': ObjectId(userid)}, {'$set': {'approved': 1}})
+    return redirect(url_for('UsersPage'))
+
+@app.route('/toBeApproved')
+def toBeApproved():
+    users = mongo.db.users
+    school = users.find_one({'email':session['email']})['school']
+    userTable = users.find({'school':school, 'approved': 0})
+    return render_template('profile_page/UsersPage.html', userTable=userTable)
+
+
+@app.route('/testingPage/')
+def testingPage():
+    return render_template('TestingPageCSS.html')
 
 if __name__ == '__main__':
     app.secret_key = 'mysecret'

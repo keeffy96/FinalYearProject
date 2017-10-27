@@ -1,0 +1,68 @@
+{% extends "index.html" %}
+{% block body %}
+<nav class="navbar navbar-default">
+      <div class="container">
+        <div class="navbar-header">
+        	<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-2">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="profile">Website Name</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-collapse-2">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ name }} {{surname}} <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="#"><i class="glyphicon glyphicon-user"></i> View profile</a></li>
+              <li><a href="editProfile"><i class="glyphicon glyphicon-cog"></i> Edit Profile</a></li>
+              <li><a href="logout"><i class="glyphicon glyphicon-log-out"></i> Log out</a></li>
+            </ul>
+          </li>
+          <li><a href="logout"><i class="glyphicon glyphicon-log-out"></i></a></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container -->
+    </nav><!-- /.navbar -->
+
+<div class="container">
+  <h3 style="display: inline-block;">Users table</h3>
+  <div class="dropdown" style="float: right;">
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="glyphicon glyphicon-list"></span>
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+      <li><a href="update">All</a></li>
+      <li><a href="toBeApproved">To be approved</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="container">
+	<table class="table table-hover table-responsive">
+		<tr style="pointer-events: none;">
+			<th>School</th>
+			<th>Name</th>
+			<th>Surname</th>
+			<th>Approved</th>
+			<th>UserID</th>
+			<th>Approve</th>
+		</tr>
+
+	{% for user in userTable %}
+	<tr>
+		<td>{{ user["school"] }}</td>
+		<td>{{ user["name"] }}</td>
+		<td>{{ user["surname"] }}</td>
+		<td>{{ user["approved"] }}</td>
+		<td>{{ user["user_id"] }}</td>
+		<td><a href="/update?_id={{user['_id']}}"><button type="submit">Approve</button></a></td>
+	</tr>
+
+	{% endfor %}
+	</table>
+</div>
+
+{% endblock %}

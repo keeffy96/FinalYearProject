@@ -1,6 +1,6 @@
 {% extends "index.html" %}
 {% block body %}
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-inverse">
       <div class="container">
         <div class="navbar-header">
         	<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-2">
@@ -14,6 +14,7 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="navbar-collapse-2">
           <ul class="nav navbar-nav navbar-right">
+            <li><a href="UsersPage"><span class="glyphicon glyphicon-list" data-toggle="tooltip" data-original-title="Users"></span></a></li>
             <li class="dropdown">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ name }} {{surname}} <b class="caret"></b></a>
             <ul class="dropdown-menu">
@@ -28,10 +29,54 @@
       </div><!-- /.container -->
     </nav><!-- /.navbar -->
 
+<div class="jumbotron">
+  <div class="panel-heading">
+  <h1>This will be the heading</h1>   
+  </div>
+  <div class="panel-body">
+    <p>This will be my panel body</p>
+  </div>
+
+  <div class="progress">
+  <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em;">
+    0%
+  </div>
+</div>
+<div class="progress">
+  <div class="progress-bar" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width: 2%;">
+    2%
+  </div>
+</div>
+
+</div>
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading">
+  <h1>This will be the heading1</h1>   
+  </div>
+  <div class="panel-body">
+    <p>This will be my panel body</p>
+  </div>
+</div>
+
+<div class="panel">
+  <div class="panel-heading">
+  <h1>This will be the heading2</h1>   
+  </div>
+  <div class="panel-body">
+    <p>This will be my panel body</p>
+  </div>
+</div>
+
 <h2>{{ instructorSchool }}</h2>
 
 <h1>Profile Page</h1>
 <h3>Hello {{ name }} {{ surname }} welcome to your home page</h3>
+
+<a href="/UsersPage">UserPage - To be changed</a>
 
 <div class="panel-body" style="margin-top:50px;">
   <h2><b><u>Students to be approved</b></u></h2>
