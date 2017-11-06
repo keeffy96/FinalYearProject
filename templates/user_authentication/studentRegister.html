@@ -1,6 +1,6 @@
 {% extends "index.html" %}
 {% block body %} 
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-inverse">
       <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -34,7 +34,7 @@
 
                     <div style="margin-bottom:25px" class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-education"></i></span>
-                        <select name="school" class="form-control">
+                        <select name="school" class="form-control" required>
                             <option value="" disabled selected>Select your school</option>
                             <option value="Maynooth">Maynooth</option>
                             <option value="Kilcock">Kilcock</option>
@@ -43,17 +43,17 @@
 
                     <div style="margin-bottom:25px" class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                        <input type="text" class="form-control" name="name" placeholder="First Name">
+                        <input type="text" class="form-control" name="name" placeholder="First Name" required>
                     </div>
 
                     <div style="margin-bottom:25px" class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                        <input type="text" class="form-control" name="surname" placeholder="Last Name">
+                        <input type="text" class="form-control" name="surname" placeholder="Last Name" required>
                     </div>
 
                     <div style="margin-bottom:25px" class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                        <input id="login-password" type="password" class="form-control" name="pass" placeholder="Password">
+                        <input id="login-password" type="password" class="form-control" name="pass" placeholder="Password" required>
                     </div>
 
                     <button type="submit" class="btn btn-primary btn-block">Register</button>

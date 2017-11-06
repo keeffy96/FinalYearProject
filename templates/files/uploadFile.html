@@ -1,0 +1,33 @@
+{% extends "index.html" %}
+{% block body %}
+<nav class="navbar navbar-inverse">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="profile">Website Name</a>
+        </div>
+      </div><!-- /.container -->
+    </nav><!-- /.navbar -->
+
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading"><strong>Upload Files</strong></div>
+        <div class="panel-body">
+            <h4>Select files from your computer</h4>
+            <form action="" method="post" enctype="multipart/form-data">
+                <input type="file" name="file">
+                <br>
+                <input class="btn btn-sm btn-primary" type="submit" value="Upload">
+            </form>
+            <br>
+            <a href="files">All files</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

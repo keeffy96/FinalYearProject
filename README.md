@@ -28,29 +28,9 @@ Or:
 
 Using mLab - mLab is the largest cloud MongoDB service in the world.
 
-In mLab I have a users collection: 
-Student:
-user_type,
-school,
-name,
-surname,
-approved,
-user_id,
-password
+Issues: 
+I can display pdfs,
+I cant display pptx.... Onclick it automatically downloads on the users pc, from there they can open...
+Is that ok? 
 
-Instructor:
-user_type,
-school,
-title,
-name,
-surname,
-email,
-password
 
-What i have so far:
-Home page:
-Register for both instructor & student
-Sign in
-Profile
-
-Issues: Students cant sign in yet.

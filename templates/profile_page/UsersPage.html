@@ -1,6 +1,6 @@
 {% extends "index.html" %}
 {% block body %}
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-inverse">
       <div class="container">
         <div class="navbar-header">
         	<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-2">
@@ -46,7 +46,7 @@
 			<th>School</th>
 			<th>Name</th>
 			<th>Surname</th>
-			<th>Approved</th>
+			<!--<th>Approved</th>-->
 			<th>UserID</th>
 			<th>Approve</th>
 		</tr>
@@ -56,9 +56,13 @@
 		<td>{{ user["school"] }}</td>
 		<td>{{ user["name"] }}</td>
 		<td>{{ user["surname"] }}</td>
-		<td>{{ user["approved"] }}</td>
+		<!--<td>{{ user["approved"] }}</td>-->
 		<td>{{ user["user_id"] }}</td>
-		<td><a href="/update?_id={{user['_id']}}"><button type="submit">Approve</button></a></td>
+    {% if user['approved'] == 0 %}
+		<td><a href="/update?_id={{user['_id']}}"><button style="color: black;" type="submit"><span class="glyphicon glyphicon-remove"></button></a></td>
+    {% else %}
+    <td><span class="glyphicon glyphicon-ok"></span></td>
+    {% endif %}
 	</tr>
 
 	{% endfor %}
