@@ -28,6 +28,8 @@
       </div><!-- /.container -->
     </nav><!-- /.navbar -->
 
+
+
 <div class="container">
   <h3 style="display: inline-block;">Users table</h3>
   <div class="dropdown" style="float: right;">
@@ -52,11 +54,10 @@
 		</tr>
 
 	{% for user in userTable %}
-	<tr>
+	<tr data-toggle="modal" data-id=1 data-target="#largeModal">
 		<td>{{ user["school"] }}</td>
 		<td>{{ user["name"] }}</td>
 		<td>{{ user["surname"] }}</td>
-		<!--<td>{{ user["approved"] }}</td>-->
 		<td>{{ user["user_id"] }}</td>
     {% if user['approved'] == 0 %}
 		<td><a href="/update?_id={{user['_id']}}"><button style="color: black;" type="submit"><span class="glyphicon glyphicon-remove"></button></a></td>
@@ -69,4 +70,22 @@
 	</table>
 </div>
 
+<div class="modal fade" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Large Modal</h4>
+      </div>
+      <div class="modal-body">
+        <h3>Modal Body</h3>
+        <h3>{{ userTable }}</h3>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

@@ -19,7 +19,7 @@
   <img src="/static/img/BracletAnswerB.jpg">
   <img src="/static/img/BracletAnswerC.jpg">
   <img src="/static/img/BracletAnswerD.jpg">
-  <input type="text" class="form-control" name="answer1" placeholder="Please enter your answer">
+  <input id="ans1" type="text" class="form-control" name="answer1" placeholder="Please enter your answer">
   </div>
 </div>
 
@@ -105,11 +105,13 @@
 
 <br>
 
-<input class="btn btn-primary btn-block" type="button" id='next' value="Next" onlick="sum_values()">
+<input class="btn btn-primary btn-block" type="button" id='next' value="Next" onlick="Compare()">
 </div>
 </div>
 
 <button style="visibility: hidden;" id="submitBtn" type="submit" class="btn btn-primary btn-block">Submit answers</button>
 </form>
+
+
 
 {% endblock %}

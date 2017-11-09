@@ -17,6 +17,7 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="navbar-collapse-2">
           <ul class="nav navbar-nav navbar-right">
+            <li><a href="test"><i>Material</i></a></li>
             <li><a href="UsersPage"><span class="glyphicon glyphicon-list" data-toggle="tooltip" data-original-title="Users"></span></a></li>
             <li id="dropdown1" class="dropdown">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ name }} {{surname}} <b class="caret"></b></a>
@@ -36,14 +37,16 @@
 
 
 
-
+<div id="wrapper">
 <div class="container" style="background-color: red;">
-  <h2>{{ instructorSchool }}</h2>
+  <h2>This user is an instructor</h2>
 
   <h1>Profile Page</h1>
 
   <h3>Hello {{ name }} {{ surname }} welcome to your home page</h3>
 </div>
+</div>
+
 {% endif %}
 
 {% if 'user_id' in session %}
@@ -75,7 +78,8 @@
       </div><!-- /.container -->
     </nav><!-- /.navbar -->
 
-<div class="container" style="background-color: blue;">
+<div class="container" style="background-color: green;">
+  <h2>This user is a student</h2>
   <h3>Hello {{ name }} please complete this quick test <a href="bebras1">Click here</a></h3>
 
   <h3>Your userid is: {{ userid }}</h3>

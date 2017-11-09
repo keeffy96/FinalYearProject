@@ -10,10 +10,12 @@ import random
 
 app = Flask(__name__)
 
+#MongoClient.connect('mongodb://keeffy96:password@ds115625.mlab.com:15625')
+#db = client.mongologinexample
+
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'pptx'])
 db = MongoClient().connect_to_mongo
 fs = gridfs.GridFS(db)
-app.config['MONGO_DBNAME'] = 'connect_to_mongo'
 app.config['MONGO_URI'] = 'mongodb://keeffy96:password@ds115625.mlab.com:15625/mongologinexample'
 
 mongo = PyMongo(app)
@@ -142,13 +144,13 @@ def editProfile():
     
     return render_template('profile_page/editProfile.html')
 
-@app.route('/file-downloads/')
-def file_downloads():
-    return render_template('testTest.html')
+#@app.route('/file-downloads/')
+#def file_downloads():
+#    return render_template('testTest.html')
     
-@app.route('/return-filez/')
-def return_file():
-    return send_file('static/img/PleaseWork.pptx', attachment_filename='powerpoint.pptx')
+#@app.route('/return-filez/')
+#def return_file():
+#    return send_file('static/img/PleaseWork.pptx', attachment_filename='powerpoint.pptx')
 
 @app.route('/UsersPage')
 def UsersPage():
@@ -202,6 +204,10 @@ def test():
 def sideBar():
     return render_template('newTest.html')
 
+@app.route('/example')
+def quiz():
+    return render_template('quizExample.html')
+
 def allowed_file(filename):
     return '.' in filename and \
             filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
@@ -213,7 +219,7 @@ def upload_file():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             oid = fs.put(file, content_type=file.content_type, filename=filename)
-            return redirect(url_for('serve_gridfs_file', oid=str(oid)))            
+            return render_template('files/uploadFile.html')            
     return render_template('files/uploadFile.html')
 
 @app.route('/files')

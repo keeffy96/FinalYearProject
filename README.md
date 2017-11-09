@@ -28,9 +28,25 @@ Or:
 
 Using mLab - mLab is the largest cloud MongoDB service in the world.
 
+Fixed:
+All user types can login
+Added 404 error
+Updated bebras test
+Added user table - Approve + Decline
+Added upload + view files
+
 Issues: 
 I can display pdfs,
 I cant display pptx.... Onclick it automatically downloads on the users pc, from there they can open...
 Is that ok? 
 
+What is the best way to store answers for babras test? Backend or js/jquery
 
+Who can upload to the db? is it only a super user? or can teachers... 
+If they can - Will they just end up uploading theyre own content?
+
+How is a folder implemented... Is theyre a column in the db to specify folder? - then you add files to that 
+folder id? 
+
+Add class
+add student class survey
