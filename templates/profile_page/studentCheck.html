@@ -1,0 +1,95 @@
+{% extends "index.html" %}
+{% block body %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+
+<nav class="navbar navbar-inverse">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-2">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          
+          <a class="navbar-brand" href="profile">Website Name</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-collapse-2">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="test"><i>Material</i></a></li>
+            <li><a href="UsersPage"><span class="glyphicon glyphicon-list" data-toggle="tooltip" data-original-title="Users"></span></a></li>
+          <li><a href="logout"><i class="glyphicon glyphicon-log-out"></i></a></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container -->
+    </nav><!-- /.navbar -->
+
+<div class="container">
+	<div class="jumbotron">
+		<h2><b><u>User</u></b></h2>
+		<h4>Student Name: {{selectedUserName}} {{selectedUserSurname}}</h4>
+		<h4>UserId: {{result}}</h4>
+		<h4>Bebras Test 1 Completed: {{approved}}</h4>
+		<h4>Bebras Test 2 Completed: <b><u>To be implemented yet</b></u></h4>
+	</div>
+
+	<div class="jumbotron">
+		<h2><b><u>Results:</u></b></h2>
+		<h4>Bebras Test 1 Completed: {{result}}% <a data-toggle="modal" data-target="#largeModal"><span style="color: red;" class="glyphicon glyphicon-asterisk"></span></a></h4>
+		<h4>Bebras Test 2 Completed: <b><u>To be implemented yet</b></u></h4>
+	</div>
+
+	<div class="jumbotron">
+		<h2><b><u>Student Feedback:</u></b></h2>
+		<h4>To be implemented</h4>
+	</div>
+
+	<a href="UsersPage"><input class="btn btn-primary" type="button" value="Back to Users Page"/></a>
+</div>
+
+<div class="modal fade" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Bebras 1 Test Results</h4>
+      </div>
+      <div class="modal-body">
+        <h3>{{selectedUserName}} {{selectedUserSurname}} results:</h3>
+         <div class="chart-container" style=" height:180px; width:198px">
+      <canvas id="myChart"></canvas>
+    </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+var ctx = document.getElementById('myChart').getContext('2d');
+
+var myDoughnutChart = new Chart(ctx, {
+    type: 'pie',
+
+    data: {
+    datasets: [{
+      backgroundColor: ['#00e600', '#ff0000'],
+      hoverBackgroundColor: ['#009900', '#990000'],
+      data: [Math.round(({{ result }}/100)*13), Math.round(((100-{{result}})/100)*13)]
+    }],
+
+    // These labels appear in the legend and in the tooltips when hovering different arcs
+    labels: [
+        'Correct Answers',
+        'Wrong Answers'
+    ]
+},
+    options: {
+    }
+});
+</script>
+
+{% endblock %}

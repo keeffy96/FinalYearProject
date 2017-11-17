@@ -1,0 +1,117 @@
+{% extends "index.html" %}
+{% block body %}
+<form id="signupform" class="form-horizontal" role="form" method=POST action="{{ url_for('bebras1') }}">
+
+<div style="background-color: black" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 container-fluid bg-info">
+  <div class="modal-dialog">
+<div>
+    <h1 style="color: white">Bebras</h1>
+</div>
+
+<div class="questions modal-content">
+  <div class="modal-header"><h3>Braclet</h3></div>
+  <div class="modal-body">
+  <label>Emily has broken her favourite bracelet. The broken bracelet now looks like this:</label> <br>
+  <img src="/static/img/BracletQuestion.jpg">
+  <h5><b>Question</b></h5>
+  <h5>Which of the following four bracelets shows what the bracelet looked like when it was whole?</h5>
+  <img src="/static/img/BracletAnswerA.jpg">
+  <img src="/static/img/BracletAnswerB.jpg">
+  <img src="/static/img/BracletAnswerC.jpg">
+  <img src="/static/img/BracletAnswerD.jpg">
+  <input id="ans1" type="text" class="form-control" name="answer1" placeholder="Please enter your answer">
+  </div>
+</div>
+
+<div class="questions modal-content">
+  <div class="modal-header"><h3>Animation</h3></div>
+  <div class="modal-body">
+  <label>Taro is planning an animation of a face that is made from a sequence of pictures.<br> To make the animation run smoothly, only one feature of the face should change from one picture to the next. <br> Unfortunately, the pictures got mixed up. Now Taro must find the correct order again. Luckily, he knows which picture is last.</label>
+  <img src="/static/img/AnimationQuestion1.jpg">
+  <img src="/static/img/AnimationQuestion2.jpg">
+  <h5><b>Question</b></h5>
+  <h5>Put the pictures in the correct order so that Taro makes the correct animation.</h5>
+
+  <input type="text" class="form-control" name="answer2" placeholder="Please enter your answer">
+</div>
+</div>
+
+<div class="questions modal-content">
+  <div class="modal-header"><h3>Animal Competition</h3></div>
+  <div class="modal-body">
+  <img src="/static/img/AnimalCompetitionQuestion1.jpg">
+  <label>The beavers and dogs had a competition. In total nine animals took part.<br>The nine participants had the following scores: 1, 2, 2, 3, 4, 5, 5, 6, 7.<br>No dog scored more than any beaver.<br>One dog tied with a beaver.<br>There were also two other dogs that tied with each other</label>
+  <h5><b>Question</b></h5>
+  <h5>How many dogs took part in the competition?<br>2, 3, 5, 6 or 7</h5>
+
+  <input type="text" class="form-control" name="answer3" placeholder="Please enter your answer">
+</div>
+</div>
+
+<div class="questions modal-content">
+  <div class="modal-header"><h3>Cross Country</h3></div>
+  <div class="modal-body">
+  <label for="question4">Three very fast beavers will compete in a cross-country run.<br> Mr. Brown will overtake one beaver when running uphill.
+  <img src="/static/img/CrossCountryBrownBeaver.jpg"><br>Mrs. Pink will overtake one beaver when running downhill.
+  <img src="/static/img/CrossCountryPinkBeaver.jpg"><br>Mrs.Green will overtake one beaver when running across rocks. 
+  <img src="/static/img/CrossCountryGreenBeaver.jpg"><br>The terrain is shown in the picture: uphill, followed by some rocks, downhill and then some more rocks.Mrs. Pink starts in the first position, followed by Mr. Brown and Mrs. Green<br></label>
+  <img src="/static/img/CrossCountryQuestion.jpg">
+  <h5><b>Question</b></h5>
+  <h5>In which order will the beavers finish the race?</h5>
+  <h5>A. Mrs Pink, Mr Brown, Mrs Green</h5>
+  <h5>B. Mr Brown, Mrs Pink, Mrs Green</h5>
+  <h5>C. Mr Brown, Mrs Green, Mrs Pink</h5>
+  <h5>D. Mrs Green, Mrs Pink, Mr Brown</h5>
+
+  <input type="text" class="form-control" name="answer4" placeholder="Please enter your answer">
+</div>
+</div>
+
+<div class="questions modal-content">
+  <div class="modal-header"><h3>Stack Computer</h3></div>
+  <div class="modal-body">
+  <label for="question5">The Stack Computer is loaded with boxes from a conveyer belt. The boxes are marked with a Number or an Operator (+, -, * or /)<br>The computer is loaded until the top box is a box marked with an operator. This operator is then used on the two boxes below it. The three boxes are then fused into one single box and marked with the outcome of the calculation.<br>In the Stack Computer, calculations are entered in a different way to a normal calculator</label>
+  <h5><b><u>Examples:</u></b><br>
+    2+3 must be entered as 2 3 + <br>
+    10-2 must be entered as 10 2 - <br>
+    5*2+3 must be entered as 5 2 * 3 + <br>
+    5+2*3 must be entered as 5 2 3 * + <br>
+    (8-2)*(3+4) must be entered as 8 2 - 3 4 + *
+  </h5><br>
+  <h5><b>Question</b></h5>
+  <h5>How should the following computation be entered: 4*(8+3)-2?</h5>
+  <img src="/static/img/StackComputerQuestion.jpg">
+
+  <input type="text" class="form-control" name="answer5" placeholder="Please enter your answer">   
+</div>
+</div>
+
+<div class="questions modal-content">
+  <div class="modal-header"><h3>Throw the Dice</h3></div>
+  <div class="modal-body">
+  <label for="question5">After school the young beavers often play together.<br> To avoid quarrels about where to play, they throw a normal six sided die.<br>The decision is found according to this rule:</label>
+
+  <img src="/static/img/ThrowTheDiceQuestion.jpg">
+  <h5><b>Question</b></h5>
+  <h5>Which sequence of throws will send the young beavers to the sports field?</h5>
+  <img src="/static/img/ThrowTheDiceSequence1.jpg"><br>
+  <img src="/static/img/ThrowTheDiceSequence2.jpg"><br>
+  <img src="/static/img/ThrowTheDiceSequence3.jpg"><br>
+  <img src="/static/img/ThrowTheDiceSequence4.jpg">
+
+  <input type="text" class="form-control" name="answer6" placeholder="Please enter your answer">
+</div>
+</div>
+
+<br>
+
+<input class="btn btn-primary btn-block" type="button" id='next' value="Next" onlick="Compare()">
+</div>
+</div>
+
+<button style="visibility: hidden;" id="submitBtn" type="submit" class="btn btn-primary btn-block">Submit answers</button>
+</form>
+
+
+
+{% endblock %}

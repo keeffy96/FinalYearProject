@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request, session, redirect, send_file, make_response, abort
+from flask import Flask, render_template, url_for, request, session, redirect, send_file, make_response, abort, Markup
 from flask_pymongo import PyMongo
 from pymongo import MongoClient
 from bson import ObjectId
@@ -94,10 +94,11 @@ def studentRegister():
         surname = request.form['surname']        
         hashpass = bcrypt.hashpw(request.form['pass'].encode('utf-8'), bcrypt.gensalt())
         approved = 0
+        b1_completed = 0
         user_id = school + str(random.randint(1,1000)) 
-        users.insert({'user_type': user_type, 'school': school, 'name': name, 'surname': surname, 'approved':approved, 'user_id':user_id, 'password' : hashpass})
+        users.insert({'user_type': user_type, 'school': school, 'name': name, 'surname': surname, 'approved':approved, 'bebras1': b1_completed, 'user_id':user_id, 'password' : hashpass})
         session['user_id'] = user_id
-        return redirect(url_for('signIn'))
+        return redirect(url_for('bebras1'))
 
     return render_template('user_authentication/studentRegister.html')
 
@@ -118,17 +119,30 @@ def studentBabrasTest1():
 @app.route('/profile')
 def profile():
     users = mongo.db.users
+    babras1 = mongo.db.babras1
     if 'email' in session:
         name = users.find_one({'email':session['email']})['name']
         surname = users.find_one({'email':session['email']})['surname']
-        instructorSchool = users.find_one({'email':session['email']})['school']        
-        return render_template('profile_page/profile.html', name=name, surname=surname, instructorSchool=instructorSchool)
+        instructorSchool = users.find_one({'email':session['email']})['school']
+        userType = users.find_one({'email':session['email']})['user_type']
+        uType = "instructor"
+        if userType == "admin":
+            uType = "admin"
+        return render_template('profile_page/profile.html', name=name, surname=surname, instructorSchool=instructorSchool, userType=userType, uType=uType)
 
     elif 'user_id' in session:
         name = users.find_one({'user_id':session['user_id']})['name']
         surname = users.find_one({'user_id':session['user_id']})['surname']
         userid = users.find_one({'user_id':session['user_id']})['user_id']
-        return render_template('profile_page/profile.html', name=name, surname=surname, userid=userid)
+        bebrasCompleted = users.find_one({'user_id':session['user_id']})['bebras1']
+        userApproved = users.find_one({'user_id':session['user_id']})['approved']
+        b1_todo = 1
+        approved = 1
+        if userApproved is 0:
+            approved = 0
+        if bebrasCompleted is 0:
+            b1_todo = 0
+        return render_template('profile_page/profile.html', name=name, surname=surname, userid=userid, b1_todo=b1_todo, approved=approved)
 
     else:
         return redirect(url_for('signIn')) 
@@ -144,13 +158,28 @@ def editProfile():
     
     return render_template('profile_page/editProfile.html')
 
-#@app.route('/file-downloads/')
-#def file_downloads():
-#    return render_template('testTest.html')
-    
-#@app.route('/return-filez/')
-#def return_file():
-#    return send_file('static/img/PleaseWork.pptx', attachment_filename='powerpoint.pptx')
+@app.route('/profilePage', methods=['POST', 'GET'])
+def profilePage():
+    babras1 = mongo.db.babras1
+    users = mongo.db.users
+    user_id = users.find_one({'user_id':session['user_id']})['user_id']    
+    result = babras1.find_one({'user_id': user_id})['finalResult']
+    return render_template('profile_page/profilePage.html', result=result)
+
+@app.route('/studentProgress')
+def studentProgress():
+    users = mongo.db.users
+    babras1 = mongo.db.babras1
+    userid = request.args.get("_id")
+    selectedUser = users.find_one({'_id': ObjectId(userid)})['user_id']
+    selectedUserName = users.find_one({'_id': ObjectId(userid)})['name']
+    selectedUserSurname = users.find_one({'_id': ObjectId(userid)})['surname']
+    selectedUserBebras = users.find_one({'_id': ObjectId(userid)})['bebras1']
+    result = babras1.find_one({'user_id': selectedUser})['finalResult']
+    approved = "Yes"
+    if selectedUserBebras is 0:
+        approved = "No"
+    return render_template('profile_page/studentCheck.html', selectedUser=selectedUser, selectedUserName=selectedUserName, selectedUserSurname=selectedUserSurname, result=result, approved=approved)
 
 @app.route('/UsersPage')
 def UsersPage():
@@ -175,38 +204,50 @@ def toBeApproved():
     userTable = users.find({'school':school, 'approved': 0})
     return render_template('profile_page/UsersPage.html', userTable=userTable)
 
-@app.route('/bebras1/', methods=['POST','GET'])
-def bebras1():
-    if request.method == 'POST':
-        babras1 = mongo.db.babras1
-        users = mongo.db.users
-        user_id = users.find_one({'user_id':session['user_id']})['user_id']
-        answer1 = request.form['answer1']
-        answer2 = request.form['answer2']
-        answer3 = request.form['answer3']
-        answer4 = request.form['answer4']
-        answer5 = request.form['answer5']
-        answer6 = request.form['answer6']
-        babras1.insert({'user_id': user_id,'answer1': answer1, 'answer2': answer2, 'answer3': answer3, 'answer4': answer4, 'answer5': answer5, 'answer6': answer6})
-        return redirect(url_for('profile'))
-
-    return render_template('bebras_test/bebras1.html')
-
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('error_pages/404.html'), 404
 
 @app.route('/test')
-def test():
-    return render_template('testTest.html')
+def chart():
+    babras1 = mongo.db.babras1
+    users = mongo.db.users
+    user_id = users.find_one({'user_id':session['user_id']})['user_id']    
+    result = babras1.find_one({'user_id': user_id})['finalResult']
+    return render_template('testTest.html', result=result)
 
-@app.route('/sideBar')
-def sideBar():
-    return render_template('newTest.html')
+@app.route('/result')
+def result():
+    babras1 = mongo.db.babras1
+    users = mongo.db.users
+    user_id = users.find_one({'user_id':session['user_id']})['user_id']    
+    result = babras1.find_one({'user_id': user_id})['finalResult']
+    return render_template('bebras_test/bebras1Results.html', user_id=user_id, result=result)
 
-@app.route('/example')
-def quiz():
-    return render_template('quizExample.html')
+@app.route('/bebras1', methods=['POST','GET'])
+def bebras1():
+    if request.method == 'POST':
+        babras1 = mongo.db.babras1
+        users = mongo.db.users
+        user_id = users.find_one({'user_id':session['user_id']})['user_id']
+        users.update_one({'user_id':session['user_id']}, {'$set': {'bebras1': 1}})
+        q1 = request.form['q1']
+        q2 = request.form['q2']
+        q3 = request.form['q3']
+        q4 = request.form['q4']
+        q5 = request.form['q5']
+        q6 = request.form['q6']
+        q7 = request.form['q7']
+        q8 = request.form['q8']
+        q9 = request.form['q9']
+        q10 = request.form['q10']
+        q11 = request.form['q11']
+        q12 = request.form['q12']
+        q13 = request.form['q13']
+        grade = request.form['grade']
+        babras1.insert({'user_id': user_id, 'answer1': q1, 'answer2': q2, 'answer3': q3, 'answer4': q4, 'answer5': q5, 'answer6': q6, 'answer7': q7, 'answer8': q8, 'answer9': q9, 'answer10': q10, 'answer11': q11, 'answer12': q12, 'answer13': q13, 'finalResult' : grade})
+        return redirect(url_for('result'))
+    return render_template('bebras_test/bebras1.html')
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -225,24 +266,13 @@ def upload_file():
 @app.route('/files')
 def list_gridfs_files():
     files = [fs.get_last_version(file) for file in fs.list()]
-    file_list = "\n".join(['<li><a href="%s">%s</a></li>' % \
-                            (url_for('serve_gridfs_file', oid=str(file._id)), file.name) \
-                            for file in files])
-    return '''
-    <!DOCTYPE html>
-    <html>
-    <head>
-    <title>Files</title>
-    </head>
-    <body>
-    <h1>Files</h1>
-    <ul>
-    %s
-    </ul>
-    <a href="%s">Upload new file</a>
-    </body>
-    </html>
-    ''' % (file_list, url_for('upload_file'))
+    userTable = fs.list()
+    #userTable = db.fs.files.find_one({'filename': 'BeaverLunchAnswer2.jpg'})
+    #userTable = db.fs.files.get(userTable)
+    #userTable = fs.get(filename = 'BeaverLunchAnswer2.jpg ')
+    file_list = "\n".join(['<li><a href="%s">%s</a></li>' % (url_for('serve_gridfs_file', oid=str(file._id)), file.name) for file in files])
+
+    return (file_list, render_template('files/uploadedFiles.html', files=files, file_list=file_list, userTable=userTable))
 
 @app.route('/files/<oid>')
 def serve_gridfs_file(oid):

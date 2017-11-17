@@ -1,8 +1,31 @@
 {% extends "index.html" %}
 {% block body %}
+<canvas id="myChart"></canvas>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
+<script type="text/javascript">
+var ctx = document.getElementById('myChart').getContext('2d');
 
+var myDoughnutChart = new Chart(ctx, {
+    type: 'doughnut',
+
+    data: {
+    datasets: [{
+      backgroundColor: ['#00e600', '#ff0000'],
+      hoverBackgroundColor: ['#009900', '#990000'],
+      data: [{{ result }}, 100-{{result}}]
+    }],
+
+    // These labels appear in the legend and in the tooltips when hovering different arcs
+    labels: [
+        'Correct Answers',
+        'Wrong Answers'
+    ]
+},
+    options: {}
+});
+</script>
 
 {% endblock %}
 
