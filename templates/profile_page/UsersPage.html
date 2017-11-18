@@ -1,5 +1,60 @@
 {% extends "index.html" %}
 {% block body %}
+{% if uType == "admin" %}
+<nav class="navbar navbar-inverse">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-2">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="profile">Website Name</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-collapse-2">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ name }} {{surname}} <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="#"><i class="glyphicon glyphicon-user"></i> View profile</a></li>
+              <li><a href="logout"><i class="glyphicon glyphicon-log-out"></i> Log out</a></li>
+            </ul>
+          </li>
+          <li><a href="logout"><i class="glyphicon glyphicon-log-out"></i></a></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container -->
+    </nav><!-- /.navbar -->
+
+    <div class="container">
+  <table class="table table-hover table-responsive">
+    <tr style="pointer-events: none;">
+      <th>School</th>
+      <th>User ID</th>
+      <th>User Type</th>
+    </tr>
+
+  {% for user in userTableAdmin %}
+  <tr>
+    {% if user["user_type"] == 'admin' %}
+    {% elif user["user_type"] == 'instructor' %}
+    <td>{{ user["school"] }}</td>
+    <td>-</td>
+    <td>{{ user["user_type"] }}</td>
+    {% else %}
+    <td>{{ user["school"] }}</td>
+    <td>{{ user["user_id"] }}</td>
+    <td>{{ user["user_type"] }}</td>
+    {% endif %}
+  </tr>
+
+  {% endfor %}
+  </table>
+</div>
+
+{% else %}
 <nav class="navbar navbar-inverse">
       <div class="container">
         <div class="navbar-header">
@@ -51,11 +106,10 @@
 			<!--<th>Approved</th>-->
 			<th>UserID</th>
 			<th>Approve</th>
-      <th></th>
 		</tr>
 
 	{% for user in userTable %}
-	<tr data-toggle="modal" data-id=1 data-target="#largeModal">
+	<tr onclick="document.location = '/studentProgress?_id={{user['_id']}}';">
 		<td>{{ user["school"] }}</td>
 		<td>{{ user["name"] }}</td>
 		<td>{{ user["surname"] }}</td>
@@ -65,17 +119,11 @@
     {% else %}
     <td><span class="glyphicon glyphicon-ok"></span></td>
     {% endif %}
-    <td class="dropdown">
-      <a data-toggle="dropdown" class="dropdown-toggle" href="#"><span style="color: black;" class="glyphicon glyphicon-option-vertical"></span></a>
-      <ul class="dropdown-menu">
-              <li><a href="/studentProgress?_id={{user['_id']}}"><i class="glyphicon glyphicon-user"></i> View student</a></li>     
-            </ul>
-    </td>
 	</tr>
 
 	{% endfor %}
 	</table>
 </div>
-
+{% endif %}
 
 {% endblock %}

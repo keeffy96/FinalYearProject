@@ -188,7 +188,12 @@ def UsersPage():
     surname = users.find_one({'email':session['email']})['surname']
     school = users.find_one({'email':session['email']})['school']
     userTable = users.find({'school':school, 'user_type': 'student'})
-    return render_template('profile_page/UsersPage.html', name=name, surname=surname, userTable=userTable)
+    userTableAdmin = users.find().sort('user_type')
+    userType = users.find_one({'email':session['email']})['user_type']
+    uType = "instructor"
+    if userType == "admin":
+        uType = "admin"
+    return render_template('profile_page/UsersPage.html', name=name, surname=surname, userTable=userTable, userTableAdmin=userTableAdmin, uType=uType)
 
 @app.route('/update')
 def update():
