@@ -53,13 +53,85 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">Bebras 1 Test Results</h4>
+        <h4 class="modal-title" id="myModalLabel">Bebras 1 Test - {{selectedUserName}} {{selectedUserSurname}}'s results:</h4>
       </div>
       <div class="modal-body">
-        <h3>{{selectedUserName}} {{selectedUserSurname}} results:</h3>
-         <div class="chart-container" style=" height:180px; width:198px">
+        <div class="row">
+          <div class="col-xs-4">
+            <div class="chart-container" style=" height:180px; width:198px">
       <canvas id="myChart"></canvas>
     </div>
+    <br><hr/>
+    <div class="chart-container" style=" height:180px; width:198px">
+      <canvas id="myChart2"></canvas>
+    </div>             
+          </div>
+          <div class="col-xs-8">
+            <table style="font-size: 12px;" class="table table-hover">
+    <thead>
+      <tr>
+        <th>Question</th>
+        <th>Answers</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Braclet</td>
+        <td>{{ a1 }}</td>
+      </tr>
+      <tr>
+        <td>Animation</td>
+        <td>{{ a2 }}</td>
+      </tr>
+      <tr>
+        <td>Animal Competition</td>
+        <td>{{ a3 }}</td>
+      </tr>
+      <tr>
+        <td>Cross Country</td>
+        <td>{{ a4 }}</td>
+      </tr>
+      <tr>
+        <td>Stack Computer</td>
+        <td>{{ a5 }}</td>
+      </tr>
+      <tr>
+        <td>Throw the Dice</td>
+        <td>{{ a6 }}</td>
+      </tr>
+      <tr>
+        <td>Drawing Stars</td>
+        <td>{{ a7 }}</td>
+      </tr>
+      <tr>
+        <td>Beaver Lunch</td>
+        <td>{{ a8 }}</td>
+      </tr>
+      <tr>
+        <td>You Won't Find It</td>
+        <td>{{ a9 }}</td>
+      </tr>
+      <tr>
+        <td>Bowl Factory</td>
+        <td>{{ a10 }}</td>
+      </tr>
+      <tr>
+        <td>Fireworks</td>
+        <td>{{ a11 }}</td>
+      </tr>
+      <tr>
+        <td>Kangaroo</td>
+        <td>{{ a12 }}</td>
+      </tr>
+      <tr>
+        <td>Spies</td>
+        <td>{{ a13 }}</td>
+      </tr>
+    </tbody>
+  </table>
+          </div>
+        </div>
+    
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -73,6 +145,28 @@ var ctx = document.getElementById('myChart').getContext('2d');
 
 var myDoughnutChart = new Chart(ctx, {
     type: 'pie',
+
+    data: {
+    datasets: [{
+      backgroundColor: ['#00e600', '#ff0000'],
+      hoverBackgroundColor: ['#009900', '#990000'],
+      data: [Math.round(({{ result }}/100)*13), Math.round(((100-{{result}})/100)*13)]
+    }],
+
+    // These labels appear in the legend and in the tooltips when hovering different arcs
+    labels: [
+        'Correct Answers',
+        'Wrong Answers'
+    ]
+},
+    options: {
+    }
+});
+
+var ctx1 = document.getElementById('myChart2').getContext('2d');
+
+var myDoughnutChart = new Chart(ctx1, {
+    type: 'doughnut',
 
     data: {
     datasets: [{

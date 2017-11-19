@@ -175,11 +175,24 @@ def studentProgress():
     selectedUserName = users.find_one({'_id': ObjectId(userid)})['name']
     selectedUserSurname = users.find_one({'_id': ObjectId(userid)})['surname']
     selectedUserBebras = users.find_one({'_id': ObjectId(userid)})['bebras1']
+    a1 = babras1.find_one({'user_id': selectedUser})['answer1']
+    a2 = babras1.find_one({'user_id': selectedUser})['answer2']
+    a3 = babras1.find_one({'user_id': selectedUser})['answer3']
+    a4 = babras1.find_one({'user_id': selectedUser})['answer4']
+    a5 = babras1.find_one({'user_id': selectedUser})['answer5']
+    a6 = babras1.find_one({'user_id': selectedUser})['answer6']
+    a7 = babras1.find_one({'user_id': selectedUser})['answer7']
+    a8 = babras1.find_one({'user_id': selectedUser})['answer8']
+    a9 = babras1.find_one({'user_id': selectedUser})['answer9']
+    a10 = babras1.find_one({'user_id': selectedUser})['answer10']
+    a11 = babras1.find_one({'user_id': selectedUser})['answer11']
+    a12 = babras1.find_one({'user_id': selectedUser})['answer12']
+    a13 = babras1.find_one({'user_id': selectedUser})['answer13']
     result = babras1.find_one({'user_id': selectedUser})['finalResult']
     approved = "Yes"
     if selectedUserBebras is 0:
         approved = "No"
-    return render_template('profile_page/studentCheck.html', selectedUser=selectedUser, selectedUserName=selectedUserName, selectedUserSurname=selectedUserSurname, result=result, approved=approved)
+    return render_template('profile_page/studentCheck.html', selectedUser=selectedUser, selectedUserName=selectedUserName, selectedUserSurname=selectedUserSurname, result=result, approved=approved, a1=a1, a2=a2, a3=a3, a4=a4, a5=a5, a6=a6, a7=a7, a8=a8, a9=a9, a10=a10, a11=a11, a12=a12, a13=a13)
 
 @app.route('/UsersPage')
 def UsersPage():
@@ -217,15 +230,17 @@ def page_not_found(e):
 def chart():
     babras1 = mongo.db.babras1
     users = mongo.db.users
-    user_id = users.find_one({'user_id':session['user_id']})['user_id']    
-    result = babras1.find_one({'user_id': user_id})['finalResult']
-    return render_template('testTest.html', result=result)
+    name = users.find_one({'email':session['email']})['name']
+    surname = users.find_one({'email':session['email']})['surname']
+    school = users.find_one({'email':session['email']})['school']
+    userTable = users.find({'school':school, 'user_type': 'student'})
+    return render_template('testTest.html', userTable=userTable)
 
 @app.route('/result')
 def result():
     babras1 = mongo.db.babras1
     users = mongo.db.users
-    user_id = users.find_one({'user_id':session['user_id']})['user_id']    
+    user_id = users.find_one({'user_id':session['user_id']})['user_id']   
     result = babras1.find_one({'user_id': user_id})['finalResult']
     return render_template('bebras_test/bebras1Results.html', user_id=user_id, result=result)
 
