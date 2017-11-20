@@ -31,13 +31,21 @@
 		<h4>Student Name: {{selectedUserName}} {{selectedUserSurname}}</h4>
 		<h4>UserId: {{selectedUser}}</h4>
 		<h4>Bebras Test 1 Completed: {{approved}}</h4>
-		<h4>Bebras Test 2 Completed: <b><u>To be implemented yet</b></u></h4>
+		<h4>Bebras Test 2 Completed: {{approved}}</h4>
 	</div>
 
 	<div class="jumbotron">
 		<h2><b><u>Results:</u></b></h2>
-		<h4>Bebras Test 1 Completed: {{result}}% <a data-toggle="modal" data-target="#largeModal"><span style="color: red;" class="glyphicon glyphicon-asterisk"></span></a></h4>
-		<h4>Bebras Test 2 Completed: <b><u>To be implemented yet</b></u></h4>
+		<h4>Bebras Test 1 Completed: {{result}}
+      {% if result == 'N/A' %}
+
+      {% else %}%
+      {% endif %} <a data-toggle="modal" data-target="#largeModal"><span style="color: red;" class="glyphicon glyphicon-asterisk"></span></a></h4>
+      <h4>Bebras Test 2 Completed: {{result2}}
+      {% if result == 'N/A' %}
+
+      {% else %}%
+      {% endif %} <a data-toggle="modal" data-target="#largeModalBebras2"><span style="color: red;" class="glyphicon glyphicon-asterisk"></span></a></h4>
 	</div>
 
 	<div class="jumbotron">
@@ -140,6 +148,99 @@
   </div>
 </div>
 
+
+<div class="modal fade" id="largeModalBebras2" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Bebras 2 Test - {{selectedUserName}} {{selectedUserSurname}}'s results:</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-xs-4">
+            <div class="chart-container" style=" height:180px; width:198px">
+      <canvas id="myChart3"></canvas>
+    </div>
+    <br><hr/>
+    <div class="chart-container" style=" height:180px; width:198px">
+      <canvas id="myChart4"></canvas>
+    </div>             
+          </div>
+          <div class="col-xs-8">
+            <table style="font-size: 12px;" class="table table-hover">
+    <thead>
+      <tr>
+        <th>Question</th>
+        <th>Answers</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Bebras Painting</td>
+        <td>{{ ba1 }}</td>
+      </tr>
+      <tr>
+        <td>Bottles</td>
+        <td>{{ ba2 }}</td>
+      </tr>
+      <tr>
+        <td>Party Guests</td>
+        <td>{{ ba3 }}</td>
+      </tr>
+      <tr>
+        <td>Tube System</td>
+        <td>{{ ba4 }}</td>
+      </tr>
+      <tr>
+        <td>Magic Potions</td>
+        <td>{{ ba5 }}</td>
+      </tr>
+      <tr>
+        <td>Concurrent Directions</td>
+        <td>{{ ba6 }}</td>
+      </tr>
+      <tr>
+        <td>Secret Messages</td>
+        <td>{{ ba7 }}</td>
+      </tr>
+      <tr>
+        <td>Triangles</td>
+        <td>{{ ba8 }}</td>
+      </tr>
+      <tr>
+        <td>Scanner Code</td>
+        <td>{{ ba9 }}</td>
+      </tr>
+      <tr>
+        <td>The Game</td>
+        <td>{{ ba10 }}</td>
+      </tr>
+      <tr>
+        <td>B-Enigma</td>
+        <td>{{ ba11 }}</td>
+      </tr>
+      <tr>
+        <td>Theatre</td>
+        <td>{{ ba12 }}</td>
+      </tr>
+      <tr>
+        <td>Pirate Hunter</td>
+        <td>{{ ba13 }}</td>
+      </tr>
+    </tbody>
+  </table>
+          </div>
+        </div>
+    
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script type="text/javascript">
 var ctx = document.getElementById('myChart').getContext('2d');
 
@@ -173,6 +274,50 @@ var myDoughnutChart = new Chart(ctx1, {
       backgroundColor: ['#00e600', '#ff0000'],
       hoverBackgroundColor: ['#009900', '#990000'],
       data: [Math.round(({{ result }}/100)*13), Math.round(((100-{{result}})/100)*13)]
+    }],
+
+    // These labels appear in the legend and in the tooltips when hovering different arcs
+    labels: [
+        'Correct Answers',
+        'Wrong Answers'
+    ]
+},
+    options: {
+    }
+});
+
+var ctx3 = document.getElementById('myChart3').getContext('2d');
+
+var myDoughnutChart = new Chart(ctx3, {
+    type: 'doughnut',
+
+    data: {
+    datasets: [{
+      backgroundColor: ['#00e600', '#ff0000'],
+      hoverBackgroundColor: ['#009900', '#990000'],
+      data: [Math.round(({{ result2 }}/100)*13), Math.round(((100-{{result2}})/100)*13)]
+    }],
+
+    // These labels appear in the legend and in the tooltips when hovering different arcs
+    labels: [
+        'Correct Answers',
+        'Wrong Answers'
+    ]
+},
+    options: {
+    }
+});
+
+var ctx4 = document.getElementById('myChart4').getContext('2d');
+
+var myDoughnutChart = new Chart(ctx4, {
+    type: 'pie',
+
+    data: {
+    datasets: [{
+      backgroundColor: ['#00e600', '#ff0000'],
+      hoverBackgroundColor: ['#009900', '#990000'],
+      data: [Math.round(({{ result2 }}/100)*13), Math.round(((100-{{result2}})/100)*13)]
     }],
 
     // These labels appear in the legend and in the tooltips when hovering different arcs

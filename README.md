@@ -30,15 +30,18 @@ Using mLab - mLab is the largest cloud MongoDB service in the world.
 
 Fixed:
 Added a superUser, userTable shows all users
-Fixed bebras test
+Finished bebras1 & bebras2
 Added nice pie chart graph on UserTable click
 Updated home
+Updated UserTable -> clickable -> studentprogress
 Updated student sign-up -> bebrasTest -> home added restriction if user is not approved
 
 Issues: 
 Need GridFS working on the server, it works locally.
-User table - if student doesnt complete bebras test it returns an error.
 
 To be implemented:
 Add class as discussed
 Add simple student survey
+Add alternative answers for a few bebras1 questions
+Add pictures to bebras2
+

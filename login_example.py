@@ -88,6 +88,8 @@ def register():
 def studentRegister():
     if request.method == 'POST':
         users = mongo.db.users
+        babras1 = mongo.db.babras1
+        bebras2 = mongo.db.bebras2
         user_type = 'student'
         school = request.form['school']
         name = request.form['name']
@@ -95,26 +97,29 @@ def studentRegister():
         hashpass = bcrypt.hashpw(request.form['pass'].encode('utf-8'), bcrypt.gensalt())
         approved = 0
         b1_completed = 0
+        b2_completed = 0
         user_id = school + str(random.randint(1,1000)) 
-        users.insert({'user_type': user_type, 'school': school, 'name': name, 'surname': surname, 'approved':approved, 'bebras1': b1_completed, 'user_id':user_id, 'password' : hashpass})
+        users.insert({'user_type': user_type, 'school': school, 'name': name, 'surname': surname, 'approved':approved, 'bebras1': b1_completed, 'bebras2': b2_completed, 'user_id':user_id, 'password' : hashpass})
         session['user_id'] = user_id
+        q1 = "N/A"
+        q2 = "N/A"
+        q3 = "N/A"
+        q4 = "N/A"
+        q5 = "N/A"
+        q6 = "N/A"
+        q7 = "N/A"
+        q8 = "N/A"
+        q9 = "N/A"
+        q10 = "N/A"
+        q11 = "N/A"
+        q12 = "N/A"
+        q13 = "N/A"
+        grade = "N/A"
+        babras1.insert({'user_id': user_id, 'answer1': q1, 'answer2': q2, 'answer3': q3, 'answer4': q4, 'answer5': q5, 'answer6': q6, 'answer7': q7, 'answer8': q8, 'answer9': q9, 'answer10': q10, 'answer11': q11, 'answer12': q12, 'answer13': q13, 'finalResult' : grade})
+        bebras2.insert({'user_id': user_id, 'answer1': q1, 'answer2': q2, 'answer3': q3, 'answer4': q4, 'answer5': q5, 'answer6': q6, 'answer7': q7, 'answer8': q8, 'answer9': q9, 'answer10': q10, 'answer11': q11, 'answer12': q12, 'answer13': q13, 'finalResult' : grade})
         return redirect(url_for('bebras1'))
 
     return render_template('user_authentication/studentRegister.html')
-
-@app.route('/babras', methods=['POST', 'GET'])
-def studentBabrasTest1():
-    if request.method == 'POST':
-        babras1 = mongo.db.babras1
-        answer1 = request.form['answer1']
-        answer2 = request.form['answer2']
-        answer3 = request.form['answer3']
-        answer4 = request.form['answer4']
-        answer5 = request.form['answer5']
-        answer6 = request.form['answer6']
-        babras1.insert({'answer1': answer1, 'answer2': answer2, 'answer3': answer3, 'answer4': answer4, 'answer5': answer5, 'answer6': answer6})
-
-    return render_template('studentBabrasTest1.html')
 
 @app.route('/profile')
 def profile():
@@ -170,11 +175,13 @@ def profilePage():
 def studentProgress():
     users = mongo.db.users
     babras1 = mongo.db.babras1
+    bebras2 = mongo.db.bebras2
     userid = request.args.get("_id")
     selectedUser = users.find_one({'_id': ObjectId(userid)})['user_id']
     selectedUserName = users.find_one({'_id': ObjectId(userid)})['name']
     selectedUserSurname = users.find_one({'_id': ObjectId(userid)})['surname']
     selectedUserBebras = users.find_one({'_id': ObjectId(userid)})['bebras1']
+    selectedUserBebras2 = users.find_one({'_id': ObjectId(userid)})['bebras2']
     a1 = babras1.find_one({'user_id': selectedUser})['answer1']
     a2 = babras1.find_one({'user_id': selectedUser})['answer2']
     a3 = babras1.find_one({'user_id': selectedUser})['answer3']
@@ -188,11 +195,31 @@ def studentProgress():
     a11 = babras1.find_one({'user_id': selectedUser})['answer11']
     a12 = babras1.find_one({'user_id': selectedUser})['answer12']
     a13 = babras1.find_one({'user_id': selectedUser})['answer13']
+
+    ba1 = bebras2.find_one({'user_id': selectedUser})['answer1']
+    ba2 = bebras2.find_one({'user_id': selectedUser})['answer2']
+    ba3 = bebras2.find_one({'user_id': selectedUser})['answer3']
+    ba4 = bebras2.find_one({'user_id': selectedUser})['answer4']
+    ba5 = bebras2.find_one({'user_id': selectedUser})['answer5']
+    ba6 = bebras2.find_one({'user_id': selectedUser})['answer6']
+    ba7 = bebras2.find_one({'user_id': selectedUser})['answer7']
+    ba8 = bebras2.find_one({'user_id': selectedUser})['answer8']
+    ba9 = bebras2.find_one({'user_id': selectedUser})['answer9']
+    ba10 = bebras2.find_one({'user_id': selectedUser})['answer10']
+    ba11 = bebras2.find_one({'user_id': selectedUser})['answer11']
+    ba12 = bebras2.find_one({'user_id': selectedUser})['answer12']
+    ba13 = bebras2.find_one({'user_id': selectedUser})['answer13']
     result = babras1.find_one({'user_id': selectedUser})['finalResult']
+    result2 = bebras2.find_one({'user_id': selectedUser})['finalResult']
+
     approved = "Yes"
     if selectedUserBebras is 0:
         approved = "No"
-    return render_template('profile_page/studentCheck.html', selectedUser=selectedUser, selectedUserName=selectedUserName, selectedUserSurname=selectedUserSurname, result=result, approved=approved, a1=a1, a2=a2, a3=a3, a4=a4, a5=a5, a6=a6, a7=a7, a8=a8, a9=a9, a10=a10, a11=a11, a12=a12, a13=a13)
+    if selectedUserBebras2 is 0:
+        approved = "No"
+    return render_template('profile_page/studentCheck.html', selectedUser=selectedUser, selectedUserName=selectedUserName, selectedUserSurname=selectedUserSurname, result=result, result2=result2, approved=approved, 
+        a1=a1, a2=a2, a3=a3, a4=a4, a5=a5, a6=a6, a7=a7, a8=a8, a9=a9, a10=a10, a11=a11, a12=a12, a13=a13,
+        ba1=ba1, ba2=ba2, ba3=ba3, ba4=ba4, ba5=ba5, ba6=ba6, ba7=ba7, ba8=ba8, ba9=ba9, ba10=ba10, ba11=ba11, ba12=ba12, ba13=ba13)
 
 @app.route('/UsersPage')
 def UsersPage():
@@ -244,6 +271,14 @@ def result():
     result = babras1.find_one({'user_id': user_id})['finalResult']
     return render_template('bebras_test/bebras1Results.html', user_id=user_id, result=result)
 
+@app.route('/bebras2Result')
+def bebras2Result():
+    bebras2 = mongo.db.bebras2
+    users = mongo.db.users
+    user_id = users.find_one({'user_id':session['user_id']})['user_id']   
+    result = bebras2.find_one({'user_id': user_id})['finalResult']
+    return render_template('bebras_test/bebras1Results.html', user_id=user_id, result=result)
+
 @app.route('/bebras1', methods=['POST','GET'])
 def bebras1():
     if request.method == 'POST':
@@ -265,9 +300,34 @@ def bebras1():
         q12 = request.form['q12']
         q13 = request.form['q13']
         grade = request.form['grade']
-        babras1.insert({'user_id': user_id, 'answer1': q1, 'answer2': q2, 'answer3': q3, 'answer4': q4, 'answer5': q5, 'answer6': q6, 'answer7': q7, 'answer8': q8, 'answer9': q9, 'answer10': q10, 'answer11': q11, 'answer12': q12, 'answer13': q13, 'finalResult' : grade})
+        babras1.update_one({'user_id':session['user_id']}, {'$set': {'answer1': q1, 'answer2': q2, 'answer3': q3, 'answer4': q4, 'answer5': q5, 'answer6': q6, 'answer7': q7, 'answer8': q8, 'answer9': q9, 'answer10': q10, 'answer11': q11, 'answer12': q12, 'answer13': q13, 'finalResult' : grade}})
         return redirect(url_for('result'))
     return render_template('bebras_test/bebras1.html')
+
+@app.route('/bebras2', methods=['POST','GET'])
+def bebras2():
+    if request.method == 'POST':
+        bebras2 = mongo.db.bebras2
+        users = mongo.db.users
+        user_id = users.find_one({'user_id':session['user_id']})['user_id']
+        users.update_one({'user_id':session['user_id']}, {'$set': {'bebras2': 1}})
+        q1 = request.form['q1']
+        q2 = request.form['q2']
+        q3 = request.form['q3']
+        q4 = request.form['q4']
+        q5 = request.form['q5']
+        q6 = request.form['q6']
+        q7 = request.form['q7']
+        q8 = request.form['q8']
+        q9 = request.form['q9']
+        q10 = request.form['q10']
+        q11 = request.form['q11']
+        q12 = request.form['q12']
+        q13 = request.form['q13']
+        grade = request.form['grade']
+        bebras2.update_one({'user_id':session['user_id']}, {'$set': {'answer1': q1, 'answer2': q2, 'answer3': q3, 'answer4': q4, 'answer5': q5, 'answer6': q6, 'answer7': q7, 'answer8': q8, 'answer9': q9, 'answer10': q10, 'answer11': q11, 'answer12': q12, 'answer13': q13, 'finalResult' : grade}})
+        return redirect(url_for('bebras2Result'))
+    return render_template('bebras_test/bebras2.html')
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -287,12 +347,9 @@ def upload_file():
 def list_gridfs_files():
     files = [fs.get_last_version(file) for file in fs.list()]
     userTable = fs.list()
-    #userTable = db.fs.files.find_one({'filename': 'BeaverLunchAnswer2.jpg'})
-    #userTable = db.fs.files.get(userTable)
-    #userTable = fs.get(filename = 'BeaverLunchAnswer2.jpg ')
     file_list = "\n".join(['<li><a href="%s">%s</a></li>' % (url_for('serve_gridfs_file', oid=str(file._id)), file.name) for file in files])
 
-    return (file_list, render_template('files/uploadedFiles.html', files=files, file_list=file_list, userTable=userTable))
+    return (file_list, render_template('files/uploadedFiles.html', files=files, file_list=file_list))
 
 @app.route('/files/<oid>')
 def serve_gridfs_file(oid):

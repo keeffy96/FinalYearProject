@@ -1,0 +1,70 @@
+{% extends "index.html" %}
+{% block body %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+
+<nav class="navbar navbar-inverse">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-2">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="profile">Website Name</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-collapse-2">
+          <ul class="nav navbar-nav navbar-right">
+          <li><a href="logout"><i class="glyphicon glyphicon-log-out"></i></a></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container -->
+    </nav><!-- /.navbar -->
+
+<div class="container">
+  <div class="jumbotron" style="height: 350px">
+    <div class="progress" style="width: 60%; float: right;">
+      <div class="progress-bar" style="width: 100%">3/3
+      </div>
+    </div>
+    
+    <h1>Bebras Quiz <div class="chart-container" style="float: right; height:180px; width:198px">
+      <canvas id="myChart"></canvas>
+    </div></h1> 
+
+    <br>
+    <p>Congratulations you got: {{ result }}%</p> 
+
+    <br>
+    <a href="profile"><input class="btn btn-primary" type="button" value="Continue to home page"/></a>
+  </div>
+</div>
+
+<script type="text/javascript">
+var ctx = document.getElementById('myChart').getContext('2d');
+
+var myDoughnutChart = new Chart(ctx, {
+    type: 'doughnut',
+
+    data: {
+    datasets: [{
+      backgroundColor: ['#00e600', '#ff0000'],
+      hoverBackgroundColor: ['#009900', '#990000'],
+      data: [Math.round(({{ result }}/100)*13), Math.round(((100-{{result}})/100)*13)]
+    }],
+
+    // These labels appear in the legend and in the tooltips when hovering different arcs
+    labels: [
+        'Correct Answers',
+        'Wrong Answers'
+    ]
+},
+    options: {
+    }
+});
+</script>
+
+
+{% endblock %}
+

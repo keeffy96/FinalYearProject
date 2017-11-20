@@ -1,0 +1,206 @@
+{% extends "index.html" %}
+{% block body %}
+<div style="background-color: black" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 container-fluid bg-info">
+  <div class="modal-dialog">
+<div>
+    <h1 style="color: white">Bebras 2</h1>
+</div>
+<form id="bebras2Form" class="form-horizontal" role="form" method=POST action="{{ url_for('bebras2') }}">
+      <hr />
+      <div class="questions modal-content">
+      <div class="modal-header"><h3>Bebras Painting</h3></div>
+      <div class="modal-body">
+      <label>The Beaver children have found a magic roller. The roller replaces a shape in a painting with the next shape shown by the arrows below.</label> <br>
+      <h5><b>Example</b></h5>
+      <h5>When Ben uses the magic roller to paint over the painting on the left, he gets the painting on the right. </h5>
+      <h5><b>Question</b></h5>
+      <h5>What will the painting below look like after using the magic roller?</h5>
+      <input type="radio" name="q1" value="A" id="q1a">A
+      <input type="radio" name="q1" value="B" id="q1b">B
+      <input type="radio" name="q1" value="C" id="q1c">C
+      <input type="radio" name="q1" value="D" id="q1d">D
+    </div>
+  </div>
+
+      <hr />
+  <div class="questions modal-content">
+  <div class="modal-header"><h3>Bottles</h3></div>
+  <div class="modal-body">
+  <label>A Beaver puts five bottles on a table.<br> He places them so that every bottle has a bit showing.<br>He places the first bottle at the back of the table and puts each new bottle in front of those already placed.</label>
+  <h5><b>Question</b></h5>
+  <h5>In what order are the bottles placed when they appear as shown in the picture?</h5>
+  <input type="radio" name="q2" value="EDCBA" id="q2a">E D C B A<br>
+  <input type="radio" name="q2" value="DBCAE" id="q2b">D B C A E<br>
+  <input type="radio" name="q2" value="ECDAB" id="q2c">E C D A B<br>
+  <input type="radio" name="q2" value="DCEBA" id="q2d">D C E B A
+    </div>
+  </div>
+      <hr />  
+
+  <div class="questions modal-content">
+  <div class="modal-header"><h3>Party Guests</h3></div>
+  <div class="modal-body">
+  <label>To arrange a dinner party Sara the beaver needs to talk to five friends:<br>Alicia, Beat, Caroline, David and Emil.<br>Sara can talk to Emil right away. However, to talk to her other friends, there are a few points to consider:<br> 1- Before she talks to David, she must first talk to Alicia.<br> 2- Before she talks to Beat, she must first talk to Emil.<br> 3- Before she talks to Caroline, she must first talk to Beat and David. <br> 4- Before she talks to Alicia, she must first talk to Beat and Emil. </label>
+  <h5><b>Question</b></h5> 
+      <h5>In what order should Sara talk to all of her friends if she wants to talk to all of them?<br> Drag the names into the right order</h5>
+      <input type="text" name="q3"> :Please write your answer
+    </div>
+  </div>
+      <hr />
+
+      <div class="questions modal-content">
+  <div class="modal-header"><h3>Tube System</h3></div>
+  <div class="modal-body">
+  <label for="question4">A mouse is at the entrance of a tube system. It wants to reach the cheese at the end of tube 5.<br> The mouse always follows these commands:<br>1. Go downwards until a crossing<br>2. At the crossing, move through to the next vertical tube<br> 3. Go to command 1</label>
+  <h5><b>Question</b></h5>
+      <h5>In which tube should the mouse start so that it reaches the cheese?</h5>
+      <input type="radio" name="q4" value="1">1<br>
+      <input type="radio" name="q4" value="2">2<br>
+      <input type="radio" name="q4" value="3">3<br>
+      <input type="radio" name="q4" value="4">4<br>
+      <input type="radio" name="q4" value="5">5
+    </div>
+  </div>
+      <hr />
+
+      <div class="questions modal-content">
+  <div class="modal-header"><h3>Magic Potions</h3></div>
+  <div class="modal-body">
+  <label for="question5">Betaro Beaver has discovered five new magic potions:<br> one makes ears longer <br> another makes teeth longer <br>another makes whiskers curly <br> another turns the nose white <br>the last one turns eyes white.<br> Betaro put each magic potion into a separate beaker. He put pure water into another beaker, so there are six beakers in total. The beakers are labeled A to F. The problem is, he forgot to record which beaker contains which magic potion!<br> <br>To find out which potion is in each beaker, Betaro set up the following experiments:<br> Expt 1: A beaver drinks from beakers A, B and C together - the effects are shown in Figure 1.<br> Expt 2: A beaver drinks from beakers A, D and E together - the effects are shown in Figure 2. <br> Expt 3: A beaver drinks from beakers C, D and F together - the effects are shown in Figure 3.</label>
+  <h5><b>Question</b></h5>
+      <h5>Which beaker contains pure water?</h5>
+      <input type="radio" name="q5" value="A">Beaker A<br>
+      <input type="radio" name="q5" value="B">Beaker B<br>
+      <input type="radio" name="q5" value="C">Beaker C<br>
+      <input type="radio" name="q5" value="D">Beaker D<br>
+      <input type="radio" name="q5" value="E">Beaker E<br>
+      <input type="radio" name="q5" value="F">Beaker F
+    </div>
+  </div>
+      <hr />
+
+      <div class="questions modal-content">
+  <div class="modal-header"><h3>Concurrent Directions</h3></div>
+  <div class="modal-body">
+  <label for="question6">In a warehouse, three robots always work as a team.<br> When the team gets a direction instruction (N, S, E, W), all robots in the grid will move one square in that direction at the same time.<br> After following a list of instructions, the robots all pick up the object found in their final square. <br> For example, if we give the list N, N, S, S, E to the team, then robot A will pick up a cone, robot B will pick up a ring, and robot C will pick up a cone.</label>
+  <h5><b>Question</b></h5>
+      <h5>Which list of instructions can be sent to the robots so that the team picks up exactly a sphere, a cone, and a ring?</h5>
+      <input type="radio" name="q6" value="N,E,E,E">N, E, E, E<br>
+      <input type="radio" name="q6" value="N,E,E,S,E">N, E, E, S, E<br>
+      <input type="radio" name="q6" value="N,N,S,E,N">N, N, S, E, N<br>
+      <input type="radio" name="q6" value="N,E,E,S,W">N, E, E, S, W
+    </div>
+  </div>
+      <hr />
+
+
+      <div class="questions modal-content">
+  <div class="modal-header"><h3>Secret messages</h3></div>
+  <div class="modal-body">
+    <label for="question7">Agents Boris and Bertha communicate using secret messages.<br> Boris wants to send Bertha the secret message:<br>MEETBILLYBEAVERAT6<br>He writes each character in a 4 column grid from left to right and row by row starting from the top. He puts an X in any unused spaces. The result is shown below.<br> <br>Then he creates the secret message by reading the characters from top to bottom and column by column starting from the left:<br>MBYVTEIBE6ELERXTLAAX<br>Bertha then uses the same method to reply to Boris. The secret message she sends him is:<br>OIERKLTEILH!WBEX</label><br>
+  <h5><b>Question</b></h5>
+      <h5>What message does Bertha send back?</h5>
+      <input type="radio" name="q7" value="OKWHERETOMEET!">OKWHERETOMEET!<br>
+      <input type="radio" name="q7" value="OKIWILLBETHERE!">OKIWILLBETHERE!<br>
+      <input type="radio" name="q7" value="WILLYOUBETHERETOO?">WILLYOUBETHERETOO?<br>
+      <input type="radio" name="q7" value="OKIWILLMEETHIM!">OKIWILLMEETHIM! 
+    </div>
+  </div>
+      <hr />
+
+      <div class="questions modal-content">
+  <div class="modal-header"><h3>Triangles</h3></div>
+  <div class="modal-body">
+    <label for="question8">A beaver wants to create a mosaic with identical, triangle-shaped tiles.<br> He starts with one tile. He rotates it 90 degrees clockwise and then adds tiles on each side of the triangle-shaped tile, as shown in the picture below. <br> Then he rotates the whole shape 90 degrees clockwise again and adds tiles to the sides as before.</label><br>
+
+  <h5><b>Question</b></h5>
+      <h5>What will be the final shape of the triangles after step 3?</h5>
+      <input type="radio" name="q8" value="a">a<br>
+      <input type="radio" name="q8" value="b">b<br>
+      <input type="radio" name="q8" value="c">c<br>
+      <input type="radio" name="q8" value="d">d
+    </div>
+  </div>
+      <hr />
+
+      <div class="questions modal-content">
+  <div class="modal-header"><h3>Scanner Code</h3></div>
+  <div class="modal-body">
+    <label for="question9">BTwo scanners encode an image by translating its pixels into a special code. The code lists the number of all consecutive pixels of the same colour (black or white), followed by the number of all the consecutive pixels of the other colour, and so on. Both scanners start from the top left corner, and go from left to right, and row by row.<br> The two scanners use different methods at the end of a row: Scanner A processes the pixels row by row and restarts the encoding on the next row. Scanner B processes the pixels row by row but does not restart the encoding on the next row. </label><br>
+    <h5><b>Example</b></h5>
+      <h5>The image on the right would be represented by the following codes:<br>Scanner A: 3,1,1,1,2,4 (3 white, 1 black, 1 black; 1 white, 2 black, 4 black)<br>Scanner B: 3,2,1,6. (3 white, 2 black, 1 white, 6 black)
+</h5>
+
+  <h5><b>Question</b></h5>
+      <h5>Which of the following pictures will have the same code no matter which scanner is used?</h5>
+      <input type="radio" name="q9" value="A">A<br>
+      <input type="radio" name="q9" value="B">B<br>
+      <input type="radio" name="q9" value="C">C<br>
+      <input type="radio" name="q9" value="D">D
+    </div>
+  </div>
+      <hr />
+
+      <div class="questions modal-content">
+  <div class="modal-header"><h3>The Game</h3></div>
+  <div class="modal-body">
+    <label for="question10">Beaver Big is playing a game with Beaver Small on the special game board shown.<br> They start from the leftmost box (Box 5). <b>Beaver Big goes first.<b><br> She can choose to move Up or Down:<br> Up will move to Box 4.4; Down will move to Box 5.7.<br>Then, it is Beaver Small’s turn to choose Up or Down. From then on they take turns until, finally, Beaver Small chooses a box in the rightmost column.<br> Because both beavers can see all the numbers on the game board all the time, they are able to plan their moves accordingly.<br></label>
+
+  <h5><b>Question</b></h5>
+      <h5>Beaver Big plays so that the final box will have the biggest possible value and Beaver Small plays to get the smallest possible value.<br> If both always play as well as they possible can, what will the number in the final box be?</h5>
+      <input type="text" name="q10"> :Please write your answer<br>
+    </div>
+  </div>
+      
+      <hr />
+
+      <div class="questions modal-content">
+  <div class="modal-header"><h3>B-enigma</h3></div>
+  <div class="modal-body">
+    <label for="question11">The Beavers need to communicate secretly. They decide to use a mechanism called the B-Enigma machine to hide (encrypt) their messages.<br> <br>The B-Enigma works as shown above. Each time a letter is typed (e.g. “A”), the left rotor will find a letter on the right rotor according to the arrows (e.g. “O” for “A” in the first step). After typing a letter, the left rotor will move up one position.<br> This is shown in a different way in the diagram below. After rotating up one position the left rotor will then be in position (2). However, note that the rotor on the right never moves. The links between the two rotors (shown by the straight arrows) also remain the same.<br> In the diagram below, all the letters available are shown on both rotors.</label>
+
+  <h5><b>Question</b></h5>
+      <h5>The Beavers wish to send the message “BEBRAS”.<br> What will the encrypted message be if we start from position (1)?</h5>
+      <input type="radio" name="q11" value="UOSAEB">UOSAEB
+      <input type="radio" name="q11" value="UOUQOP">UOUQOP
+      <input type="radio" name="q11" value="UOOOIP">UOOOIP
+      <input type="radio" name="q11" value="UOOUPQ">UOOUPQ
+    </div>
+  </div>
+      <hr />
+
+      <div class="questions modal-content">
+  <div class="modal-header"><h3>Theatre</h3></div>
+  <div class="modal-body">
+    <label for="question12">Three spotlights are used to light the theatre stage in the beavers' forest, a red one, a green one and a blue one.<br> The colour of the stage depends on which of the three spotlights are turned on.<br> This table shows the possible combinations of colours.<br> <br>From the beginning of the show, the lights will be switched on and off in this pattern:<br>• The red light repeats the sequence: two minutes off, two minutes on. <br>• The green light repeats the sequence: one minute off, one minute on. <br>• The blue light repeats the sequence: four minutes on, four minutes off.</label><br>
+
+  <h5><b>Question</b></h5>
+      <h5>What will the colour of the stage be in the first 4 minutes of the show?<br> Drag the correct colour onto the block of the minute. </h5>
+      <input type="text" name="q12"> :Please write your answer<br>
+    </div>
+  </div>
+      <hr />
+
+      <div class="questions modal-content">
+  <div class="modal-header"><h3>Pirate Hunters</h3></div>
+  <div class="modal-body">
+    <label for="question13">In the game of Pirate Hunters players take turns moving a Pirate or a Policeman.<br> When it is the police's turn, the player moves a policeman over to a neighbouring circle.<br> The pirate is faster than a policeman, and skips a circle on his turn, moving two circles.<br> A policeman cannot move to a circle that is occupied -- either by his colleague policeman, or the pirate.<br> The game ends when the pirate is forced to move to a circle occupied by one of the policemen.<br>The policeman goes first</label><br>
+
+  <h5><b>Question</b></h5>
+      <h5>If the pirate plays the best way possible and makes no mistakes, how many moves will it take the police to capture him?</h5><br>
+      <input type="radio" name="q13" value="A">The police win in 2 turns <br>
+      <input type="radio" name="q13" value="B">The police win in 3 turns<br>
+      <input type="radio" name="q13" value="C">The police win in 5 turns<br>
+      <input type="radio" name="q13" value="D">The police have no chance of winning
+    </div>
+  </div>
+      <hr />
+      <input type="hidden" name="grade" id="grade" value="">
+
+      <input class="btn btn-primary btn-block" type="submit" value="Submit Answers" onclick="setValueBebras2()">
+    </form>
+</div>
+</div>
+
+{% endblock %}
+
