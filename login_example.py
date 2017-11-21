@@ -9,6 +9,7 @@ import gridfs
 import random
 
 app = Flask(__name__)
+app.secret_key = 'mysecret'
 
 #MongoClient.connect('mongodb://keeffy96:password@ds115625.mlab.com:15625')
 #db = client.mongologinexample
@@ -362,5 +363,4 @@ def serve_gridfs_file(oid):
         abort(404)
 
 if __name__ == '__main__':
-    app.secret_key = 'mysecret'
     app.run(debug=True)
