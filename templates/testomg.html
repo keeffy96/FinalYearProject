@@ -1,201 +1,427 @@
 {% extends "index.html" %}
 {% block body %}
-<form id="quizForm" class="form-horizontal" role="form" method=POST action="{{ url_for('bebras2') }}">
-      <hr />
-      <div class="questions modal-content">
-      <div class="modal-header"><h3>Bebras Painting</h3></div>
-      <div class="modal-body">
-      <label>The Beaver children have found a magic roller. The roller replaces a shape in a painting with the next shape shown by the arrows below.</label> <br>
-      <h5><b>Example</b></h5>
-      <h5>When Ben uses the magic roller to paint over the painting on the left, he gets the painting on the right. </h5>
-      <h5><b>Question</b></h5>
-      <h5>What will the painting below look like after using the magic roller?</h5>
-      <input type="radio" name="q1" value="A" id="q1a">A
-      <input type="radio" name="q1" value="B" id="q1b">B
-      <input type="radio" name="q1" value="C" id="q1c">C
-      <input type="radio" name="q1" value="D" id="q1d">D
+{% if 'email' in session %}
+{% if uType == "admin" %}
+<div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="profile">Website Name</a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-collapse-2">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ name }} {{surname}} <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="profilePage"><i class="glyphicon glyphicon-user"></i> View profile</a></li>
+              <li><a href="editProfile"><i class="glyphicon glyphicon-cog"></i> Edit Profile</a></li>
+              <li><a href="logout"><i class="glyphicon glyphicon-log-out"></i> Log out</a></li>
+            </ul>
+          </li>
+          <li><a href="logout"><i class="glyphicon glyphicon-log-out"></i></a></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+        <!-- /.nav-collapse -->
     </div>
-  </div>
+    <!-- /.container -->
+</div>
+<!-- /.navbar -->
 
-      <hr />
-  <div class="questions modal-content">
-  <div class="modal-header"><h3>Bottles</h3></div>
-  <div class="modal-body">
-  <label>A Beaver puts five bottles on a table.<br> He places them so that every bottle has a bit showing.<br>He places the first bottle at the back of the table and puts each new bottle in front of those already placed.</label>
-  <h5><b>Question</b></h5>
-  <h5>In what order are the bottles placed when they appear as shown in the picture?</h5>
-  <input type="radio" name="q2" value="EDCBA" id="q2a">E D C B A<br>
-  <input type="radio" name="q2" value="DBCAE" id="q2b">D B C A E<br>
-  <input type="radio" name="q2" value="ECDAB" id="q2c">E C D A B<br>
-  <input type="radio" name="q2" value="DCEBA" id="q2d">D C E B A
+<div style="width: 100%; height: 100%;">
+<div class="container-fluid">
+    <div class="row row-offcanvas row-offcanvas-left">
+        <div style="background-color: #222;" id="myDIV" class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+            <div class="sidebar-nav">
+                <ul class="nav">
+                    <li class="active"><a href="#">Link</a></li>
+                    <li><a href="#">Link</a></li>
+                    <li><a href="#">Link</a></li>
+                    <li class="nav-divider"></li>
+
+                    <div style="width: 100%; margin: 1.6rem auto; max-width: 76rem; text-align: center;" class="container">
+		<div class="cal">
+			<div class="cal__header">
+				<button class="btn btn-action btn-link btn-lg" data-calendar-toggle="previous"><svg height="24" version="1.1" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+				<path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"></path></svg></button>
+				<div class="cal__header__label" data-calendar-label="month">
+					March 2017
+				</div><button class="btn btn-action btn-link btn-lg" data-calendar-toggle="next"> <svg height="24" version="1.1" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+				<path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z"></path></svg></button>
+			</div>
+			<div class="cal__week">
+				<span>Mo</span> <span>Tu</span><span>We</span> <span>Th</span> <span>Fr</span> <span>Sa</span> <span>Su</span>
+			</div>
+			<div class="cal__body" data-calendar-area="month"></div>
+		</div>
+
+		<p class="demo-picked">
+			Date picked: <span data-calendar-label="picked"></span>
+		</p>
+	</div>
+                   <li class="nav-divider"></li>
+                    <li><a href="#">Link</a></li>
+                    <li><a href="#">Link</a></li>
+                </ul>
+            </div>
+            <!--/.well -->
+        </div>
+        <!--/span-->
+
+        <div id="moveJumbo" class="col-xs-12 col-sm-9">
+            <br>
+            <input class="btn btn-default btn-lg" type='button' id='hideshow' onclick="myFunction()" value='Hide'>
+            <h3>Dashboard:</h3>
+            <div class="jumbotron">
+            <h1>This user is an admin</h1>
+            <p>This is an example to show the potential of an offcanvas layout pattern in Bootstrap. Try some responsive-range viewport sizes to see it in action.</p>
+            </div>
+            <div class="row">
+                <div class="col-6 col-sm-6 col-lg-4">
+                    <h2>This user is an admin</h2>
+                    <p>Bootstrap is a front-end framework that uses CSS and JavaScript to facilitate responsive Web design. Bootply is a playground for Bootstrap that enables developers and designers to test, prototype and create mockups using Bootstrap
+                        friendly HTML, CSS and Javascript.</p>
+                    <p><a class="btn btn-default" href="#">View details »</a></p>
+                    <a href="#" class="btn btn-default" data-toggle="offcanvas">HelloWorld</i></a>
+                </div>
+                <!--/span-->
+                <div class="col-6 col-sm-6 col-lg-4">
+                    <h2>Heading</h2>
+                    <p>Bootply is a playground for Bootstrap that enables developers and designers to test, prototype and create mockups using Bootstrap friendly HTML, CSS and Javascript. Bootstrap is a front-end framework that uses CSS and JavaScript to
+                        facilitate responsive Web design. </p>
+                    <p><a class="btn btn-default" href="#">View details »</a></p>
+                </div>
+                <!--/span-->
+                
+                <div class="col-6 col-sm-6 col-lg-4">
+                    <h2>Heading</h2>
+                    <p>Bootstrap is a front-end framework that uses CSS and JavaScript to facilitate responsive Web design. Bootply is a playground for Bootstrap that enables developers and designers to test, prototype and create mockups using Bootstrap
+                        friendly HTML, CSS and Javascript.</p>
+                    <p><a class="btn btn-default" href="#">View details »</a></p>
+                </div>
+                <!--/span-->
+                <div class="col-6 col-sm-6 col-lg-4">
+                    <h2>Heading</h2>
+                    <p>Bootstrap is a front-end framework that uses CSS and JavaScript to facilitate responsive Web design. Bootply is a playground for Bootstrap that enables developers and designers to test, prototype and create mockups using Bootstrap
+                        friendly HTML, CSS and Javascript.</p>
+                    <p><a class="btn btn-default" href="#">View details »</a></p>
+                </div>
+                <!--/span-->
+            </div>
+            <!--/row-->
+        </div>
+        <!--/span-->
     </div>
-  </div>
-      <hr />  
-
-  <div class="questions modal-content">
-  <div class="modal-header"><h3>Party Guests</h3></div>
-  <div class="modal-body">
-  <label>To arrange a dinner party Sara the beaver needs to talk to five friends:<br>Alicia, Beat, Caroline, David and Emil.<br>Sara can talk to Emil right away. However, to talk to her other friends, there are a few points to consider:<br> 1- Before she talks to David, she must first talk to Alicia.<br> 2- Before she talks to Beat, she must first talk to Emil.<br> 3- Before she talks to Caroline, she must first talk to Beat and David. <br> 4- Before she talks to Alicia, she must first talk to Beat and Emil. </label>
-  <h5><b>Question</b></h5> 
-      <h5>In what order should Sara talk to all of her friends if she wants to talk to all of them?<br> Drag the names into the right order</h5>
-      <input type="text" name="q3"> :Please write your answer
+{% else %}
+<div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="profile">Website Name</a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-collapse-2">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ name }} {{surname}} <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="profilePage"><i class="glyphicon glyphicon-user"></i> View profile</a></li>
+              <li><a href="editProfile"><i class="glyphicon glyphicon-cog"></i> Edit Profile</a></li>
+              <li><a href="logout"><i class="glyphicon glyphicon-log-out"></i> Log out</a></li>
+            </ul>
+          </li>
+          <li><a href="logout"><i class="glyphicon glyphicon-log-out"></i></a></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+        <!-- /.nav-collapse -->
     </div>
-  </div>
-      <hr />
+    <!-- /.container -->
+</div>
+<!-- /.navbar -->
 
-      <div class="questions modal-content">
-  <div class="modal-header"><h3>Tube System</h3></div>
-  <div class="modal-body">
-  <label for="question4">A mouse is at the entrance of a tube system. It wants to reach the cheese at the end of tube 5.<br> The mouse always follows these commands:<br>1. Go downwards until a crossing<br>2. At the crossing, move through to the next vertical tube<br> 3. Go to command 1</label>
-  <h5><b>Question</b></h5>
-      <h5>In which tube should the mouse start so that it reaches the cheese?</h5>
-      <input type="radio" name="q4" value="1">1<br>
-      <input type="radio" name="q4" value="2">2<br>
-      <input type="radio" name="q4" value="3">3<br>
-      <input type="radio" name="q4" value="4">4<br>
-      <input type="radio" name="q4" value="5">5
+<div style="width: 100%; height: 100%;">
+<div class="container-fluid">
+    <div style="padding: 2px;" class="row row-offcanvas row-offcanvas-left">
+        <div style="background-color: #222;" id="myDIV" class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+            <div class="sidebar-nav">
+                <ul class="nav">
+                    <li><a href="UsersPage"><span class="glyphicon glyphicon-user"></span> Users</a></li>
+                    <li><a href="UsersPage"><span class="glyphicon glyphicon-user"></span> Users</a></li>
+                    <li><a href="#">Link</a></li>
+                    <li class="nav-divider"></li>
+
+                    <div style="width: 100%; margin: 1.6rem auto; max-width: 76rem; text-align: center;" class="container">
+		<div class="cal">
+			<div class="cal__header">
+				<button class="btn btn-action btn-link btn-lg" data-calendar-toggle="previous"><svg height="24" version="1.1" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+				<path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"></path></svg></button>
+				<div class="cal__header__label" data-calendar-label="month">
+					March 2017
+				</div><button class="btn btn-action btn-link btn-lg" data-calendar-toggle="next"> <svg height="24" version="1.1" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+				<path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z"></path></svg></button>
+			</div>
+			<div class="cal__week">
+				<span>Mo</span> <span>Tu</span><span>We</span> <span>Th</span> <span>Fr</span> <span>Sa</span> <span>Su</span>
+			</div>
+			<div class="cal__body" data-calendar-area="month"></div>
+		</div>
+
+		<p class="demo-picked">
+			Date picked: <span data-calendar-label="picked"></span>
+		</p>
+	</div>
+                   <li class="nav-divider"></li>
+                    <li><a href="#">Link</a></li>
+                    <li><a href="#">Link</a></li>
+                </ul>
+            </div>
+            <!--/.well -->
+        </div>
+        <!--/span-->
+
+        <div id="moveJumbo" class="col-xs-12 col-sm-9">
+            <br>
+            <input class="btn btn-default btn-lg" type='button' id='hideshow' onclick="myFunction()" value='Hide'>
+            <h3>Dashboard:</h3>
+            <div class="jumbotron">
+            <h1>This user is an instructor</h1>
+            <p>Hello {{ name }} {{ surname }} welcome to your home page</p>
+            </div>
+            <div class="row">
+                <div class="col-6 col-sm-6 col-lg-4">
+                    <h2>This user is an admin</h2>
+                    <p>Bootstrap is a front-end framework that uses CSS and JavaScript to facilitate responsive Web design. Bootply is a playground for Bootstrap that enables developers and designers to test, prototype and create mockups using Bootstrap
+                        friendly HTML, CSS and Javascript.</p>
+                    <p><a class="btn btn-default" href="#">View details »</a></p>
+                    <a href="#" class="btn btn-default" data-toggle="offcanvas">HelloWorld</i></a>
+                </div>
+                <!--/span-->
+                <div class="col-6 col-sm-6 col-lg-4">
+                    <h2>Heading</h2>
+                    <p>Bootply is a playground for Bootstrap that enables developers and designers to test, prototype and create mockups using Bootstrap friendly HTML, CSS and Javascript. Bootstrap is a front-end framework that uses CSS and JavaScript to
+                        facilitate responsive Web design. </p>
+                    <p><a class="btn btn-default" href="#">View details »</a></p>
+                </div>
+                <!--/span-->
+                
+                <div class="col-6 col-sm-6 col-lg-4">
+                    <h2>Heading</h2>
+                    <p>Bootstrap is a front-end framework that uses CSS and JavaScript to facilitate responsive Web design. Bootply is a playground for Bootstrap that enables developers and designers to test, prototype and create mockups using Bootstrap
+                        friendly HTML, CSS and Javascript.</p>
+                    <p><a class="btn btn-default" href="#">View details »</a></p>
+                </div>
+                <!--/span-->
+                <div class="col-6 col-sm-6 col-lg-4">
+                    <h2>Heading</h2>
+                    <p>Bootstrap is a front-end framework that uses CSS and JavaScript to facilitate responsive Web design. Bootply is a playground for Bootstrap that enables developers and designers to test, prototype and create mockups using Bootstrap
+                        friendly HTML, CSS and Javascript.</p>
+                    <p><a class="btn btn-default" href="#">View details »</a></p>
+                </div>
+                <!--/span-->
+            </div>
+            <!--/row-->
+        </div>
+        <!--/span-->
     </div>
-  </div>
-      <hr />
+</div>
+{% endif %}
+{% endif %}
 
-      <div class="questions modal-content">
-  <div class="modal-header"><h3>Magic Potions</h3></div>
-  <div class="modal-body">
-  <label for="question5">Betaro Beaver has discovered five new magic potions:<br> one makes ears longer <br> another makes teeth longer <br>another makes whiskers curly <br> another turns the nose white <br>the last one turns eyes white.<br> Betaro put each magic potion into a separate beaker. He put pure water into another beaker, so there are six beakers in total. The beakers are labeled A to F. The problem is, he forgot to record which beaker contains which magic potion!<br> <br>To find out which potion is in each beaker, Betaro set up the following experiments:<br> Expt 1: A beaver drinks from beakers A, B and C together - the effects are shown in Figure 1.<br> Expt 2: A beaver drinks from beakers A, D and E together - the effects are shown in Figure 2. <br> Expt 3: A beaver drinks from beakers C, D and F together - the effects are shown in Figure 3.</label>
-  <h5><b>Question</b></h5>
-      <h5>Which beaker contains pure water?</h5>
-      <input type="radio" name="q5" value="A">Beaker A<br>
-      <input type="radio" name="q5" value="B">Beaker B<br>
-      <input type="radio" name="q5" value="C">Beaker C<br>
-      <input type="radio" name="q5" value="D">Beaker D<br>
-      <input type="radio" name="q5" value="E">Beaker E<br>
-      <input type="radio" name="q5" value="F">Beaker F
+{% if 'user_id' in session %}
+<div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="profile">Website Name</a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-collapse-2">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ name }} {{surname}} <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="profilePage"><i class="glyphicon glyphicon-user"></i> View profile</a></li>
+              <li><a href="editProfile"><i class="glyphicon glyphicon-cog"></i> Edit Profile</a></li>
+              <li><a href="logout"><i class="glyphicon glyphicon-log-out"></i> Log out</a></li>
+            </ul>
+          </li>
+          <li><a href="logout"><i class="glyphicon glyphicon-log-out"></i></a></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+        <!-- /.nav-collapse -->
     </div>
-  </div>
-      <hr />
+    <!-- /.container -->
+</div>
+<!-- /.navbar -->
 
-      <div class="questions modal-content">
-  <div class="modal-header"><h3>Concurrent Directions</h3></div>
-  <div class="modal-body">
-  <label for="question6">In a warehouse, three robots always work as a team.<br> When the team gets a direction instruction (N, S, E, W), all robots in the grid will move one square in that direction at the same time.<br> After following a list of instructions, the robots all pick up the object found in their final square. <br> For example, if we give the list N, N, S, S, E to the team, then robot A will pick up a cone, robot B will pick up a ring, and robot C will pick up a cone.</label>
-  <h5><b>Question</b></h5>
-      <h5>Which list of instructions can be sent to the robots so that the team picks up exactly a sphere, a cone, and a ring?</h5>
-      <input type="radio" name="q6" value="N,E,E,E">N, E, E, E<br>
-      <input type="radio" name="q6" value="N,E,E,S,E">N, E, E, S, E<br>
-      <input type="radio" name="q6" value="N,N,S,E,N">N, N, S, E, N<br>
-      <input type="radio" name="q6" value="N,E,E,S,W">N, E, E, S, W
+<div style="width: 100%; height: 100%;">
+<div class="container-fluid">
+    <div class="row row-offcanvas row-offcanvas-left">
+        <div style="background-color: #222;" id="myDIV" class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+            <div class="sidebar-nav">
+                <ul class="nav">
+                    
+                    <li class="active"><a href="#">Link</a></li>
+                    <li><a href="#">Link</a></li>
+                    <li><a href="#">Link</a></li>
+                    <li class="nav-divider"></li>
+
+                    <div style="width: 100%; margin: 1.6rem auto; max-width: 76rem; text-align: center;" class="container">
+		<div class="cal">
+			<div class="cal__header">
+				<button class="btn btn-action btn-link btn-lg" data-calendar-toggle="previous"><svg height="24" version="1.1" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+				<path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"></path></svg></button>
+				<div class="cal__header__label" data-calendar-label="month">
+					March 2017
+				</div><button class="btn btn-action btn-link btn-lg" data-calendar-toggle="next"> <svg height="24" version="1.1" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+				<path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z"></path></svg></button>
+			</div>
+			<div class="cal__week">
+				<span>Mo</span> <span>Tu</span><span>We</span> <span>Th</span> <span>Fr</span> <span>Sa</span> <span>Su</span>
+			</div>
+			<div class="cal__body" data-calendar-area="month"></div>
+		</div>
+
+		<p class="demo-picked">
+			Date picked: <span data-calendar-label="picked"></span>
+		</p>
+	</div>
+                   <li class="nav-divider"></li>
+                    <li><a href="#">Link</a></li>
+                    <li><a href="#">Link</a></li>
+                </ul>
+            </div>
+            <!--/.well -->
+        </div>
+        <!--/span-->
+
+        <div id="moveJumbo" class="col-xs-12 col-sm-9">
+            <br>
+            <input class="btn btn-default btn-lg" type='button' id='hideshow' onclick="myFunction()" value='Hide'>
+            <h3>Dashboard:</h3>
+            <div class="jumbotron">
+            <h1>This user is a student</h1>
+            <p>Hello {{ name }} {{ surname }} welcome to your home page</p>
+            <h3>Your userid is: {{ userid }}</h3>
+
+            {% if approved == 0 %}
+            <h4 style="color: red;">Please wait to be approved</h4>
+            {% if b1_todo == 0 %}
+            <h3>Hello {{ name }} please complete this quick test <a href="bebras1">Click here</a></h3>
+            {% endif %}
+
+            {% else %}
+            {% if b1_todo == 0 %}
+            <h3>Hello {{ name }} please complete this quick test <a href="bebras1">Click here</a></h3>
+            {% endif %}
+
+            {% endif %}
+
+
+            </div>
+            <div class="row">
+                <div class="col-6 col-sm-6 col-lg-4">
+                    <h2>This user is an student</h2>
+                    <p>Bootstrap is a front-end framework that uses CSS and JavaScript to facilitate responsive Web design. Bootply is a playground for Bootstrap that enables developers and designers to test, prototype and create mockups using Bootstrap
+                        friendly HTML, CSS and Javascript.</p>
+                    <p><a class="btn btn-default" href="#">View details »</a></p>
+                    <a href="#" class="btn btn-default" data-toggle="offcanvas">HelloWorld</i></a>
+                </div>
+                <!--/span-->
+                <div class="col-6 col-sm-6 col-lg-4">
+                    <h2>Heading</h2>
+                    <p>Bootply is a playground for Bootstrap that enables developers and designers to test, prototype and create mockups using Bootstrap friendly HTML, CSS and Javascript. Bootstrap is a front-end framework that uses CSS and JavaScript to
+                        facilitate responsive Web design. </p>
+                    <p><a class="btn btn-default" href="#">View details »</a></p>
+                </div>
+                <!--/span-->
+                
+                <div class="col-6 col-sm-6 col-lg-4">
+                    <h2>Heading</h2>
+                    <p>Bootstrap is a front-end framework that uses CSS and JavaScript to facilitate responsive Web design. Bootply is a playground for Bootstrap that enables developers and designers to test, prototype and create mockups using Bootstrap
+                        friendly HTML, CSS and Javascript.</p>
+                    <p><a class="btn btn-default" href="#">View details »</a></p>
+                </div>
+                <!--/span-->
+                <div class="col-6 col-sm-6 col-lg-4">
+                    <h2>Heading</h2>
+                    <p>Bootstrap is a front-end framework that uses CSS and JavaScript to facilitate responsive Web design. Bootply is a playground for Bootstrap that enables developers and designers to test, prototype and create mockups using Bootstrap
+                        friendly HTML, CSS and Javascript.</p>
+                    <p><a class="btn btn-default" href="#">View details »</a></p>
+                </div>
+                <!--/span-->
+            </div>
+            <!--/row-->
+        </div>
+        <!--/span-->
     </div>
-  </div>
-      <hr />
+</div>
 
+{% endif %}
 
-      <div class="questions modal-content">
-  <div class="modal-header"><h3>Secret messages</h3></div>
-  <div class="modal-body">
-    <label for="question7">Agents Boris and Bertha communicate using secret messages.<br> Boris wants to send Bertha the secret message:<br>MEETBILLYBEAVERAT6<br>He writes each character in a 4 column grid from left to right and row by row starting from the top. He puts an X in any unused spaces. The result is shown below.<br> <br>Then he creates the secret message by reading the characters from top to bottom and column by column starting from the left:<br>MBYVTEIBE6ELERXTLAAX<br>Bertha then uses the same method to reply to Boris. The secret message she sends him is:<br>OIERKLTEILH!WBEX</label><br>
-  <h5><b>Question</b></h5>
-      <h5>What message does Bertha send back?</h5>
-      <input type="radio" name="q7" value="OKWHERETOMEET!">OKWHERETOMEET!<br>
-      <input type="radio" name="q7" value="OKIWILLBETHERE!">OKIWILLBETHERE!<br>
-      <input type="radio" name="q7" value="WILLYOUBETHERETOO?">WILLYOUBETHERETOO?<br>
-      <input type="radio" name="q7" value="OKIWILLMEETHIM!">OKIWILLMEETHIM! 
-    </div>
-  </div>
-      <hr />
+    <hr>
 
-      <div class="questions modal-content">
-  <div class="modal-header"><h3>Triangles</h3></div>
-  <div class="modal-body">
-    <label for="question8">A beaver wants to create a mosaic with identical, triangle-shaped tiles.<br> He starts with one tile. He rotates it 90 degrees clockwise and then adds tiles on each side of the triangle-shaped tile, as shown in the picture below. <br> Then he rotates the whole shape 90 degrees clockwise again and adds tiles to the sides as before.</label><br>
+    <footer>	
+        <p>© Company 2017</p>
+        
+    </footer>
 
-  <h5><b>Question</b></h5>
-      <h5>What will be the final shape of the triangles after step 3?</h5>
-      <input type="radio" name="q8" value="a">a<br>
-      <input type="radio" name="q8" value="b">b<br>
-      <input type="radio" name="q8" value="c">c<br>
-      <input type="radio" name="q8" value="d">d
-    </div>
-  </div>
-      <hr />
+</div>
+</div>
+<!--/.container-->
 
-      <div class="questions modal-content">
-  <div class="modal-header"><h3>Scanner Code</h3></div>
-  <div class="modal-body">
-    <label for="question9">BTwo scanners encode an image by translating its pixels into a special code. The code lists the number of all consecutive pixels of the same colour (black or white), followed by the number of all the consecutive pixels of the other colour, and so on. Both scanners start from the top left corner, and go from left to right, and row by row.<br> The two scanners use different methods at the end of a row: Scanner A processes the pixels row by row and restarts the encoding on the next row. Scanner B processes the pixels row by row but does not restart the encoding on the next row. </label><br>
-    <h5><b>Example</b></h5>
-      <h5>The image on the right would be represented by the following codes:<br>Scanner A: 3,1,1,1,2,4 (3 white, 1 black, 1 black; 1 white, 2 black, 4 black)<br>Scanner B: 3,2,1,6. (3 white, 2 black, 1 white, 6 black)
-</h5>
+<style type="text/css">
+@media screen and (max-width: 768px) {
+  #hideshow  { display: none; }
+}
+	html {
+  box-sizing: border-box;
+  font-size: 10px;
+}
 
-  <h5><b>Question</b></h5>
-      <h5>Which of the following pictures will have the same code no matter which scanner is used?</h5>
-      <input type="radio" name="q8" value="A">A<br>
-      <input type="radio" name="q8" value="B">B<br>
-      <input type="radio" name="q8" value="C">C<br>
-      <input type="radio" name="q8" value="D">D
-    </div>
-  </div>
-      <hr />
+*, *:before, *:after {
+  box-sizing: inherit;
+}
 
-      <div class="questions modal-content">
-  <div class="modal-header"><h3>The Game</h3></div>
-  <div class="modal-body">
-    <label for="question10">Beaver Big is playing a game with Beaver Small on the special game board shown.<br> They start from the leftmost box (Box 5). <b>Beaver Big goes first.<b><br> She can choose to move Up or Down:<br> Up will move to Box 4.4; Down will move to Box 5.7.<br>Then, it is Beaver Small’s turn to choose Up or Down. From then on they take turns until, finally, Beaver Small chooses a box in the rightmost column.<br> Because both beavers can see all the numbers on the game board all the time, they are able to plan their moves accordingly.<br></label>
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  color: #333;
+  font-size: 1.6rem;
+  padding-top: 50px;
+  background-color: #FAFAFA;
+  -webkit-font-smoothing: antialiased;
+}
 
-  <h5><b>Question</b></h5>
-      <h5>Beaver Big plays so that the final box will have the biggest possible value and Beaver Small plays to get the smallest possible value.<br> If both always play as well as they possible can, what will the number in the final box be?</h5>
-      <input type="text" name="q10"> :Please write your answer<br>
-    </div>
-  </div>
-      
-      <hr />
+a, a:visited {
+  color: white;
+}
 
-      <div class="questions modal-content">
-  <div class="modal-header"><h3>B-enigma</h3></div>
-  <div class="modal-body">
-    <label for="question11">The Beavers need to communicate secretly. They decide to use a mechanism called the B-Enigma machine to hide (encrypt) their messages.<br> <br>The B-Enigma works as shown above. Each time a letter is typed (e.g. “A”), the left rotor will find a letter on the right rotor according to the arrows (e.g. “O” for “A” in the first step). After typing a letter, the left rotor will move up one position.<br> This is shown in a different way in the diagram below. After rotating up one position the left rotor will then be in position (2). However, note that the rotor on the right never moves. The links between the two rotors (shown by the straight arrows) also remain the same.<br> In the diagram below, all the letters available are shown on both rotors.</label>
+footer {
+  padding-left: 15px;
+  padding-right: 15px;
+  text-align: center;
+  margin: 1.6rem 0;
+}
 
-  <h5><b>Question</b></h5>
-      <h5>The Beavers wish to send the message “BEBRAS”.<br> What will the encrypted message be if we start from position (1)?</h5>
-      <input type="radio" name="q11" value="UOSAEB">UOSAEB
-      <input type="radio" name="q11" value="UOUQOP">UOUQOP
-      <input type="radio" name="q11" value="UOOOIP">UOOOIP
-      <input type="radio" name="q11" value="UOOUPQ">UOOUPQ
-    </div>
-  </div>
-      <hr />
+h1 {
+  text-align: center;
+}
+</style>
 
-      <div class="questions modal-content">
-  <div class="modal-header"><h3>Theatre</h3></div>
-  <div class="modal-body">
-    <label for="question12">Three spotlights are used to light the theatre stage in the beavers' forest, a red one, a green one and a blue one.<br> The colour of the stage depends on which of the three spotlights are turned on.<br> This table shows the possible combinations of colours.<br> <br>From the beginning of the show, the lights will be switched on and off in this pattern:<br>• The red light repeats the sequence: two minutes off, two minutes on. <br>• The green light repeats the sequence: one minute off, one minute on. <br>• The blue light repeats the sequence: four minutes on, four minutes off.</label><br>
-
-  <h5><b>Question</b></h5>
-      <h5>What will the colour of the stage be in the first 4 minutes of the show?<br> Drag the correct colour onto the block of the minute. </h5>
-      <input type="text" name="q12"> :Please write your answer<br>
-    </div>
-  </div>
-      <hr />
-
-      <div class="questions modal-content">
-  <div class="modal-header"><h3>Pirate Hunters</h3></div>
-  <div class="modal-body">
-    <label for="question13">In the game of Pirate Hunters players take turns moving a Pirate or a Policeman.<br> When it is the police's turn, the player moves a policeman over to a neighbouring circle.<br> The pirate is faster than a policeman, and skips a circle on his turn, moving two circles.<br> A policeman cannot move to a circle that is occupied -- either by his colleague policeman, or the pirate.<br> The game ends when the pirate is forced to move to a circle occupied by one of the policemen.<br>The policeman goes first</label><br>
-
-  <h5><b>Question</b></h5>
-      <h5>If the pirate plays the best way possible and makes no mistakes, how many moves will it take the police to capture him?</h5><br>
-      <input type="radio" name="q13" value="2">The police win in 2 turns <br>
-      <input type="radio" name="q13" value="3">The police win in 3 turns<br>
-      <input type="radio" name="q13" value="5">The police win in 5 turns<br>
-      <input type="radio" name="q13" value="0">The police have no chance of winning
-    </div>
-  </div>
-      <hr />
-
-      <input type="hidden" name="grade" id="grade" value="">
-
-      <input class="btn btn-primary btn-block" type="submit" value="Submit Answers"">
-    </form>
-
+<script>
+window.addEventListener('load', function () {
+	vanillacalendar.init();
+})
+</script>
 
 {% endblock %}
 
