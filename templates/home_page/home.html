@@ -19,14 +19,8 @@
             <li><a href="#">Home</a></li>
             <li><a href="#">About</a></li>
             <li><a href="#">Services</a></li>
-            <li class="dropdown">
-            <a data-toggle="dropdown" class="dropdown-toggle" href="#">Sign Up <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li><a href="studentRegister">Student</a></li>
-              <li><a href="register">Instructor</a></li>
-            </ul>
-          </li>
-          <li><a href="signIn">Sign In</a></li>
+            <li><a data-toggle="modal" data-target="#registerModal">Sign Up</a></li>
+          <li><a data-toggle="modal" data-target="#signInModal">Sign in</a></li>
           </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container -->
@@ -115,8 +109,84 @@
     <div class="footer-bottom">
         <div class="container">
             <p class="pull-left"> Copyright © 2017. All right reserved. </p>
+            <a data-toggle="modal" data-target="#registerModal"><span style="color: red;" class="glyphicon glyphicon-asterisk"></span></a>
         </div>
     </div>
     <!--/.footer-bottom--> 
 </footer>
+
+<div class="modal fade" id="signInModal" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Log In</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+        <div class="col-xs-7">
+          <div class="well">
+      <form id="loginform" class="form-horizontal" role="form" method=POST action="{{ url_for('login') }}">
+        <h5><b>Username</b></h5>
+                    <div style="margin-bottom:25px" class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input id="login-username" type="text" class="form-control" name="email" placeholder="Email or Username" required>
+                    </div>
+
+                    <h5><b>Password</b></h5>
+                    <div style="margin-bottom:25px" class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <input id="login-password" type="password" class="form-control" name="pass" placeholder="Password" required>
+                    </div>
+
+
+                    <button type="submit" class="btn btn-success btn-block">Log In</button>
+                </form>
+                </div> 
+                </div>
+                <div class="col-xs-5">
+                      <p class="lead">Register now</p>
+                      <ul class="list-unstyled" style="line-height: 2">
+                          <li><span style="color: green" class="glyphicon glyphicon-ok"></span> Some text</li>
+                          <li><span style="color: green" class="glyphicon glyphicon-ok"></span> Some text</li>
+                          <li><span style="color: green" class="glyphicon glyphicon-ok"></span> Some text</li>
+                          <li><span style="color: green" class="glyphicon glyphicon-ok"></span> Some text</li>
+                          <li><span style="color: green" class="glyphicon glyphicon-ok"></span> Some text</li>
+                      </ul>
+                      <p><a href="/new-customer/" class="btn btn-info btn-block">Yes please, register now!</a></p>
+                  </div>
+                </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
+  
+  <div class="modal-dialog modal-sm">
+    
+    <div class="modal-content">
+      
+      <div class="modal-header">
+        
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>  
+        <h4 style="text-align: center;" class="modal-title" id="myModalLabel">Who Are You?</h4>
+      
+      </div>
+      
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-xs-6">
+            <button style="background-color: white;" type="button" onclick="window.location.href = '/register'">
+              <span style="font-size: 102px; color: #ff3333" class="glyphicon glyphicon-education"></span><br><h6>I am a teacher</h6></button> 
+          </div>
+          <div class="col-xs-6">
+            <button style="background-color: white;" type="button" onclick="window.location.href = '/studentRegister'">
+              <span style="font-size: 102px; color: #4dff4d;" class="glyphicon glyphicon-user"></span><br><h6>I am a student</h6></button> 
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

@@ -1,0 +1,294 @@
+{% extends "index.html" %}
+{% block body %}
+<link href='https://fonts.googleapis.com/css?family=ABeeZee' rel='stylesheet'>
+
+<style type="text/css">
+	body {
+        font-family: 'ABeeZee';
+		background-color: white;
+		background-image: url("/static/img/homePage4.jpg");
+	}
+
+    label {
+        padding: 0 1em;
+        text-align: center;
+    }
+
+    #asterisk {
+        display: inline;
+        color: red;
+    }
+</style>
+<div id="item"></div>
+
+<div style="background-color: white" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 container-fluid bg-info">
+  <div class="modal-dialog">
+  	<div>
+  		<h1 style="color: black">Bebras</h1>
+  	</div>
+    
+    <div id="results"></div>
+    <form id="quizForm" class="form-horizontal" role="form" method=POST action="{{ url_for('csQuestions') }}">
+    	<div class="questions modal-content">
+    		<div class="modal-header"><h3><b><u>Personal Form</u></b></h3></div>
+    		<div class="modal-body">
+    			<!-- Question 1 -->
+    			<h4><b>Would you/have you considered studying Computer Science in college/university?<div id="asterisk"> *</div></b></h4>
+    			<input class="radio-inline" type="radio" name="q1" value="Yes" id="q1" required>Yes
+    			<input class="radio-inline" type="radio" name="q1" value="No" id="q1">No
+                <input class="radio-inline" type="radio" name="q1" value="Maybe" id="q1">Maybe
+
+    			<hr />
+
+    			<!-- Question 2 -->
+    			<h4><b>What do you think of when you hear Computer Science?<div id="asterisk"> *</div> </b></h4>
+    			<input class="form-control" type="text" name="q2" id="q2" placeholder="Your answer" required>
+
+    			<hr />
+
+    			<!-- Question 3 -->
+    			<h4><b>Is Computer Science interesting to you? <div id="asterisk"> *</div></b></h4>
+    			<input class="radio-inline" type="radio" name="q3" value="Yes" id="q3" required>Yes
+                <input class="radio-inline" type="radio" name="q3" value="No" id="q3">No
+                <input class="radio-inline" type="radio" name="q3" value="Maybe" id="q3">Maybe
+
+                <hr />
+
+    			<!-- Question 4 -->
+    			<h4><b>If yes/no, why?</b></h4>
+    			<input class="form-control" type="text" name="q4" id="q4" placeholder="Your answer">
+
+    			<hr />
+
+    			<!-- Question 5 -->
+    			<h4><b>Is Computer Science challenging?<div id="asterisk"> *</div></b></h4>
+    			<input class="radio-inline" type="radio" name="q5" value="Yes" id="q5" required>Yes
+                <input class="radio-inline" type="radio" name="q5" value="No" id="q5">No
+                <input class="radio-inline" type="radio" name="q5" value="Maybe" id="q5">Maybe
+
+    			<hr />
+
+    			<!-- Question 6 -->
+    			<h4><b>If yes/no, why?</b></h4>
+    			<input class="form-control" type="text" name="q6" id="q6" placeholder="Your answer">
+
+    			<hr />
+
+    			<!-- Question 7 -->
+    			<h4><b>Using the internet is central in Computer Science<div id="asterisk"> *</div></b></h4>
+                <div style="text-align: center;">
+                    Strongly Disagree<label>1<br>
+                        <input type="radio" id="q7" name="q7" value="Strongly Disagree" required>
+                    </label>
+                    <label>2<br>
+                        <input type="radio" id="q7" name="q7" value="Disagree">
+                    </label>
+                    <label>3<br>
+                        <input type="radio" id="q7" name="q7" value="Neutral">
+                    </label>
+                    <label>4<br>
+                        <input type="radio" id="q7" name="q7" value="Agree">
+                    </label>
+                    <label>5<br>
+                        <input type="radio" id="q7" name="q7" value="Strongly agree">
+                    </label>Strongly agree
+                </div>
+    			<hr />
+
+    			<!-- Question 8 -->
+    			<h4><b>Using Word, Excel etc. is central in Computer Science<div id="asterisk"> *</div></b></h4>
+                <div style="text-align: center;">
+                    Strongly Disagree<label>1<br>
+                        <input type="radio" id="q8" name="q8" value="Strongly Disagree" required>
+                    </label>
+                    <label>2<br>
+                        <input type="radio" id="q8" name="q8" value="Disagree">
+                    </label>
+                    <label>3<br>
+                        <input type="radio" id="q8" name="q8" value="Neutral">
+                    </label>
+                    <label>4<br>
+                        <input type="radio" id="q8" name="q8" value="Agree">
+                    </label>
+                    <label>5<br>
+                        <input type="radio" id="q8" name="q8" value="Strongly agree">
+                    </label>Strongly agree
+                </div>
+
+    			<hr />
+
+    			<!-- Question 9 -->
+    			<h4><b>Installing software (eg. Windows, iTunes) is central in Computer Science<div id="asterisk"> *</div></b></h4>
+                <div style="text-align: center;">
+                    Strongly Disagree<label>1<br>
+                        <input type="radio" id="q9" name="q9" value="Strongly Disagree" required>
+                    </label>
+                    <label>2<br>
+                        <input type="radio" id="q9" name="q9" value="Disagree">
+                    </label>
+                    <label>3<br>
+                        <input type="radio" id="q9" name="q9" value="Neutral">
+                    </label>
+                    <label>4<br>
+                        <input type="radio" id="q9" name="q9" value="Agree">
+                    </label>
+                    <label>5<br>
+                        <input type="radio" id="q9" name="q9" value="Strongly agree">
+                    </label>Strongly agree
+                </div>
+
+    			<hr />
+
+    			<!-- Question 10 -->
+    			<h4><b>Programming is central in Computer Science<div id="asterisk"> *</div></b></h4>
+                <div style="text-align: center;">
+                    Strongly Disagree<label>1<br>
+                        <input type="radio" id="q10" name="q10" value="Strongly Disagree" required>
+                    </label>
+                    <label>2<br>
+                        <input type="radio" id="q10" name="q10" value="Disagree">
+                    </label>
+                    <label>3<br>
+                        <input type="radio" id="q10" name="q10" value="Neutral">
+                    </label>
+                    <label>4<br>
+                        <input type="radio" id="q10" name="q10" value="Agree">
+                    </label>
+                    <label>5<br>
+                        <input type="radio" id="q10" name="q10" value="Strongly agree">
+                    </label>Strongly agree
+                </div>
+
+    			<hr />
+
+    			<!-- Question 11 -->
+    			<h4><b>Being able to solve different problems is central in Computer Science<div id="asterisk"> *</div></b></h4>
+                <div style="text-align: center;">
+                    Strongly Disagree<label>1<br>
+                        <input type="radio" id="q11" name="q11" value="Strongly Disagree" required>
+                    </label>
+                    <label>2<br>
+                        <input type="radio" id="q11" name="q11" value="Disagree">
+                    </label>
+                    <label>3<br>
+                        <input type="radio" id="q11" name="q11" value="Neutral">
+                    </label>
+                    <label>4<br>
+                        <input type="radio" id="q11" name="q11" value="Agree">
+                    </label>
+                    <label>5<br>
+                        <input type="radio" id="q11" name="q11" value="Strongly agree">
+                    </label>Strongly agree
+                </div>
+
+    			<hr />
+
+    			<!-- Question 12 -->
+    			<h4><b>Computer Science is an area related to maths<div id="asterisk"> *</div></b></h4>
+                <div style="text-align: center;">
+                    Strongly Disagree<label>1<br>
+                        <input type="radio" id="q12" name="q12" value="Strongly Disagree" required>
+                    </label>
+                    <label>2<br>
+                        <input type="radio" id="q12" name="q12" value="Disagree">
+                    </label>
+                    <label>3<br>
+                        <input type="radio" id="q12" name="q12" value="Neutral">
+                    </label>
+                    <label>4<br>
+                        <input type="radio" id="q12" name="q12" value="Agree">
+                    </label>
+                    <label>5<br>
+                        <input type="radio" id="q12" name="q12" value="Strongly agree">
+                    </label>Strongly agree
+                </div>
+
+    			<hr />
+
+    			<!-- Question 13 -->
+    			<h4><b>A computer scientist should be good at working with others<div id="asterisk"> *</div></b></h4>
+                <div style="text-align: center;">
+                    Strongly Disagree<label>1<br>
+                        <input type="radio" id="q13" name="q13" value="Strongly Disagree" required>
+                    </label>
+                    <label>2<br>
+                        <input type="radio" id="q13" name="q13" value="Disagree">
+                    </label>
+                    <label>3<br>
+                        <input type="radio" id="q13" name="q13" value="Neutral">
+                    </label>
+                    <label>4<br>
+                        <input type="radio" id="q13" name="q13" value="Agree">
+                    </label>
+                    <label>5<br>
+                        <input type="radio" id="q13" name="q13" value="Strongly agree">
+                    </label>Strongly agree
+                </div>
+
+                <hr />
+
+    			<!-- Question 14 -->
+    			<h4><b>Boys/men are more likely to study Computer Science than girls/women<div id="asterisk"> *</div></b></h4>
+                <div style="text-align: center;">
+                    Strongly Disagree<label>1<br>
+                        <input type="radio" id="q14" name="q14" value="Strongly Disagree" required>
+                    </label>
+                    <label>2<br>
+                        <input type="radio" id="q14" name="q14" value="Disagree">
+                    </label>
+                    <label>3<br>
+                        <input type="radio" id="q14" name="q14" value="Neutral">
+                    </label>
+                    <label>4<br>
+                        <input type="radio" id="q14" name="q14" value="Agree">
+                    </label>
+                    <label>5<br>
+                        <input type="radio" id="q14" name="q14" value="Strongly agree">
+                    </label>Strongly agree
+                </div>
+
+    			<hr />
+
+    			<!-- Question 15 -->
+    			<h4><b>Work in Computer Science can be done without a computer<div id="asterisk"> *</div></b></h4>
+                <div style="text-align: center;">
+                    Strongly Disagree<label>1<br>
+                        <input type="radio" id="q15" name="q15" value="Strongly Disagree" required>
+                    </label>
+                    <label>2<br>
+                        <input type="radio" id="q15" name="q15" value="Disagree">
+                    </label>
+                    <label>3<br>
+                        <input type="radio" id="q15" name="q15" value="Neutral">
+                    </label>
+                    <label>4<br>
+                        <input type="radio" id="q15" name="q15" value="Agree">
+                    </label>
+                    <label>5<br>
+                        <input type="radio" id="q15" name="q15" value="Strongly agree">
+                    </label>Strongly agree
+                </div>
+    			
+    			<hr />
+
+    			<!-- Question 16 -->
+    			<h4><b>Have you ever heard the term Computational Thinking?<div id="asterisk"> *</div></b></h4>
+                <input class="radio-inline" type="radio" name="q16" value="Yes" id="q16" required>Yes
+                <input class="radio-inline" type="radio" name="q16" value="No" id="q16">No
+
+                <hr />
+    			
+
+    			<!-- Question 17 -->
+    			<h4><b>If yes, what do you think it is/means?</b></h4>
+                <input class="form-control" type="text" name="q17" id="q17" placeholder="Your answer">
+
+    			<hr />
+
+    			<input class="btn btn-primary btn-block" type="submit" value="Submit Answers">
+    		</div>
+    	</div>
+    </form>
+</div>
+{% endblock %}
+

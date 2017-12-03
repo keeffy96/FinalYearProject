@@ -1,0 +1,336 @@
+{% extends "index.html" %}
+{% block body %}
+<link href='https://fonts.googleapis.com/css?family=ABeeZee' rel='stylesheet'>
+<style type="text/css">
+	body {
+		font-family: 'ABeeZee';
+		background-color: white;
+		background-image: url("/static/img/homePage4.jpg");
+	}
+    label {
+        padding: 0 1em;
+        text-align: center;
+    }
+
+    #asterisk {
+        display: inline;
+        color: red;
+</style>
+<div id="item"></div>
+
+<div style="background-color: white" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 container-fluid bg-info">
+  <div class="modal-dialog">
+  	<div>
+  		<h1 style="color: black">Bebras</h1>
+  	</div>
+    
+    <div id="results"></div>
+    <form id="quizForm" class="form-horizontal" role="form" method=POST action="{{ url_for('personalQuestions') }}">
+    	<div class="questions modal-content">
+    		<div class="modal-header"><h3><b><u>Personal Form</u></b></h3></div>
+    		<div class="modal-body">
+    			<!-- Question 1 -->
+    			<h4><b>Gender<div id="asterisk"> *</div></b></h4>
+    			<input class="radio-inline" type="radio" name="q1" value="Male" id="q1" required>Male
+    			<input class="radio-inline" type="radio" name="q1" value="Female" id="q1">Female
+
+    			<hr />
+
+    			<!-- Question 2 -->
+    			<h4><b>Age<div id="asterisk"> *</div></b></h4>
+    			<select name="q2" class="form-control" required>
+    				<option value="" disabled selected>Select your age</option>
+    				<option value="12">12</option>
+    				<option value="13">13</option>
+    				<option value="14">14</option>
+    				<option value="15">15</option>
+    				<option value="16">16</option>
+    				<option value="17">17</option>
+    				<option value="18+">18+</option>
+    			</select>
+
+    			<hr />
+
+    			<!-- Question 3 -->
+    			<h4><b>What year of school are you currently in?<div id="asterisk"> *</div></b></h4>
+    			<select name="q3" class="form-control" required>
+    				<option value="" disabled selected>Select your year</option>
+    				<option value="1st Year">1st Year</option>
+    				<option value="2nd Year">2nd Year</option>
+    				<option value="3rd Year">3rd Year</option>
+    				<option value="4th Year">4th Year</option>
+    				<option value="5th Year">5th Year</option>
+    				<option value="6th Year">6th Year</option>
+    			</select>
+
+    			<hr />
+
+    			<!-- Question 4 -->
+    			<h4><b>Are you a native English speaker?<div id="asterisk"> *</div></b></h4>
+    			<input class="radio-inline" type="radio" name="q4" value="Yes" id="q4" required>Yes
+    			<input class="radio-inline" type="radio" name="q4" value="No" id="q4">No
+
+    			<hr />
+
+    			<!-- Question 5 -->
+    			<h4><b>Would you say you are a morning or night person?<div id="asterisk"> *</div></b></h4>
+    			<input class="radio-inline" type="radio" name="q5" value="Morning" id="q5" required>Morning
+    			<input class="radio-inline" type="radio" name="q5" value="Night" id="q5">Night
+    			<input class="radio-inline" type="radio" name="q5" value="No preference" id="q5">No preference
+
+    			<hr />
+
+    			<!-- Question 6 -->
+    			<h4><b>Do you own a personal smartphone?<div id="asterisk"> *</div></b></h4>
+    			<input class="radio-inline" type="radio" name="q6" value="Yes" id="q6" required>Yes
+    			<input class="radio-inline" type="radio" name="q6" value="No" id="q6">No
+
+    			<hr />
+
+    			<!-- Question 7 -->
+    			<h4><b>If no, do you have access to one at home</b></h4>
+    			<input class="radio-inline" type="radio" name="q7" value="Yes" id="q7">Yes
+    			<input class="radio-inline" type="radio" name="q7" value="No" id="q7">No
+
+    			<hr />
+
+    			<!-- Question 8 -->
+    			<h4><b>How many hours per day do you spend on a smartphone?<div id="asterisk"> *</div></b></h4>
+    			<select name="q8" class="form-control" required>
+    				<option value="" disabled selected>Select how many hours</option>
+    				<option value="Less than one hour">Less than one hour</option>
+    				<option value="1-3 hours">1-3 hours</option>
+    				<option value="More than 3 hours">More than 3 hours</option>
+    				<option value="N/A">N/A</option>
+    			</select>
+
+    			<hr />
+
+    			<!-- Question 9 -->
+    			<h4><b>What do you spend most of your time doing on a smartphone?</b></h4>
+    			<input type="checkbox" name="q9" value="Texting (SMS)" id="q9">Texting (SMS)<br>
+    			<input type="checkbox" name="q9" value="Calling (using the phones network)" id="q9">Calling (using the phones network)<br>
+    			<input type="checkbox" name="q9" value="Other forms of messaging (Facebook Messenger, Whatsapp, Viber etc.)" id="q9">Other forms of messaging (Facebook Messenger, Whatsapp, Viber etc.)<br>
+    			<input type="checkbox" name="q9" value="Facebook" id="q9">Facebook<br>
+    			<input type="checkbox" name="q9" value="Snapchat" id="q9">Snapchat<br>
+    			<input type="checkbox" name="q9" value="Instagram" id="q9">Instagram<br>
+    			<input type="checkbox" name="q9" value="Browsing the web (using Safari/Chrome etc.)" id="q9">Browsing the web (using Safari/Chrome etc.)<br>
+    			<input type="checkbox" name="q9" value="Playing games" id="q9">Playing games<br>
+    			<input type="checkbox" name="q9" value="Looking up news/information (BBC, RTE, Wikipedia etc.)" id="q9">Looking up news/information (BBC, RTE, Wikipedia etc.)<br>
+    			<input type="checkbox" name="q9" value="Taking photos" id="q9">Taking photos<br>
+    			<input type="checkbox" name="q9" value="Sending/reading emails" id="q9">Sending/reading emails<br>
+    			<input type="checkbox" name="q9" value="Reading books/newspapers etc." id="q9">Reading books/newspapers etc.<br>
+    			<input type="checkbox" name="q9" value="Listen to music (ITunes, Spotify)" id="q9">Listen to music (ITunes, Spotify)<br>
+    			<input type="checkbox" name="q9" value="Watch videos (using Netflix, YouTube etc.)" id="q9">Watch videos (using Netflix, YouTube etc.)<br>
+    			<input type="checkbox" name="q9" value="Other" id="q9h">Other
+
+    			<hr />
+
+    			<!-- Question 10 -->
+    			<h4><b>Do you own a personal laptop/desktop PC?</b></h4>
+    			<input class="radio-inline" type="radio" name="q10" value="Yes" id="q10" required>Yes
+    			<input class="radio-inline" type="radio" name="q10" value="No" id="q10">No
+
+    			<hr />
+
+    			<!-- Question 11 -->
+    			<h4><b>If no, do you have access to one at home?</b></h4>
+    			<input class="radio-inline" type="radio" name="q11" value="Yes" id="q11">Yes
+    			<input class="radio-inline" type="radio" name="q11" value="No" id="q11">No
+
+    			<hr />
+
+    			<!-- Question 12 -->
+    			<h4><b>How many hours per day do you spend on a laptop/PC?</b></h4>
+    			<select name="q12" class="form-control">
+    				<option value="" disabled selected>Select how many hours</option>
+    				<option value="Less than one hour">Less than one hour</option>
+    				<option value="1-3 hours">1-3 hours</option>
+    				<option value="More than 3 hours">More than 3 hours</option>
+    				<option value="N/A">N/A</option>
+    			</select>
+
+    			<hr />
+
+    			<!-- Question 13 -->
+    			<h4><b>What do you spend most of your time doing on a laptop/computer?</b></h4>
+    			<input type="checkbox" name="q13" value="Instagram" id="q13" required>Instagram<br>
+    			<input type="checkbox" name="q13" value="Browsing the web (using Safari/Chrome etc.)" id="q13">Browsing the web (using Safari/Chrome etc.)<br>
+    			<input type="checkbox" name="q13" value="Facebook & other social media" id="q13">Facebook &amp; other social media<br>
+    			<input type="checkbox" name="q13" value="Playing games" id="q13">Playing games<br>
+    			<input type="checkbox" name="q13" value="Looking up news/information (BBC, RTE, Wikipedia etc.)" id="q13">Looking up news/information (BBC, RTE, Wikipedia etc.)<br>
+    			<input type="checkbox" name="q13" value="Sending/reading emails" id="q13">Sending/reading emails<br>
+    			<input type="checkbox" name="q13" value="School work or similar (using Word, Powerpoint etc.)" id="q13">School work or similar (using Word, Powerpoint etc.)<br>
+    			<input type="checkbox" name="q13" value="Listen to music (ITunes, Spotify)" id="q13">Listening to music<br>
+    			<input type="checkbox" name="q13" value="Watch videos (using Netflix, YouTube etc.)" id="q13">Watch videos (using Netflix, YouTube etc.)<br>
+    			<input type="checkbox" name="q13" value="Other" id="q13h">Other   
+
+    			<hr />
+
+    			<!-- Question 14 -->
+    			<h4><b>Do you own a personal tablet?</b></h4>
+    			<input class="radio-inline" type="radio" name="q14" value="Yes" id="q14">Yes
+    			<input class="radio-inline" type="radio" name="q14" value="No" id="q14">No
+
+    			<hr />
+
+    			<!-- Question 15 -->
+    			<h4><b>How many hours per day do you spend on a tablet?</b></h4>
+    			<select name="q15" class="form-control">
+    				<option value="" disabled selected>Select how many hours</option>
+    				<option value="Less than one hour">Less than one hour</option>
+    				<option value="1-3 hours">1-3 hours</option>
+    				<option value="More than 3 hours">More than 3 hours</option>
+    				<option value="N/A">N/A</option>
+    			</select>
+
+    			<hr />
+
+    			<!-- Question 16 -->
+    			<h4><b>What do you spend most of your time doing on a tablet?</b></h4>
+    			<input type="checkbox" name="q16" value="Instagram" id="q16">Instagram<br>
+    			<input type="checkbox" name="q16" value="Browsing the web (using Safari/Chrome etc.)" id="q16">Browsing the web (using Safari/Chrome etc.)<br>
+    			<input type="checkbox" name="q16" value="Facebook" id="q16">Facebook<br>
+    			<input type="checkbox" name="q16" value="Playing games" id="q16">Playing games<br>
+    			<input type="checkbox" name="q16" value="Looking up news/information (BBC, RTE, Wikipedia etc.)" id="q16">Looking up news/information (BBC, RTE, Wikipedia etc.)<br>
+    			<input type="checkbox" name="q16" value="Sending/reading emails" id="q16">Sending/reading emails<br>
+    			<input type="checkbox" name="q16" value="Snapchat" id="q16">Snapchat<br>
+    			<input type="checkbox" name="q16" value="Reading books/newspapers etc." id="q16">Reading books/newspapers etc.<br>
+    			<input type="checkbox" name="q16" value="Some form of texting/messaging (Facebook Messenger, Whatsapp, Viber etc.)" id="q16">Some form of texting/messaging (Facebook Messenger, Whatsapp, Viber etc.)<br>
+    			<input type="checkbox" name="q16" value="Listen to music (ITunes, Spotify)" id="q16">Listening to music<br>
+    			<input type="checkbox" name="q16" value="Watch videos (using Netflix, YouTube etc.)" id="q16">Watch videos (using Netflix, YouTube etc.)<br>
+    			<input type="checkbox" name="q16" value="Other" id="q16h">Other  
+
+    			<!-- Question 17 -->
+    			<h4><b>Have you had previous programming experience?</b></h4>
+    			<input class="radio-inline" type="radio" name="q17" value="Yes" id="q17">Yes
+    			<input class="radio-inline" type="radio" name="q17" value="No" id="q17">No
+
+    			<hr />
+
+    			<!-- Question 18 -->
+    			<h4><b>How much programming experience do you have?</b></h4>
+    			<select name="q18" class="form-control">
+    				<option value="" disabled selected>Select how many hours</option>
+    				<option value="Never programmed before">Never programmed before</option>
+    				<option value="I have done programming once or twice.">I have done programming once or twice.</option>
+    				<option value="I have done programming a number of times">I have done programming a number of times</option>
+    				<option value="I have been programming for over a year">I have been programming for over a year</option>
+    			</select>
+
+    			<hr />
+
+    			<!-- Question 19 -->
+    			<h4><b>Which programming language/s have you used before?</b></h4>
+    			<input type="checkbox" name="q19" value="Java" id="q19">Java<br>
+    			<input type="checkbox" name="q19" value="Python" id="q19">Python<br>
+    			<input type="checkbox" name="q19" value="Scratch" id="q19">Scratch<br>
+    			<input type="checkbox" name="q19" value="C/C++" id="q19">C/C++<br>
+    			<input type="checkbox" name="q19" value="Javascript" id="q19">Javascript<br>
+    			<input type="checkbox" name="q19" value="Other" id="q19">Other<br>
+
+    			<hr />
+
+    			<!-- Question 20 -->
+    			<h4><b>How often do you program?</b></h4>
+                <div style="text-align: center;">
+                    Not at all<label>1<br>
+                        <input type="radio" id="q20" name="q20" value="Never" required>
+                    </label>
+                    <label>2<br>
+                        <input type="radio" id="q20" name="q20" value="Rarely">
+                    </label>
+                    <label>3<br>
+                        <input type="radio" id="q20" name="q20" value="Neutral">
+                    </label>
+                    <label>4<br>
+                        <input type="radio" id="q20" name="q20" value="Once in a while">
+                    </label>
+                    <label>5<br>
+                        <input type="radio" id="q20" name="q20" value="Daily">
+                    </label>Daily
+                </div>
+    			
+    			<hr />
+
+    			<!-- Question 21 -->
+    			<h4><b>If you have programmed before, how would you rate your programming level?</b></h4>
+                <div style="text-align: center;">
+                    Strongly Disagree<label>1<br>
+                        <input type="radio" id="q21" name="q21" value="Strongly Disagree" required>
+                    </label>
+                    <label>2<br>
+                        <input type="radio" id="q21" name="q21" value="Disagree">
+                    </label>
+                    <label>3<br>
+                        <input type="radio" id="q21" name="q21" value="Neutral">
+                    </label>
+                    <label>4<br>
+                        <input type="radio" id="q21" name="q21" value="Agree">
+                    </label>
+                    <label>5<br>
+                        <input type="radio" id="q21" name="q21" value="Strongly agree">
+                    </label>Strongly agree
+                </div>
+    			
+    			<hr />
+
+    			<!-- Question 22 -->
+    			<h4><b>Have you ever done any website/app development?</b></h4>
+    			<input class="radio-inline" type="radio" name="q22" value="Yes" id="q22">Yes
+    			<input class="radio-inline" type="radio" name="q22" value="No" id="q22">No
+
+    			<hr />
+
+    			<!-- Question 23 -->
+    			<h4><b>If yes, which of the following tools/technologies have you used?</b></h4>
+    			<input type="checkbox" name="q23" value="HTML" id="q23">HTML<br>
+    			<input type="checkbox" name="q23" value="CSS" id="q23">CSS<br>
+    			<input type="checkbox" name="q23" value="JavaScript" id="q23">JavaScript<br>
+    			<input type="checkbox" name="q23" value=">PHP or other server-side langauge" id="q23">PHP or other server-side langauge<br>
+    			<input type="checkbox" name="q23" value="App Inventor" id="q23">App Inventor<br>
+    			<input type="checkbox" name="q23" value="Android Studio" id="q23">Android Studio<br>
+    			<input type="checkbox" name="q23" value="XCode (Apple App Development tool)" id="q23">XCode (Apple App Development tool)<br>
+
+    			<hr />
+
+    			<!-- Question 24 -->
+    			<h4><b>Have you ever heard of any of the following?</b></h4>
+    			<input type="checkbox" name="q24" value="Bebras challenge" id="q24">Bebras challenge<br>
+    			<input type="checkbox" name="q24" value="Codecademy" id="q24">Codecademy<br>
+    			<input type="checkbox" name="q24" value="Khan Academy" id="q24">Khan Academy<br>
+    			<input type="checkbox" name="q24" value=">Udacity" id="q24">Udacity<br>
+    			<input type="checkbox" name="q24" value="Kangaroo Maths" id="q24">Kangaroo Maths<br>
+    			<input type="checkbox" name="q24" value="Call to Code" id="q24">Call to Code<br>
+    			<input type="checkbox" name="q24" value="XHour of Code (code.org)" id="q24">Hour of Code (code.org)<br>
+    			<input type="checkbox" name="q24" value="AILO (All Ireland Linguistics Olympiad)" id="q24">AILO (All Ireland Linguistics Olympiad)<br>
+    			<input type="checkbox" name="q24" value="XHour of Code (code.org)" id="q24">Hour of Code (code.org)<br>
+    			<input type="checkbox" name="q24" value="None of the above" id="q24">None of the above<br>
+    			<input type="checkbox" name="q24" value="Other" id="q24">Other<br>
+
+    			<hr />
+
+    			<!-- Question 25 -->
+    			<h4><b>What level of maths did you take/are you taking for Junior Cert?</b></h4>
+    			<input class="radio-inline" type="radio" name="q25" value="Foundation" id="q25">Foundation
+    			<input class="radio-inline" type="radio" name="q25" value="Ordinary" id="q25">Ordinary
+    			<input class="radio-inline" type="radio" name="q25" value="Higher" id="q25">Higher
+
+    			<hr />
+
+    			<!-- Question 26 -->
+    			<h4><b>Do either of your parents work in an IT related job?</b></h4>
+    			<h6>Examples include Software Developer, Systems administrator etc.</h6>
+    			<input class="radio-inline" type="radio" name="q26" value="Yes" id="q26">Yes
+    			<input class="radio-inline" type="radio" name="q26" value="No" id="q26">No
+    			<input class="radio-inline" type="radio" name="q26" value="Not sure" id="q26">Not sure
+
+    			<hr />
+
+    			<input class="btn btn-primary btn-block" type="submit" value="Submit Answers">
+    		</div>
+    	</div>
+    </form>
+</div>
+{% endblock %}
+

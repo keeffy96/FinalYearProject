@@ -46,6 +46,7 @@ def login():
     users = mongo.db.users
     login = users.find_one({'email' : request.form['email']})
     login1 = users.find_one({'user_id' : request.form['email']})
+    incorrectDetails = "Invalid login, please try again"
 
     if login:
         if bcrypt.hashpw(request.form['pass'].encode('utf-8'), login['password']) == login['password'] :
@@ -58,7 +59,7 @@ def login():
             return redirect(url_for('signIn'))
 
     #Render template to be changed, just testing login1 attribute
-    return render_template('testTest.html', login1=login1)
+    return render_template('user_authentication/signIn.html', incorrectDetails=incorrectDetails)
 
 @app.route('/logout')
 def logout():
@@ -359,6 +360,36 @@ def bebras2():
         bebras2.update_one({'user_id':session['user_id']}, {'$set': {'answer1': q1, 'answer2': q2, 'answer3': q3, 'answer4': q4, 'answer5': q5, 'answer6': q6, 'answer7': q7, 'answer8': q8, 'answer9': q9, 'answer10': q10, 'answer11': q11, 'answer12': q12, 'answer13': q13, 'finalResult' : grade}})
         return redirect(url_for('bebras2Result'))
     return render_template('bebras_test/bebras2.html')
+
+@app.route('/personalQuestions', methods=['POST','GET'])
+def personalQuestions():
+    return render_template('personalQuestions.html')
+
+@app.route('/csQuestions', methods=['POST','GET'])
+def csQuestions():
+    if request.method == 'POST':
+        csQuestions = mongo.db.csQuestions
+        q1 = request.form['q1']
+        q2 = request.form['q2']
+        q3 = request.form['q3']
+        q4 = request.form['q4']
+        q5 = request.form['q5']
+        q6 = request.form['q6']
+        q7 = request.form['q7']
+        q8 = request.form['q8']
+        q9 = request.form['q9']
+        q10 = request.form['q10']
+        q11 = request.form['q11']
+        q12 = request.form['q12']
+        q13 = request.form['q13']
+        q14 = request.form['q14']
+        q15 = request.form['q15']
+        q16 = request.form['q16']
+        q17 = request.form['q17']
+        csQuestions.insert({'q1':q1, 'q2':q2, 'q3':q3, 'q4':q4, 'q5':q5, 'q6':q6, 'q7':q7, 'q8':q8, 'q9':q9, 'q10':q10, 'q11':q11, 'q12':q12, 'q13':q13, 'q14':q14, 'q15':q15, 'q16':q16, 'q17':q17})
+        return redirect(url_for('profile'))
+    return render_template('csQuestions.html')
+
 
 def allowed_file(filename):
     return '.' in filename and \
