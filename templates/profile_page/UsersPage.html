@@ -109,7 +109,7 @@
 		</tr>
 
 	{% for user in userTable %}
-	<tr onclick="document.location = '/studentProgress?_id={{user['_id']}}';">
+	<tr style="cursor: pointer;" onclick="document.location = '/studentProgress?_id={{user['_id']}}';">
 		<td>{{ user["school"] }}</td>
 		<td>{{ user["name"] }}</td>
 		<td>{{ user["surname"] }}</td>
