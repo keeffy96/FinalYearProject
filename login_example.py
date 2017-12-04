@@ -126,8 +126,8 @@ def studentRegister():
 
     return render_template('user_authentication/studentRegister.html')
 
-@app.route('/profile')
-def profile():
+@app.route('/testProfile')
+def testProfile():
     users = mongo.db.users
     babras1 = mongo.db.babras1
     if 'email' in session:
@@ -290,6 +290,34 @@ def test():
         return redirect(url_for('signIn'))
          
     return render_template('testomg.html')
+
+@app.route('/profile')
+def profile():
+    users = mongo.db.users
+    babras1 = mongo.db.babras1
+    if 'email' in session:
+        name = users.find_one({'email':session['email']})['name']
+        surname = users.find_one({'email':session['email']})['surname']
+        userid = users.find_one({'email':session['email']})['email']
+        school = users.find_one({'email':session['email']})['school']
+        return render_template('profile_page/homePage.html', name=name, surname=surname, userid=userid, school=school)
+    
+    elif 'user_id' in session:
+        name = users.find_one({'user_id':session['user_id']})['name']
+        surname = users.find_one({'user_id':session['user_id']})['surname']
+        userid = users.find_one({'user_id':session['user_id']})['user_id']
+        school = users.find_one({'user_id':session['user_id']})['school']
+        bebrasCompleted = users.find_one({'user_id':session['user_id']})['bebras1']
+        userApproved = users.find_one({'user_id':session['user_id']})['approved']
+        b1_todo = 1
+        approved = 1
+        if userApproved is 0:
+            approved = 0
+        if bebrasCompleted is 0:
+            b1_todo = 0
+        return render_template('profile_page/homePage.html', name=name, surname=surname, userid=userid, school=school, b1_todo=b1_todo, approved=approved)
+
+    return render_template('profile_page/homePage.html')
 
 @app.route('/calender')
 def calender():
