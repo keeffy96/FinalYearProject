@@ -83,12 +83,12 @@
       </div>
       <div class="well" style="padding: 0px;">
       	<div style="padding-top: 8px">
-      		<h5><b>Calender</b></h5>
+      		<h5><span class="glyphicon glyphicon-calendar"></span><b> Calender</b></h5>
       	</div>
       	<hr />
         
         <div style="width: 250px; margin: 1.6rem auto; max-width: 76rem; text-align: center;" class="container">
-		<div class="cal" style="border: 1px solid black;">
+		<div class="cal" style="border: 1px solid #f5f5f0;">
 			<div class="cal__header">
 				<button class="btn btn-action btn-link btn-lg" data-calendar-toggle="previous"><svg height="24" version="1.1" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
 				<path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"></path></svg></button>
@@ -123,32 +123,27 @@
       
       <div class="row">
         <div class="col-sm-12">
-          <div class="well">
-            <p>Just Forgot that I had to mention something about someone to someone about how I forgot something, but now I forgot it. Ahh, forget it! Or wait. I remember.... no I don't.</p>
+          <div style="text-align: left;" class="well">
+            <h4>Computer Science Course: Material</h4>
+            <hr />
+            <h5><a href="#"><span style="color: red;" class="glyphicon glyphicon-folder-open"></span>&nbsp; Concepts and Introduction</a></h5>
+            <p>Coming soon</p>
+            <hr />
+            <h5><a href="#"><span style="color: green;" class="glyphicon glyphicon-folder-open"></span>&nbsp; Scratch</a></h5>
+            <p>Coming soon</p>
+            <hr />
+            <h5><a href="#"><span style="color: blue;" class="glyphicon glyphicon-folder-open"></span>&nbsp; Python</a></h5>
+            <p>Coming soon</p>
+            <hr />
+            <h5><a href="#"><span style="color: purple;" class="glyphicon glyphicon-folder-open"></span>&nbsp; Web Development &amp; The Internt</a></h5>
+            <p>Coming soon</p>
+            <hr />
+            <h5><a href="#"><span style="color: yellow;" class="glyphicon glyphicon-folder-open"></span>&nbsp; App Development</a></h5>
+            <p>Coming soon</p>
+            <hr />
           </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="well">
-            <p>Just Forgot that I had to mention something about someone to someone about how I forgot something, but now I forgot it. Ahh, forget it! Or wait. I remember.... no I don't.</p>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="well">
-            <p>Just Forgot that I had to mention something about someone to someone about how I forgot something, but now I forgot it. Ahh, forget it! Or wait. I remember.... no I don't.</p>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="well">
-            <p>Just Forgot that I had to mention something about someone to someone about how I forgot something, but now I forgot it. Ahh, forget it! Or wait. I remember.... no I don't.</p>
-          </div>
-        </div>
-      </div>     
+      </div>    
     </div>
     <div class="col-sm-3">
       <div class="thumbnail well">
@@ -169,5 +164,22 @@ window.addEventListener('load', function () {
 	vanillacalendar.init();
 })
 </script>
+
+<style type="text/css">
+  .well {
+    background: white;
+}
+
+ hr {
+  border-color: #c2c2a3;
+ }
+
+ body {
+  background-color: #f5f5f0;
+ }
+ p {
+  font-size: 10px;
+ }
+</style>
 
 {% endblock %}
