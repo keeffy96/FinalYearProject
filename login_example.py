@@ -11,18 +11,13 @@ import random
 app = Flask(__name__)
 app.secret_key = 'mysecret'
 
-#MongoClient.connect('mongodb://keeffy96:password@ds115625.mlab.com:15625')
-#db = client.mongologinexample
-conn = MongoClient(host='mongodb://keeffy96:password@ds115625.mlab.com:15625/mongologinexample')
-db = conn['mongologinexample']
-
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'pptx'])
-#db = MongoClient().connect_to_mongo
-fs = gridfs.GridFS(db)
 app.config['MONGO_URI'] = 'mongodb://keeffy96:password@ds115625.mlab.com:15625/mongologinexample'
-
-
 mongo = PyMongo(app)
+
+def dbSetup():
+    db = mongo.db
+    fs = gridfs.GridFS(mongo.db)
 
 @app.route('/')
 def home():
@@ -258,39 +253,6 @@ def toBeApproved():
 def page_not_found(e):
     return render_template('error_pages/404.html'), 404
 
-@app.route('/test')
-def test():
-    users = mongo.db.users
-    babras1 = mongo.db.babras1
-    if 'email' in session:
-        name = users.find_one({'email':session['email']})['name']
-        surname = users.find_one({'email':session['email']})['surname']
-        instructorSchool = users.find_one({'email':session['email']})['school']
-        userType = users.find_one({'email':session['email']})['user_type']
-        uType = "instructor"
-        if userType == "admin":
-            uType = "admin"
-        return render_template('testomg.html', name=name, surname=surname, instructorSchool=instructorSchool, userType=userType, uType=uType)
-
-    elif 'user_id' in session:
-        name = users.find_one({'user_id':session['user_id']})['name']
-        surname = users.find_one({'user_id':session['user_id']})['surname']
-        userid = users.find_one({'user_id':session['user_id']})['user_id']
-        bebrasCompleted = users.find_one({'user_id':session['user_id']})['bebras1']
-        userApproved = users.find_one({'user_id':session['user_id']})['approved']
-        b1_todo = 1
-        approved = 1
-        if userApproved is 0:
-            approved = 0
-        if bebrasCompleted is 0:
-            b1_todo = 0
-        return render_template('testomg.html', name=name, surname=surname, userid=userid, b1_todo=b1_todo, approved=approved)
-
-    else:
-        return redirect(url_for('signIn'))
-         
-    return render_template('testomg.html')
-
 @app.route('/profile')
 def profile():
     users = mongo.db.users
@@ -300,7 +262,11 @@ def profile():
         surname = users.find_one({'email':session['email']})['surname']
         userid = users.find_one({'email':session['email']})['email']
         school = users.find_one({'email':session['email']})['school']
-        return render_template('profile_page/homePage.html', name=name, surname=surname, userid=userid, school=school)
+        userType = users.find_one({'email':session['email']})['user_type']
+        uType = "instructor"
+        if userType == "admin":
+            uType = "admin"
+        return render_template('profile_page/homePage.html', name=name, surname=surname, userid=userid, school=school, userType=userType, uType=uType)
     
     elif 'user_id' in session:
         name = users.find_one({'user_id':session['user_id']})['name']
@@ -318,10 +284,6 @@ def profile():
         return render_template('profile_page/homePage.html', name=name, surname=surname, userid=userid, school=school, b1_todo=b1_todo, approved=approved)
 
     return render_template('profile_page/homePage.html')
-
-@app.route('/calender')
-def calender():
-    return render_template('calenderTest.html')
 
 @app.route('/result')
 def result():
@@ -425,6 +387,7 @@ def allowed_file(filename):
 
 @app.route('/uploadFiles', methods=['GET', 'POST'])
 def upload_file():
+    fs = gridfs.GridFS(mongo.db)
     if request.method == 'POST':
         file = request.files['file']
         if file and allowed_file(file.filename):
@@ -435,6 +398,7 @@ def upload_file():
 
 @app.route('/files')
 def list_gridfs_files():
+    fs = gridfs.GridFS(mongo.db)
     files = [fs.get_last_version(file) for file in fs.list()]
     userTable = fs.list()
     file_list = "\n".join(['<li><a href="%s">%s</a></li>' % (url_for('serve_gridfs_file', oid=str(file._id)), file.name) for file in files])
@@ -443,6 +407,7 @@ def list_gridfs_files():
 
 @app.route('/files/<oid>')
 def serve_gridfs_file(oid):
+    fs = gridfs.GridFS(mongo.db)
     try:
         file = fs.get(ObjectId(oid))
         response = make_response(file.read())
