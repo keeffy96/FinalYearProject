@@ -1,0 +1,45 @@
+{% extends "index.html" %}
+{% block body %}
+<nav class="navbar navbar-inverse">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-2">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          
+          <a class="navbar-brand" href="profile">CTC Engine</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-collapse-2">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="test"><i>Material</i></a></li>
+            <li><a href="UsersPage"><span class="glyphicon glyphicon-list" data-toggle="tooltip" data-original-title="Users"></span></a></li>
+          <li><a href="logout"><i class="glyphicon glyphicon-log-out"></i></a></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container -->
+    </nav><!-- /.navbar -->
+
+{% for user in files %}
+<li>
+	<a href="files/{{ user['_id'] }}" download>Download - {{user['filename']}}</a>
+</li>
+  {% endfor %}
+
+<br>
+{% for user in files %}
+<li>
+	<a target="_blank" href="files/{{ user['_id'] }}">Open - {{user['filename']}}</a>
+</li>
+  {% endfor %}
+<br>
+<br>
+<br>
+  <a style="border: 5px solid red;" href="uploadFiles">Back to upload Files</a>
+
+{% endblock %}
+
+target="_blank"

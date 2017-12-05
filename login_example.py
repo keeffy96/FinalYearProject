@@ -439,5 +439,13 @@ def serve_gridfs_file(oid):
     except NoFile:
         abort(404)
 
+
+@app.route('/test')
+def test():
+    fs = gridfs.GridFS(mongo.db)
+    files = [fs.get_last_version(file) for file in fs.list()]
+    file = fs.get(ObjectId("5a26e63dfb489f258ca94d6b"))
+    return render_template('test.html', file=file, files=files)
+
 if __name__ == '__main__':
     app.run(debug=True)
