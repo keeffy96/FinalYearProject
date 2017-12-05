@@ -396,14 +396,37 @@ def upload_file():
             return render_template('files/uploadFile.html')            
     return render_template('files/uploadFile.html')
 
+# @app.route('/files')
+# def list_gridfs_files():
+#     fs = gridfs.GridFS(mongo.db)
+#     files = [fs.get_last_version(file) for file in fs.list()]
+#     userTable = fs.list()
+#     file_list = "\n".join(['<li><a href="%s">%s</a></li>' % (url_for('serve_gridfs_file', oid=str(file._id)), file.name) for file in files])
+
+#     return (file_list, render_template('files/uploadedFiles.html', files=files, file_list=file_list))
+
 @app.route('/files')
 def list_gridfs_files():
     fs = gridfs.GridFS(mongo.db)
     files = [fs.get_last_version(file) for file in fs.list()]
-    userTable = fs.list()
-    file_list = "\n".join(['<li><a href="%s">%s</a></li>' % (url_for('serve_gridfs_file', oid=str(file._id)), file.name) for file in files])
-
-    return (file_list, render_template('files/uploadedFiles.html', files=files, file_list=file_list))
+    file_list = "\n".join(['<li><a href="%s">%s</a></li>' % \
+        (url_for('serve_gridfs_file', oid=str(file._id)), file.name) \
+        for file in files])
+    return '''
+    <!DOCTYPE html>
+    <html>
+    <head>
+    <title>Files</title>
+    </head>
+    <body>
+    <h1>Files</h1>
+    <ul>
+    %s
+    </ul>
+    <a href="%s">Upload new file</a>
+    </body>
+    </html>
+    ''' % (file_list, url_for('upload_file'))
 
 @app.route('/files/<oid>')
 def serve_gridfs_file(oid):
