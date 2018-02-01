@@ -167,9 +167,13 @@ def editProfile():
 def profilePage():
     babras1 = mongo.db.babras1
     users = mongo.db.users
-    user_id = users.find_one({'user_id':session['user_id']})['user_id']    
-    result = babras1.find_one({'user_id': user_id})['finalResult']
-    return render_template('profile_page/profilePage.html', result=result)
+    if 'email' in session:
+        return render_template('profile_page/profilePage.html')
+
+    elif 'user_id' in session:
+        user_id = users.find_one({'user_id':session['user_id']})['user_id']
+        result = babras1.find_one({'user_id': user_id})['finalResult']
+        return render_template('profile_page/profilePage.html', result=result)
 
 @app.route('/studentProgress')
 def studentProgress():
@@ -283,7 +287,8 @@ def profile():
             b1_todo = 0
         return render_template('profile_page/homePage.html', name=name, surname=surname, userid=userid, school=school, b1_todo=b1_todo, approved=approved)
 
-    return render_template('profile_page/homePage.html')
+    else:
+        return redirect(url_for('signIn')) 
 
 @app.route('/result')
 def result():

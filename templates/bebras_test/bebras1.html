@@ -1,21 +1,86 @@
 {% extends "index.html" %}
 {% block body %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
+
+<script type="text/javascript">
+  function demoFromHTML() {
+    var pdf = new jsPDF('p', 'pt', 'a4');
+    source = $('#testHtml')[0];
+    specialElementHandlers = {
+        '#bypassme': function (element, renderer) {
+            return true
+        }
+    };
+    margins = {
+        top: 80,
+        bottom: 60,
+        left: 40,
+        width: 522
+    };
+    pdf.fromHTML(
+    source, 
+    margins.left, 
+    margins.top, { 
+        'width': margins.width, 
+        'elementHandlers': specialElementHandlers
+    },
+
+    function (dispose) {
+        pdf.save('Bebras_Test_1.pdf');
+    }, margins);
+}
+</script>
+
 <script type="text/javascript">
   function showDiv() {
    document.getElementById('acceptedQuiz').style.display = "block";
    document.getElementById('hideDiv').style.display = "none";
 }
 </script>
+
+<style type="text/css">
+  label > input{ /* HIDE RADIO */
+  visibility: hidden; /* Makes input not-clickable */
+  position: absolute; /* Remove input from document flow */
+}
+label > input + img{ /* IMAGE STYLES */
+  cursor:pointer;
+  border:2px solid transparent;
+}
+label > input:checked + img{ /* (RADIO CHECKED) IMAGE STYLES */
+  border:2px solid #f00;
+}
+</style>
+
 <div id="acceptedQuiz"  style="display:none;">
 
-<div style="background-color: black" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 container-fluid bg-info">
-  <div class="modal-dialog">
-<div>
-    <h1 style="color: white">Bebras</h1>
-</div>
-    <div id="results"></div>
+<nav class="navbar navbar-inverse">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-2">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+      <a class="navbar-brand" href="profile">CTC Engine</a>
+    </div>
+  </div>
+</nav>
+
+<div id="testHtml" style="width: 100%; margin-top: -30px; background-color: #c1d7d7;">
+  <div style="width: 700px;" class="modal-dialog">
+    <div class="container" style="width: 700px;">
+      <h2 style="color: black; float: left;">Bebras Test No.1</h2>
+
+      <button style="float: right; margin-top: 22px;" class="btn btn-success" onclick="javascript:demoFromHTML();">Download as PDF</button>
+
+      <a style="float: right; margin-top: 22px;" class="btn btn-primary" href="profile">Skip</a>
+    </div>
+
     <form id="quizForm" class="form-horizontal" role="form" method=POST action="{{ url_for('bebras1') }}">
-      <hr />
       <div class="questions modal-content">
       <div class="modal-header"><h3>Braclet</h3></div>
       <div class="modal-body">
@@ -23,10 +88,21 @@
       <img src="/static/img/BracletQuestion.jpg">
       <h5><b>Question</b></h5>
       <h5>Which of the following four bracelets shows what the bracelet looked like when it was whole?</h5>
-      <input type="radio" name="q1" value="a" id="q1a"><img src="/static/img/BracletAnswerA.jpg">
-      <input type="radio" name="q1" value="b" id="q1b"><img src="/static/img/BracletAnswerB.jpg">
-      <input type="radio" name="q1" value="c" id="q1c"><img src="/static/img/BracletAnswerC.jpg">
-      <input type="radio" name="q1" value="d" id="q1d"><img src="/static/img/BracletAnswerD.jpg">
+      <label>
+        <input type="radio" name="q1" value="a" id="q1a" required><img src="/static/img/BracletAnswerA.jpg">
+      </label>
+
+      <label>
+        <input type="radio" name="q1" value="b" id="q1b"><img src="/static/img/BracletAnswerB.jpg"> 
+      </label>
+      
+      <label> 
+        <input type="radio" name="q1" value="c" id="q1c"><img src="/static/img/BracletAnswerC.jpg">
+      </label>
+      
+      <label>
+        <input type="radio" name="q1" value="d" id="q1d"><img src="/static/img/BracletAnswerD.jpg">
+      </label>
     </div>
   </div>
 
@@ -39,7 +115,7 @@
   <br><img src="/static/img/AnimationQuestion2.jpg">
   <h5><b>Question</b></h5>
   <h5>Put the pictures in the correct order so that Taro makes the correct animation.</h5>
-  <input type="text" name="q2"> :Please write your answer
+  <input style=" border: 2px solid; border-radius: 5px;" type="text" class="form-control" name="q2" placeholder="Write your answer here..." required>
     </div>
   </div>
       <hr />  
@@ -51,12 +127,11 @@
   <label>The beavers and dogs had a competition. In total nine animals took part.<br>The nine participants had the following scores: 1, 2, 2, 3, 4, 5, 5, 6, 7.<br>No dog scored more than any beaver.<br>One dog tied with a beaver.<br>There were also two other dogs that tied with each other</label>
   <h5><b>Question</b></h5> 
       <h5>How many dogs took part in the competition?<br><b>2, 3, 5, 6 or 7</b></h5>
-      <input type="radio" name="q3" value="2">2<br>
-      <input type="radio" name="q3" value="3">3<br>
-      <input type="radio" name="q3" value="5">5<br>
-      <input type="radio" name="q3" value="6">6<br>
-      <input type="radio" name="q3" value="7">7<br>
-
+      <input class="radio-inline" type="radio" name="q3" value="2" required> 2
+      <input class="radio-inline" type="radio" name="q3" value="3"> 3
+      <input class="radio-inline" type="radio" name="q3" value="5"> 5
+      <input class="radio-inline" type="radio" name="q3" value="6"> 6
+      <input class="radio-inline" type="radio" name="q3" value="7"> 7
     </div>
   </div>
       <hr />
@@ -70,8 +145,8 @@
   <img src="/static/img/CrossCountryGreenBeaver.jpg"><br>The terrain is shown in the picture: uphill, followed by some rocks, downhill and then some more rocks.Mrs. Pink starts in the first position, followed by Mr. Brown and Mrs. Green<br></label>
   <img src="/static/img/CrossCountryQuestion.jpg">
   <h5><b>Question</b></h5>
-      <h5>4.In which order will the beavers finish the race?</h5>
-      <input type="radio" name="q4" value="A">A. Mrs Pink, Mr Brown, Mrs Green<br>
+      <h5>In which order will the beavers finish the race?</h5>
+      <input type="radio" name="q4" value="A" required>A. Mrs Pink, Mr Brown, Mrs Green<br>
       <input type="radio" name="q4" value="B">B. Mr Brown, Mrs Pink, Mrs Green<br>
       <input type="radio" name="q4" value="C">C. Mr Brown, Mrs Green, Mrs Pink<br>
       <input type="radio" name="q4" value="D">D. Mrs Green, Mrs Pink, Mr Brown<br>
@@ -93,7 +168,7 @@
   <h5><b>Question</b></h5>
       <h5>How should the following computation be entered: 4*(8+3)-2?</h5>
       <img src="/static/img/StackComputerQuestion.jpg"><br>
-      <input type="text" name="q5"> :Please write your answer
+      <input style=" border: 2px solid; border-radius: 5px;" type="text" class="form-control" name="q5" placeholder="Write your answer here..." required>
     </div>
   </div>
       <hr />
@@ -106,10 +181,21 @@
   <img src="/static/img/ThrowTheDiceQuestion.jpg">
   <h5><b>Question</b></h5>
       <h5>Which sequence of throws will send the young beavers to the sports field?</h5>
-      <input type="radio" name="q6" value="1"><img src="/static/img/ThrowTheDiceSequence1.jpg">
-      <input type="radio" name="q6" value="2"><img src="/static/img/ThrowTheDiceSequence2.jpg"><br>
-      <input type="radio" name="q6" value="3"><img src="/static/img/ThrowTheDiceSequence3.jpg">
-      <input type="radio" name="q6" value="4"><img src="/static/img/ThrowTheDiceSequence4.jpg"><br>
+      <label>
+        <input type="radio" name="q6" value="1" required><img src="/static/img/ThrowTheDiceSequence1.jpg">
+      </label>
+      
+      <label>
+        <input type="radio" name="q6" value="2"><img src="/static/img/ThrowTheDiceSequence2.jpg"><br>
+      </label>
+      
+      <label>
+        <input type="radio" name="q6" value="3"><img src="/static/img/ThrowTheDiceSequence3.jpg">
+      </label>
+
+      <label>
+        <input type="radio" name="q6" value="4"><img src="/static/img/ThrowTheDiceSequence4.jpg"><br>
+      </label>
     </div>
   </div>
       <hr />
@@ -125,10 +211,10 @@
   <h5><b>Question</b></h5>
       <h5>How would Stella label the following star?</h5>
       <img src="/static/img/DrawingStarsQuestion1.jpg">
-      <input type="radio" name="q7" value="9:3">9:3 
-      <input type="radio" name="q7" value="9:4">9:4 
-      <input type="radio" name="q7" value="10:4">10:4 
-      <input type="radio" name="q7" value="10:5">10:5 
+      <input class="radio-inline" type="radio" name="q7" value="9:3" required>9:3 
+      <input class="radio-inline" type="radio" name="q7" value="9:4">9:4 
+      <input class="radio-inline" type="radio" name="q7" value="10:4">10:4 
+      <input class="radio-inline" type="radio" name="q7" value="10:5">10:5 
     </div>
   </div>
       <hr />
@@ -140,10 +226,21 @@
 
   <h5><b>Question</b></h5>
       <h5>Which of the following lunches is not a proper Beaver lunch?</h5>
-      <input type="radio" name="q8" value="A"><img src="/static/img/BeaverLunchAnswer1.jpg">
-      <input type="radio" name="q8" value="B"><img src="/static/img/BeaverLunchAnswer2.jpg"><br>
-      <input type="radio" name="q8" value="C"><img src="/static/img/BeaverLunchAnswer3.jpg">
-      <input type="radio" name="q8" value="D"><img src="/static/img/BeaverLunchAnswer4.jpg"><br>
+      <label>
+        <input type="radio" name="q8" value="A" required><img src="/static/img/BeaverLunchAnswer1.jpg">
+      </label>
+
+      <label>
+        <input type="radio" name="q8" value="B"><img src="/static/img/BeaverLunchAnswer2.jpg"><br>
+      </label>
+      
+      <label>
+        <input type="radio" name="q8" value="C"><img src="/static/img/BeaverLunchAnswer3.jpg">
+      </label>
+      
+      <label>
+        <input type="radio" name="q8" value="D"><img src="/static/img/BeaverLunchAnswer4.jpg"><br>
+      </label>
     </div>
   </div>
       <hr />
@@ -155,10 +252,10 @@
 
   <h5><b>Question</b></h5>
       <h5>What did Alex want to say?</h5>
-      <input type="radio" name="q9" value="RIVER">RIVER<br>
-      <input type="radio" name="q9" value="KNOCK">KNOCK<br>
-      <input type="radio" name="q9" value="FLOOD">FLOOD<br>
-      <input type="radio" name="q9" value="LODGE">LODGE<br>
+      <input class="radio-inline" type="radio" name="q9" value="RIVER" required>RIVER
+      <input class="radio-inline" type="radio" name="q9" value="KNOCK">KNOCK
+      <input class="radio-inline" type="radio" name="q9" value="FLOOD">FLOOD
+      <input class="radio-inline" type="radio" name="q9" value="LODGE">LODGE
     </div>
   </div>
       <hr />
@@ -171,7 +268,7 @@
 
   <h5><b>Question</b></h5>
       <h5>How many workers should be put along the line to sort the set of bowls on the right?</h5><img src="/static/img/BowlFactoryQuestion2.jpg"><br>
-      <input type="text" name="q10"> :Please write your answer<br>
+      <input style=" border: 2px solid; border-radius: 5px;" type="text" class="form-control" name="q10" placeholder="Write your answer here...">
     </div>
   </div>
       
@@ -186,11 +283,11 @@
   <h5><b>Question</b></h5>
       <h5>How many <b>different</b> meanings can the following sequence of fireworks have?</h5>
       <img src="/static/img/FireworksQuestion2.jpg"><br>
-      <input type="radio" name="q11" value="0">0
-      <input type="radio" name="q11" value="1">1
-      <input type="radio" name="q11" value="2">2
-      <input type="radio" name="q11" value="3">3
-      <input type="radio" name="q11" value="4">4
+      <input class="radio-inline" type="radio" name="q11" value="0" required>0
+      <input class="radio-inline" type="radio" name="q11" value="1">1
+      <input class="radio-inline" type="radio" name="q11" value="2">2
+      <input class="radio-inline" type="radio" name="q11" value="3">3
+      <input class="radio-inline" type="radio" name="q11" value="4">4
     </div>
   </div>
       <hr />
@@ -202,16 +299,16 @@
 
   <h5><b>Question</b></h5>
       <h5>If Thomas collects all 10 apples, which apple does he collect last?</h5>
-      <input type="radio" name="q12" value="A">A
-      <input type="radio" name="q12" value="B">B
-      <input type="radio" name="q12" value="C">C
-      <input type="radio" name="q12" value="D">D
-      <input type="radio" name="q12" value="E">E
-      <input type="radio" name="q12" value="F">F
-      <input type="radio" name="q12" value="G">G
-      <input type="radio" name="q12" value="H">H
-      <input type="radio" name="q12" value="I">I
-      <input type="radio" name="q12" value="J">J
+      <input class="radio-inline" type="radio" name="q12" value="A" required>A
+      <input class="radio-inline" type="radio" name="q12" value="B">B
+      <input class="radio-inline" type="radio" name="q12" value="C">C
+      <input class="radio-inline" type="radio" name="q12" value="D">D
+      <input class="radio-inline" type="radio" name="q12" value="E">E
+      <input class="radio-inline" type="radio" name="q12" value="F">F
+      <input class="radio-inline" type="radio" name="q12" value="G">G
+      <input class="radio-inline" type="radio" name="q12" value="H">H
+      <input class="radio-inline" type="radio" name="q12" value="I">I
+      <input class="radio-inline" type="radio" name="q12" value="J">J
     </div>
   </div>
       <hr />
@@ -226,11 +323,11 @@
   <h5><b>Which of the following statements is true?</b></h5>
       <h5>After an international incident one spy has stopped attending the meetings. What is the minimum number of rounds needed for the five remaining spies to exchange all information?</h5><br>
       <img src="/static/img/SpiesQuestion1.jpg"><br>
-      <input type="radio" name="q13" value="1">1
-      <input type="radio" name="q13" value="2">2
-      <input type="radio" name="q13" value="3">3
-      <input type="radio" name="q13" value="4">4
-      <input type="radio" name="q13" value="5">5<br>
+      <input class="radio-inline" type="radio" name="q13" value="1" required>1
+      <input class="radio-inline" type="radio" name="q13" value="2">2
+      <input class="radio-inline" type="radio" name="q13" value="3">3
+      <input class="radio-inline" type="radio" name="q13" value="4">4
+      <input class="radio-inline" type="radio" name="q13" value="5">5<br>
     </div>
   </div>
       <hr />
@@ -246,41 +343,20 @@
 <div id="hideDiv">
   <div class="container">
     <h1> </h1>
-  <div class="jumbotron">
-    <div class="progress" style="width: 60%; float: right;">
-    <div class="progress-bar" style="width: 66%">2/3</div>
-</div>
-    <h1>Bebras Quiz</h1> 
-    <p>You will now be prompted with a set of questions and answers. Please take your time reading them etc........</p> 
+    <div class="jumbotron">
+      <div class="progress" style="width: 60%; float: right;">
+        <div class="progress-bar" style="width: 66%">2/3
+        </div>
+      </div>
+    
+      <h1>Bebras Quiz</h1> 
+      <p>You will now be prompted with a set of questions and answers. Please take your time reading them etc........</p> 
 
       <input class="btn btn-primary" type="button" name="answer" value="Continue To Test ..." onclick="showDiv()"/> 
 
       <a href="logout"><input style="float: right" class="btn btn-primary" type="button" value="Log out"/></a>
+    </div>
   </div>
 </div>
 
-</div>
-
-
-
 {% endblock %}
-
-
-<!--
-/*
-Answer 1 - B
-Answer 2 - B D C A E
-Answer 3 - 6
-Answer 4 - C 
-Answer 5 - 4 8 3 + * 2 - | 4 3 8 + * 2 - | 8 3 + 4 * 2 - | 3 8 + 4 * 2 -
-Answer 6 - Image with 3 3 3 (Maybe add images as radios)
-Answer 7 - 10:4
-Answer 8 - Image D (Maybe add images as radios)
-Answer 9 - Flood (Maybe radio button)
-Answer 10 - 4
-Answer 11 - 4 (Maybe radio buttons)
-Answer 12 - Plate I (Maybe radio buttons)
-Answer 13 - 4
-An
-*/
-  -->
