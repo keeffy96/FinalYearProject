@@ -2,11 +2,6 @@
 {% block body %}
 <link href='https://fonts.googleapis.com/css?family=ABeeZee' rel='stylesheet'>
 <style type="text/css">
-	body {
-		font-family: 'ABeeZee';
-		background-color: white;
-		background-image: url("/static/img/homePage4.jpg");
-	}
     label {
         padding: 0 1em;
         text-align: center;
@@ -16,18 +11,28 @@
         display: inline;
         color: red;
 </style>
-<div id="item"></div>
 
-<div style="background-color: white" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 container-fluid bg-info">
-  <div class="modal-dialog">
-  	<div>
-  		<h1 style="color: black">Bebras</h1>
-  	</div>
+<script type="text/javascript">
+  function showDiv() {
+   document.getElementById('acceptedQuiz').style.display = "block";
+   document.getElementById('hideDiv').style.display = "none";
+}
+</script>
+
+<div id="acceptedQuiz"  style="display:none;">
+
+<div id="testHtml" style="width: 100%; margin-top: -30px; background-color: #c1d7d7;">
+    <div style="width: 700px;" class="modal-dialog">
+    <div class="container" style="width: 700px;">
+      <h2 style="color: black; float: left;">Personal Form </h2>
+
+      <div class="progress" style="width: 60%; float: right; margin-top: 23px;">
+    <div class="progress-bar" style="width: 40%">2/5</div>
+</div>
+    </div>
     
-    <div id="results"></div>
     <form id="quizForm" class="form-horizontal" role="form" method=POST action="{{ url_for('personalQuestions') }}">
     	<div class="questions modal-content">
-    		<div class="modal-header"><h3><b><u>Personal Form</u></b></h3></div>
     		<div class="modal-body">
     			<!-- Question 1 -->
     			<h4><b>Gender<div id="asterisk"> *</div></b></h4>
@@ -89,8 +94,7 @@
 
     			<!-- Question 7 -->
     			<h4><b>If no, do you have access to one at home</b></h4>
-    			<input class="radio-inline" type="radio" name="q7" value="Yes" id="q7">Yes
-    			<input class="radio-inline" type="radio" name="q7" value="No" id="q7">No
+                <input class="form-control" type="text" name="q7" id="q7" placeholder="Your answer">
 
     			<hr />
 
@@ -108,7 +112,7 @@
 
     			<!-- Question 9 -->
     			<h4><b>What do you spend most of your time doing on a smartphone?</b></h4>
-    			<input type="checkbox" name="q9" value="Texting (SMS)" id="q9">Texting (SMS)<br>
+    			<input type="checkbox" name="q9" value="Texting (SMS)" id="q9" required>Texting (SMS)<br>
     			<input type="checkbox" name="q9" value="Calling (using the phones network)" id="q9">Calling (using the phones network)<br>
     			<input type="checkbox" name="q9" value="Other forms of messaging (Facebook Messenger, Whatsapp, Viber etc.)" id="q9">Other forms of messaging (Facebook Messenger, Whatsapp, Viber etc.)<br>
     			<input type="checkbox" name="q9" value="Facebook" id="q9">Facebook<br>
@@ -127,7 +131,7 @@
     			<hr />
 
     			<!-- Question 10 -->
-    			<h4><b>Do you own a personal laptop/desktop PC?</b></h4>
+    			<h4><b>Do you own a personal laptop/desktop PC?</b> <div id="asterisk"> *</div></h4>
     			<input class="radio-inline" type="radio" name="q10" value="Yes" id="q10" required>Yes
     			<input class="radio-inline" type="radio" name="q10" value="No" id="q10">No
 
@@ -135,14 +139,13 @@
 
     			<!-- Question 11 -->
     			<h4><b>If no, do you have access to one at home?</b></h4>
-    			<input class="radio-inline" type="radio" name="q11" value="Yes" id="q11">Yes
-    			<input class="radio-inline" type="radio" name="q11" value="No" id="q11">No
+                <input class="form-control" type="text" name="q11" id="q11" placeholder="Your answer">
 
     			<hr />
 
     			<!-- Question 12 -->
-    			<h4><b>How many hours per day do you spend on a laptop/PC?</b></h4>
-    			<select name="q12" class="form-control">
+    			<h4><b>How many hours per day do you spend on a laptop/PC?</b> <div id="asterisk"> *</div></h4>
+    			<select name="q12" class="form-control" required>
     				<option value="" disabled selected>Select how many hours</option>
     				<option value="Less than one hour">Less than one hour</option>
     				<option value="1-3 hours">1-3 hours</option>
@@ -168,15 +171,15 @@
     			<hr />
 
     			<!-- Question 14 -->
-    			<h4><b>Do you own a personal tablet?</b></h4>
-    			<input class="radio-inline" type="radio" name="q14" value="Yes" id="q14">Yes
+    			<h4><b>Do you own a personal tablet?</b> <div id="asterisk"> *</div></h4>
+    			<input class="radio-inline" type="radio" name="q14" value="Yes" id="q14" required>Yes
     			<input class="radio-inline" type="radio" name="q14" value="No" id="q14">No
 
     			<hr />
 
     			<!-- Question 15 -->
-    			<h4><b>How many hours per day do you spend on a tablet?</b></h4>
-    			<select name="q15" class="form-control">
+    			<h4><b>How many hours per day do you spend on a tablet?</b> <div id="asterisk"> *</div></h4>
+    			<select name="q15" class="form-control" required>
     				<option value="" disabled selected>Select how many hours</option>
     				<option value="Less than one hour">Less than one hour</option>
     				<option value="1-3 hours">1-3 hours</option>
@@ -188,7 +191,7 @@
 
     			<!-- Question 16 -->
     			<h4><b>What do you spend most of your time doing on a tablet?</b></h4>
-    			<input type="checkbox" name="q16" value="Instagram" id="q16">Instagram<br>
+    			<input type="checkbox" name="q16" value="Instagram" id="q16" required>Instagram<br>
     			<input type="checkbox" name="q16" value="Browsing the web (using Safari/Chrome etc.)" id="q16">Browsing the web (using Safari/Chrome etc.)<br>
     			<input type="checkbox" name="q16" value="Facebook" id="q16">Facebook<br>
     			<input type="checkbox" name="q16" value="Playing games" id="q16">Playing games<br>
@@ -202,15 +205,15 @@
     			<input type="checkbox" name="q16" value="Other" id="q16h">Other  
 
     			<!-- Question 17 -->
-    			<h4><b>Have you had previous programming experience?</b></h4>
-    			<input class="radio-inline" type="radio" name="q17" value="Yes" id="q17">Yes
+    			<h4><b>Have you had previous programming experience?</b> <div id="asterisk"> *</div></h4>
+    			<input class="radio-inline" type="radio" name="q17" value="Yes" id="q17" required>Yes
     			<input class="radio-inline" type="radio" name="q17" value="No" id="q17">No
 
     			<hr />
 
     			<!-- Question 18 -->
-    			<h4><b>How much programming experience do you have?</b></h4>
-    			<select name="q18" class="form-control">
+    			<h4><b>How much programming experience do you have?</b> <div id="asterisk"> *</div> </h4>
+    			<select name="q18" class="form-control" required>
     				<option value="" disabled selected>Select how many hours</option>
     				<option value="Never programmed before">Never programmed before</option>
     				<option value="I have done programming once or twice.">I have done programming once or twice.</option>
@@ -222,7 +225,7 @@
 
     			<!-- Question 19 -->
     			<h4><b>Which programming language/s have you used before?</b></h4>
-    			<input type="checkbox" name="q19" value="Java" id="q19">Java<br>
+    			<input type="checkbox" name="q19" value="Java" id="q19" required>Java<br>
     			<input type="checkbox" name="q19" value="Python" id="q19">Python<br>
     			<input type="checkbox" name="q19" value="Scratch" id="q19">Scratch<br>
     			<input type="checkbox" name="q19" value="C/C++" id="q19">C/C++<br>
@@ -232,7 +235,7 @@
     			<hr />
 
     			<!-- Question 20 -->
-    			<h4><b>How often do you program?</b></h4>
+    			<h4><b>How often do you program?</b> <div id="asterisk"> *</div></h4>
                 <div style="text-align: center;">
                     Not at all<label>1<br>
                         <input type="radio" id="q20" name="q20" value="Never" required>
@@ -254,7 +257,7 @@
     			<hr />
 
     			<!-- Question 21 -->
-    			<h4><b>If you have programmed before, how would you rate your programming level?</b></h4>
+    			<h4><b>If you have programmed before, how would you rate your programming level?</b><div id="asterisk"> *</div></h4>
                 <div style="text-align: center;">
                     Strongly Disagree<label>1<br>
                         <input type="radio" id="q21" name="q21" value="Strongly Disagree" required>
@@ -276,15 +279,15 @@
     			<hr />
 
     			<!-- Question 22 -->
-    			<h4><b>Have you ever done any website/app development?</b></h4>
-    			<input class="radio-inline" type="radio" name="q22" value="Yes" id="q22">Yes
+    			<h4><b>Have you ever done any website/app development?</b> <div id="asterisk"> *</div></h4>
+    			<input class="radio-inline" type="radio" name="q22" value="Yes" id="q22" required>Yes
     			<input class="radio-inline" type="radio" name="q22" value="No" id="q22">No
 
     			<hr />
 
     			<!-- Question 23 -->
     			<h4><b>If yes, which of the following tools/technologies have you used?</b></h4>
-    			<input type="checkbox" name="q23" value="HTML" id="q23">HTML<br>
+    			<input type="checkbox" name="q23" value="HTML" id="q23" required>HTML<br>
     			<input type="checkbox" name="q23" value="CSS" id="q23">CSS<br>
     			<input type="checkbox" name="q23" value="JavaScript" id="q23">JavaScript<br>
     			<input type="checkbox" name="q23" value=">PHP or other server-side langauge" id="q23">PHP or other server-side langauge<br>
@@ -296,7 +299,7 @@
 
     			<!-- Question 24 -->
     			<h4><b>Have you ever heard of any of the following?</b></h4>
-    			<input type="checkbox" name="q24" value="Bebras challenge" id="q24">Bebras challenge<br>
+    			<input type="checkbox" name="q24" value="Bebras challenge" id="q24" required>Bebras challenge<br>
     			<input type="checkbox" name="q24" value="Codecademy" id="q24">Codecademy<br>
     			<input type="checkbox" name="q24" value="Khan Academy" id="q24">Khan Academy<br>
     			<input type="checkbox" name="q24" value=">Udacity" id="q24">Udacity<br>
@@ -311,17 +314,17 @@
     			<hr />
 
     			<!-- Question 25 -->
-    			<h4><b>What level of maths did you take/are you taking for Junior Cert?</b></h4>
-    			<input class="radio-inline" type="radio" name="q25" value="Foundation" id="q25">Foundation
+    			<h4><b>What level of maths did you take/are you taking for Junior Cert?</b> <div id="asterisk"> *</div></h4>
+    			<input class="radio-inline" type="radio" name="q25" value="Foundation" id="q25" required>Foundation
     			<input class="radio-inline" type="radio" name="q25" value="Ordinary" id="q25">Ordinary
     			<input class="radio-inline" type="radio" name="q25" value="Higher" id="q25">Higher
 
     			<hr />
 
     			<!-- Question 26 -->
-    			<h4><b>Do either of your parents work in an IT related job?</b></h4>
+    			<h4><b>Do either of your parents work in an IT related job?</b> <div id="asterisk"> *</div></h4>
     			<h6>Examples include Software Developer, Systems administrator etc.</h6>
-    			<input class="radio-inline" type="radio" name="q26" value="Yes" id="q26">Yes
+    			<input class="radio-inline" type="radio" name="q26" value="Yes" id="q26" required>Yes
     			<input class="radio-inline" type="radio" name="q26" value="No" id="q26">No
     			<input class="radio-inline" type="radio" name="q26" value="Not sure" id="q26">Not sure
 
@@ -331,6 +334,25 @@
     		</div>
     	</div>
     </form>
+</div>
+</div>
+</div>
+
+<div id="hideDiv">
+  <div class="container">
+    <h1> </h1>
+    <div class="jumbotron">
+      <div class="progress" style="width: 60%; float: right;">
+        <div class="progress-bar" style="width: 20%">2/5
+        </div>
+      </div>
+    
+      <h1>Surveys</h1> 
+      <p>You will now be asked to complete two surveys, the first survey is based around you, and the second is your view on computer science.</p> 
+
+      <input class="btn btn-success" type="button" name="answer" value="Continue To Survey ..." onclick="showDiv()"/> 
+    </div>
+  </div>
 </div>
 {% endblock %}
 

@@ -17,7 +17,6 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="navbar-collapse-2">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="test"><i>Material</i></a></li>
             <li><a href="UsersPage"><span class="glyphicon glyphicon-list" data-toggle="tooltip" data-original-title="Users"></span></a></li>
           <li><a href="logout"><i class="glyphicon glyphicon-log-out"></i></a></li>
           </ul>
@@ -40,12 +39,12 @@
       {% if result == 'N/A' %}
 
       {% else %}%
-      {% endif %} <a data-toggle="modal" data-target="#largeModal"><span style="color: red;" class="glyphicon glyphicon-asterisk"></span></a></h4>
+      {% endif %} <a data-toggle="modal" title="View results" data-target="#largeModal"><span style="color: #337ab7;" class="glyphicon glyphicon-info-sign"></span></a></h4>
       <h4>Bebras Test 2 Completed: {{result2}}
       {% if result == 'N/A' %}
 
       {% else %}%
-      {% endif %} <a data-toggle="modal" data-target="#largeModalBebras2"><span style="color: red;" class="glyphicon glyphicon-asterisk"></span></a></h4>
+      {% endif %} <a data-toggle="modal" data-target="#largeModalBebras2" title="View results"><span style="color: #337ab7;" class="glyphicon glyphicon-info-sign"></span></a></h4>
 	</div>
 
 	<div class="jumbotron">

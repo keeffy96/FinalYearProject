@@ -3,12 +3,6 @@
 <link href='https://fonts.googleapis.com/css?family=ABeeZee' rel='stylesheet'>
 
 <style type="text/css">
-	body {
-        font-family: 'ABeeZee';
-		background-color: white;
-		background-image: url("/static/img/homePage4.jpg");
-	}
-
     label {
         padding: 0 1em;
         text-align: center;
@@ -19,18 +13,20 @@
         color: red;
     }
 </style>
-<div id="item"></div>
 
-<div style="background-color: white" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 container-fluid bg-info">
-  <div class="modal-dialog">
-  	<div>
-  		<h1 style="color: black">Bebras</h1>
-  	</div>
+<div id="testHtml" style="width: 100%; margin-top: -30px; background-color: #c1d7d7;">
+  <div style="width: 700px;" class="modal-dialog">
+  	<div class="container" style="width: 700px;">
+      <h3 style="color: black; float: left;">View of Computer Science</h3>
+
+      <div class="progress" style="width: 50%; float: right; margin-top: 23px;">
+    <div class="progress-bar" style="width: 60%">3/5</div>
+</div>
+    </div>
     
     <div id="results"></div>
     <form id="quizForm" class="form-horizontal" role="form" method=POST action="{{ url_for('csQuestions') }}">
     	<div class="questions modal-content">
-    		<div class="modal-header"><h3><b><u>Personal Form</u></b></h3></div>
     		<div class="modal-body">
     			<!-- Question 1 -->
     			<h4><b>Would you/have you considered studying Computer Science in college/university?<div id="asterisk"> *</div></b></h4>

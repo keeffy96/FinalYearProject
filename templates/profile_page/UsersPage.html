@@ -105,7 +105,7 @@
 			<th>Surname</th>
 			<!--<th>Approved</th>-->
 			<th>UserID</th>
-			<th>Approve</th>
+			<th style="text-align: center;">Approve student</th>
 		</tr>
 
 	{% for user in userTable %}
@@ -115,9 +115,9 @@
 		<td>{{ user["surname"] }}</td>
 		<td>{{ user["user_id"] }}</td>
     {% if user['approved'] == 0 %}
-		<td><a href="/update?_id={{user['_id']}}"><button style="color: black;" type="submit"><span class="glyphicon glyphicon-remove"></button></a></td>
+		<td style="text-align: center;"><a href="/update?_id={{user['_id']}}"><button style="color: black;" type="submit"><span class="glyphicon glyphicon-ok"></button></a></td>
     {% else %}
-    <td><span class="glyphicon glyphicon-ok"></span></td>
+    <td></td>
     {% endif %}
 	</tr>
 
