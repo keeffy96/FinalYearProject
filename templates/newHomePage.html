@@ -2,23 +2,30 @@
 {% block body %}
 
 <link rel="stylesheet" href="static/css/main.css" />
+<style type="text/css">
+	#asize {
+		font-size: 16px;
+	}
+</style>
 
 <header id="header">
 	<div class="inner">
-		<a href="testHomePage" class="logo">CTC Engine</a>
+		<a style="font-size: 21px;" href="testHomePage" class="logo">CTC Engine</a>
 		<nav id="nav">
-			<a href="testHomePage">Home</a>
-			<a href="#">About</a>
-			<a href="#">Services</a>
-			<a data-toggle="modal" data-target="#registerModal">Sign Up</a>
-			<a data-toggle="modal" data-target="#signInModal">Sign in</a>
+			<div id="asize">
+				<a href="testHomePage">Home</a>
+				<a href="#">About</a>
+				<a href="#">Services</a>
+				<a data-toggle="modal" data-target="#registerModal">Sign Up</a>
+				<a data-toggle="modal" data-target="#signInModal">Sign in</a>
+			</div>
 		</nav>
 	</div>
 </header>
 
-<section style="background-image: url('/static/img/new/banner.jpg'); margin-top:-15px;" id="banner">
-	<h1>Welcome to the CTC Engine</h1>
-	<p>A free online learning platform designed with efficenty for maximum performance</p>
+<section style="background-image: url('/static/img/new/csImage.jpg'); margin-top:-15px;" id="banner">
+	<h1 style="background-color: rgba(0, 0, 0, 0.4);">Welcome to the CTC Engine</h1>
+	<p style="background-color: rgba(0, 0, 0, 0.4);">A free online learning platform designed with efficenty for maximum performance</p>
 </section>
 
 <section id="one" class="wrapper">
@@ -63,7 +70,7 @@
 	</div>
 </section>
 
-<section id="two" class="wrapper style1 special">
+<section id="two" class="wrapper style1 special" style="background-color: #140033">
 	<div class="inner">
 		<header>
 			<h2>Say something</h2>
