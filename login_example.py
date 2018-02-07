@@ -22,7 +22,7 @@ def dbSetup():
 #Home Page
 @app.route('/')
 def home():
-    return render_template('home_page/home.html')
+    return render_template('home_page/newHomePage.html')
 
 #Student Register
 @app.route('/studentRegister', methods=['POST', 'GET'])
@@ -124,7 +124,7 @@ def login():
 def logout():
     session.pop('email', None)
     session.pop('user_id', None)
-    return render_template('home_page/home.html')
+    return render_template('home_page/newHomePage.html')
 
 #Users Home Page
 @app.route('/profile')
@@ -515,10 +515,6 @@ def test():
     files = [fs.get_last_version(file) for file in fs.list()]
     file = fs.get(ObjectId("5a26e63dfb489f258ca94d6b"))
     return render_template('test.html', file=file, files=files)
-
-@app.route('/testHomePage')
-def testHomePage():
-    return render_template('newHomePage.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
