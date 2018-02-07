@@ -156,7 +156,7 @@
 	<div class="inner">
 		<div class="flex">
 			<div class="copyright">
-				&copy; Untitled. Design: <a href="https://templated.co">TEMPLATED</a>. Images: <a href="https://unsplash.com">Unsplash</a>.
+				&copy; Conor O'Keefe Incorporated 
 			</div>
 		</div>
 	</div>
@@ -164,14 +164,12 @@
 
 <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
   
-  <div class="modal-dialog modal-sm">
+  <div style="margin-top: 200px; width: 400px;" class="modal-dialog modal-sm">
     
-    <div class="modal-content">
+    <div style="height: 250px;" class="modal-content">
       
       <div class="modal-header">
-        
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> 
-         
+                 
         <h4 style="text-align: center;" class="modal-title" id="myModalLabel">Who Are You?</h4>
       
       </div>
@@ -193,11 +191,10 @@
 </div>
 
 <div class="modal fade" id="signInModal" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
+  <div style="margin-top: 100px;" class="modal-dialog modal-lg">
     <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">Log In</h4>
+      <div style="margin-top: -80px;" class="modal-header">
+        <h4 style="margin-top: 80px;" class="modal-title" id="myModalLabel">Log In</h4>
       </div>
       <div class="modal-body">
         <div class="row">
@@ -207,15 +204,14 @@
         <h5><b>Username</b></h5>
                     <div style="margin-bottom:25px" class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                        <input id="login-username" type="text" class="form-control" name="email" placeholder="Email or Username" required>
+                        <input style="background: white" id="login-username" type="text" class="form-control" name="email" placeholder="Email or Username" required>
                     </div>
 
                     <h5><b>Password</b></h5>
                     <div style="margin-bottom:25px" class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                        <input id="login-password" type="password" class="form-control" name="pass" placeholder="Password" required>
+                        <input style="background: white" id="login-password" type="password" class="form-control" name="pass" placeholder="Password" required>
                     </div>
-
 
                     <button type="submit" class="btn btn-success btn-block">Log In</button>
                 </form>
@@ -237,11 +233,4 @@
     </div>
   </div>
 </div>
-
-<!-- <script src="static/js/new/jquery.min.js"></script>
-<script src="static/js/new/skel.min.js"></script>
-<script src="static/js/new/util.js"></script>
-<script src="static/js/new/main.js"></script>
- -->
-
 {% endblock %}
