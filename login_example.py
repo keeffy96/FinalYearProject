@@ -363,7 +363,7 @@ def csQuestions():
         q17 = request.form['q17']
         csQuestions.insert({'user_id':session['user_id'],'q1':q1, 'q2':q2, 'q3':q3, 'q4':q4, 'q5':q5, 'q6':q6, 'q7':q7, 'q8':q8, 'q9':q9, 'q10':q10, 'q11':q11, 'q12':q12, 'q13':q13, 'q14':q14, 'q15':q15, 'q16':q16, 'q17':q17})
         return redirect(url_for('bebras1'))
-    return render_template('csQuestions.html')
+    return render_template('survey/csQuestions.html')
 
 #Student Personal Questions
 @app.route('/personalQuestions', methods=['POST','GET'])
@@ -401,7 +401,7 @@ def personalQuestions():
         personalQuestions.insert({'user_id':session['user_id'],'q1':q1, 'q2':q2, 'q3':q3, 'q4':q4, 'q5':q5, 'q6':q6, 'q7':q7, 'q8':q8, 'q9':q9, 'q10':q10, 'q11':q11, 'q12':q12, 'q13':q13,
          'q14':q14, 'q15':q15, 'q16':q16, 'q17':q17, 'q18':q18, 'q19':q19, 'q20':q20, 'q21':q21, 'q22':q22, 'q23':q23, 'q24':q24, 'q25':q25, 'q26':q26})
         return redirect(url_for('csQuestions'))
-    return render_template('personalQuestions.html')
+    return render_template('survey/personalQuestions.html')
 
 
 @app.route('/testProfile')
@@ -508,13 +508,83 @@ def serve_gridfs_file(oid):
     except NoFile:
         abort(404)
 
-
+#Create a module within that module will be an array of filenames
+#Call that array in a loop and ez
 @app.route('/test')
 def test():
     fs = gridfs.GridFS(mongo.db)
-    files = [fs.get_last_version(file) for file in fs.list()]
-    file = fs.get(ObjectId("5a26e63dfb489f258ca94d6b"))
-    return render_template('test.html', file=file, files=files)
+    array = ['4th_year_CSSE_Thesis_template.docx']
+
+
+    files = [fs.get_last_version(file) for file in array]
+    #returns an array of filenames
+    filename = fs.list()
+    #file = fs.get_last_version("4th_year_CSSE_Thesis_template.docx").read()
+    #name = ObjectId("5a75eeeffb489f3aa0378ed5")
+    #file = fs.get(ObjectId("5a75eeeffb489f3aa0378ed5"))
+    return render_template('test.html',files=files, filename=filename)#, #file=file, files=files,filename=filename)
+
+@app.route('/module1')
+def module1():
+    fs = gridfs.GridFS(mongo.db)
+    testDB = mongo.db.test
+    users = mongo.db.users
+    school = users.find_one({'email':session['email']})['school']
+    schoolModule = testDB.find_one({'school': school})
+    module1 = testDB.find_one({'school': school})['module1']
+    array = module1
+    files = [fs.get_last_version(file) for file in array]
+    return render_template('modules/module1.html' , files=files)
+
+@app.route('/module2')
+def module2():
+    fs = gridfs.GridFS(mongo.db)
+    testDB = mongo.db.test
+    users = mongo.db.users
+    school = users.find_one({'email':session['email']})['school']
+    schoolModule = testDB.find_one({'school': school})
+    module2 = testDB.find_one({'school': school})['module2']
+    array = module2
+    files = [fs.get_last_version(file) for file in array]
+    return render_template('modules/module2.html', files=files)
+
+@app.route('/module3')
+def module3():
+    fs = gridfs.GridFS(mongo.db)
+    testDB = mongo.db.test
+    users = mongo.db.users
+    school = users.find_one({'email':session['email']})['school']
+    schoolModule = testDB.find_one({'school': school})
+    module3 = testDB.find_one({'school': school})['module3']
+    array = module3
+    files = [fs.get_last_version(file) for file in array]
+    return render_template('modules/module3.html' , files=files)
+
+@app.route('/module4')
+def module4():
+    fs = gridfs.GridFS(mongo.db)
+    array = ['4th_year_CSSE_Thesis_template.docx']
+    files = [fs.get_last_version(file) for file in array]
+    return render_template('modules/module4.html', files=files)
+
+@app.route('/modules', methods=['POST','GET'])
+def modules():
+    testDB = mongo.db.test
+    users = mongo.db.users
+    school = "Maynooth"
+    module1 = ['5a7b3d2bd3f7ef0009f9e37f.pdf', 'Week_1.1_MN304_Welcome_and_Introduction.pdf', 'lab1.pdf']
+    module2 = ['4th_year_CSSE_Thesis_template.docx', 'Week_1.1_MN304_Welcome_and_Introduction.pdf', 'lab1.pdf']
+    module3 = ['4th_year_CSSE_Thesis_template.docx', '5a7b3d2bd3f7ef0009f9e37f.pdf', 'lab1.pdf']
+    testDB.insert({'school': school,'module1': module1, 'module2': module2, 'module3': module3})
+    return redirect(url_for('profile'))
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+#moduledatabase with each module filenames
+#will contain valid
+#and rejected
+#teacher will be able to remove from class and update 
+
+#By default teacher will have all files, then can remove when registered

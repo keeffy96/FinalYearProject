@@ -1,5 +1,6 @@
 {% extends "index.html" %}
 {% block body %}
+
 <nav class="navbar navbar-inverse">
       <div class="container">
         <div class="navbar-header">
@@ -23,13 +24,25 @@
       </div><!-- /.container -->
     </nav><!-- /.navbar -->
 
-{% for file in files %}
-<li>
-	<a href="files/{{ file['_id'] }}" download>Download - {{file['filename']}}</a>
-</li>
+<div class="container">
+    	<div class="jumbotron">
+    		<h3>Python</h3>
+    	</div>
 
-{{filename}}
-  {% endfor %}
+    	<div class="jumbotron">
+    		<table class="table table-hover table-responsive">
+    			<tr style="pointer-events: none;">
+    				<th>Course Files</th>
+			    </tr>
 
-
+			    {% for user in files %}
+			    <tr>
+			    	<td>
+			    		<span class="glyphicon glyphicon-file"></span><a href="files/{{ user['_id'] }}" download><h5 style="display: inline;"> {{user['filename']}}</h5></a>
+			    	</td>
+			    </tr>
+			    {% endfor %}
+			</table>
+    	</div>
+    </div>
 {% endblock %}
