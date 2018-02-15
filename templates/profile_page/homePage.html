@@ -1,8 +1,9 @@
 {% extends "index.html" %}
 {% block body %}
+
 {% if 'user_id' in session %}
-<nav class="navbar navbar-inverse">
-      <div class="container">
+<nav class="navbar navbar-inverse" style="background-color: #140033">
+      <div class="container" >
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-2">
             <span class="sr-only">Toggle navigation</span>
@@ -31,7 +32,7 @@
 {% endif %}
 
 {% if 'email' in session %}
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse" style="background-color: #140033">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-2">
@@ -71,7 +72,7 @@
 </div>
 {% endif %}
   
-<div class="container text-center">    
+<div class="container text-center" style="background-color: #dbd8d9;">    
   <div class="row">
     <div class="col-sm-3">
       <div class="well">
@@ -196,7 +197,7 @@ window.addEventListener('load', function () {
  }
 
  body {
-  background-color: #f5f5f0;
+  background-color: #dbd8d9;
  }
  p {
   font-size: 10px;

@@ -1,12 +1,64 @@
 {% extends "index.html" %}
 {% block body %}
-<div style="background-color: black" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 container-fluid bg-info">
-  <div class="modal-dialog">
-<div>
-    <h1 style="color: white">Bebras 2</h1>
-</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
+
+<script type="text/javascript">
+  function demoFromHTML() {
+    var pdf = new jsPDF('p', 'pt', 'a4');
+    source = $('#testHtml')[0];
+    specialElementHandlers = {
+        '#bypassme': function (element, renderer) {
+            return true
+        }
+    };
+    margins = {
+        top: 80,
+        bottom: 60,
+        left: 40,
+        width: 522
+    };
+    pdf.fromHTML(
+    source, 
+    margins.left, 
+    margins.top, { 
+        'width': margins.width, 
+        'elementHandlers': specialElementHandlers
+    },
+
+    function (dispose) {
+        pdf.save('Bebras_Test_2.pdf');
+    }, margins);
+}
+</script>
+
+<nav class="navbar navbar-inverse" style="background-color: #140033">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-2">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          
+          <a class="navbar-brand" href="#">CTC Engine</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-collapse-2">
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container -->
+    </nav><!-- /.navbar -->
+
+<div id="testHtml" style="width: 100%; margin-top: -30px; background-color: #dbd8d9;">   <div style="width: 700px;" class="modal-dialog">
+    <div class="container" style="width: 700px;">
+      <h2 style="color: black; float: left;">Bebras Test No.2</h2>
+
+      <button style="float: right; margin-top: 22px;" class="btn btn-success" onclick="javascript:demoFromHTML();">Download as PDF</button>
+
+      <a style="float: right; margin-top: 22px;" class="btn btn-primary" href="profile">Skip</a>
+    </div>
 <form id="bebras2Form" class="form-horizontal" role="form" method=POST action="{{ url_for('bebras2') }}">
-      <hr />
       <div class="questions modal-content">
       <div class="modal-header"><h3>Bebras Painting</h3></div>
       <div class="modal-body">

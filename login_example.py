@@ -167,6 +167,8 @@ def editProfile():
         users = mongo.db.users
         name = request.form['name']
         surname = request.form['surname']
+        name = users.find_one({'email':session['email']})['name']
+        surname = users.find_one({'email':session['email']})['surname']
         users.update_one({'email':session['email']}, {'$set': {'name': name, 'surname': surname}})
         return redirect(url_for('profile'))
     
@@ -178,7 +180,9 @@ def profilePage():
     babras1 = mongo.db.babras1
     users = mongo.db.users
     if 'email' in session:
-        return render_template('profile_page/profilePage.html')
+        name = users.find_one({'email':session['email']})['name']
+        surname = users.find_one({'email':session['email']})['surname']
+        return render_template('profile_page/profilePage.html', name=name, surname=surname)
 
     elif 'user_id' in session:
         user_id = users.find_one({'user_id':session['user_id']})['user_id']
@@ -276,6 +280,8 @@ def studentProgress():
     users = mongo.db.users
     babras1 = mongo.db.babras1
     bebras2 = mongo.db.bebras2
+    name = users.find_one({'email':session['email']})['name']
+    surname = users.find_one({'email':session['email']})['surname']
     userid = request.args.get("_id")
     selectedUser = users.find_one({'_id': ObjectId(userid)})['user_id']
     selectedUserName = users.find_one({'_id': ObjectId(userid)})['name']
@@ -319,15 +325,17 @@ def studentProgress():
         approved = "No"
     return render_template('profile_page/studentCheck.html', selectedUser=selectedUser, selectedUserName=selectedUserName, selectedUserSurname=selectedUserSurname, result=result, result2=result2, approved=approved, 
         a1=a1, a2=a2, a3=a3, a4=a4, a5=a5, a6=a6, a7=a7, a8=a8, a9=a9, a10=a10, a11=a11, a12=a12, a13=a13,
-        ba1=ba1, ba2=ba2, ba3=ba3, ba4=ba4, ba5=ba5, ba6=ba6, ba7=ba7, ba8=ba8, ba9=ba9, ba10=ba10, ba11=ba11, ba12=ba12, ba13=ba13)
+        ba1=ba1, ba2=ba2, ba3=ba3, ba4=ba4, ba5=ba5, ba6=ba6, ba7=ba7, ba8=ba8, ba9=ba9, ba10=ba10, ba11=ba11, ba12=ba12, ba13=ba13, name=name, surname=surname)
 
 #Approve Student
 @app.route('/toBeApproved')
 def toBeApproved():
     users = mongo.db.users
+    name = users.find_one({'email':session['email']})['name']
+    surname = users.find_one({'email':session['email']})['surname']
     school = users.find_one({'email':session['email']})['school']
     userTable = users.find({'school':school, 'approved': 0})
-    return render_template('profile_page/UsersPage.html', userTable=userTable)
+    return render_template('profile_page/UsersPage.html', userTable=userTable, name=name, surname=surname)
 
 #Update student to Class
 @app.route('/update')
@@ -442,14 +450,6 @@ def page_not_found(e):
 
 
 
-
-
-
-
-
-
-
-
 def allowed_file(filename):
     return '.' in filename and \
             filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
@@ -457,13 +457,17 @@ def allowed_file(filename):
 @app.route('/uploadFiles', methods=['GET', 'POST'])
 def upload_file():
     fs = gridfs.GridFS(mongo.db)
+    users = mongo.db.users
+    name = users.find_one({'email':session['email']})['name']
+    surname = users.find_one({'email':session['email']})['surname']
+
     if request.method == 'POST':
         file = request.files['file']
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             oid = fs.put(file, content_type=file.content_type, filename=filename)
-            return render_template('files/uploadedFiles.html')            
-    return render_template('files/uploadFile.html')
+            return render_template('files/uploadedFiles.html', name=name, surname=surname)            
+    return render_template('files/uploadFile.html', name=name, surname=surname)
 
 # @app.route('/files')
 # def list_gridfs_files():
@@ -474,7 +478,7 @@ def upload_file():
 
 #     return (file_list, render_template('files/uploadedFiles.html', files=files, file_list=file_list))
 
-@app.route('/files')
+@app.route('/allfiles')
 def list_gridfs_files():
     fs = gridfs.GridFS(mongo.db)
     files = [fs.get_last_version(file) for file in fs.list()]
@@ -497,7 +501,7 @@ def list_gridfs_files():
     </html>
     ''' % (file_list, url_for('upload_file'))
 
-@app.route('/files/<oid>')
+@app.route('/allfiles/<oid>')
 def serve_gridfs_file(oid):
     fs = gridfs.GridFS(mongo.db)
     try:
@@ -510,19 +514,14 @@ def serve_gridfs_file(oid):
 
 #Create a module within that module will be an array of filenames
 #Call that array in a loop and ez
-@app.route('/test')
+@app.route('/files')
 def test():
     fs = gridfs.GridFS(mongo.db)
-    array = ['4th_year_CSSE_Thesis_template.docx']
-
-
-    files = [fs.get_last_version(file) for file in array]
-    #returns an array of filenames
-    filename = fs.list()
-    #file = fs.get_last_version("4th_year_CSSE_Thesis_template.docx").read()
-    #name = ObjectId("5a75eeeffb489f3aa0378ed5")
-    #file = fs.get(ObjectId("5a75eeeffb489f3aa0378ed5"))
-    return render_template('test.html',files=files, filename=filename)#, #file=file, files=files,filename=filename)
+    users = mongo.db.users
+    name = users.find_one({'email':session['email']})['name']
+    surname = users.find_one({'email':session['email']})['surname']
+    files = [fs.get_last_version(file) for file in fs.list()]
+    return render_template('files/files.html',files=files, name=name, surname=surname)
 
 @app.route('/module1')
 def module1():
@@ -571,11 +570,17 @@ def module4():
 def modules():
     testDB = mongo.db.test
     users = mongo.db.users
-    school = "Maynooth"
+    school = "Kilcock"
     module1 = ['5a7b3d2bd3f7ef0009f9e37f.pdf', 'Week_1.1_MN304_Welcome_and_Introduction.pdf', 'lab1.pdf']
+    module1Unused = ['5a7b3d2bd3f7ef0009f9e37f.pdf']
     module2 = ['4th_year_CSSE_Thesis_template.docx', 'Week_1.1_MN304_Welcome_and_Introduction.pdf', 'lab1.pdf']
+    module2Unused = []
     module3 = ['4th_year_CSSE_Thesis_template.docx', '5a7b3d2bd3f7ef0009f9e37f.pdf', 'lab1.pdf']
+    module3Unused = []
     testDB.insert({'school': school,'module1': module1, 'module2': module2, 'module3': module3})
+    testDB.update_one({'school': school}, {'$set': {'module1Unused': module1Unused}})
+
+    #users.update_one({'_id': ObjectId(userid)}, {'$set': {'approved': 1}})
     return redirect(url_for('profile'))
 
 if __name__ == '__main__':

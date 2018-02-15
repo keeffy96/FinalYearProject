@@ -32,20 +32,22 @@
       </div><!-- /.container -->
     </nav><!-- /.navbar -->
 
-<div class="container">
-    <div class="panel panel-default">
-        <div class="panel-heading"><strong>Upload Files</strong></div>
-        <div class="panel-body">
-            <h4>Select files from your computer</h4>
-            <form action="" method="post" enctype="multipart/form-data">
-                <input type="file" name="file">
-                <br>
-                <input class="btn btn-sm btn-primary" type="submit" value="Upload">
-            </form>
-            <br>
-            <a href="test">All files</a>
-        </div>
-    </div>
+  <div class="container">
+  <table class="table table-hover table-responsive">
+    <tr style="pointer-events: none;">
+      <th>Downloadable</th>
+      <th>Open in new tab</th>
+    </tr>
+
+  {% for file in files %}
+  <tr>
+    <td><a href="files/{{ file['_id'] }}" download>{{file['filename']}}</a></td>
+    <td><a href="files/{{ file['_id'] }}" target="_blank" >{{file['filename']}}</a></td>
+  </tr>
+
+  {% endfor %}
+  </table>
 </div>
+
 
 {% endblock %}
