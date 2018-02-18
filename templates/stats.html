@@ -1,0 +1,161 @@
+{% extends "index.html" %}
+{% block body %}
+<style>
+  .bod {
+    border-left: 1px solid grey;
+  }
+</style>
+<nav class="navbar navbar-inverse" style="background-color: #140033">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-2">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          
+          <a class="navbar-brand" href="profile">CTC Engine</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-collapse-2">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="UsersPage"><span class="glyphicon glyphicon-list" data-toggle="tooltip" data-original-title="Users"></span></a></li>
+            <li id="dropdown1" class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ name }} {{surname}} <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="profilePage"><i class="glyphicon glyphicon-user"></i> View profile</a></li>
+              <li><a href="editProfile"><i class="glyphicon glyphicon-cog"></i> Edit Profile</a></li>
+              <li><a href="uploadFiles"><i class="glyphicon glyphicon-upload"></i> Upload Files</a></li>
+              <li><a href="files"><i class="glyphicon glyphicon-file"></i> Files</a></li>
+              <li><a href="logout"><i class="glyphicon glyphicon-log-out"></i> Log out</a></li>
+            </ul>
+          </li>
+          <li><a href="logout"><i class="glyphicon glyphicon-log-out"></i></a></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container -->
+    </nav><!-- /.navbar -->
+
+<div class="container">
+  <div class="row">
+  <div class="col-md-6">
+    <h4>Student personal question results</h4>
+  </div>
+  <div class="col-md-6">
+    <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#personalQuestions">View Survey Results</button>
+  </div>
+</div>
+  <div class="row">
+  <div class="col-md-6">
+    <h4>Student csQuestions results</h4>
+  </div>
+  <div class="col-md-6">
+    <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#csQuestions">View Survey Results</button>
+  </div>
+</div>
+</div>
+
+<div class="container">
+<div id="personalQuestions" class="collapse">           
+  <table class="table table-hover">
+    <thead> 
+      <tr>
+        <th>Question</th>
+        <th>Response</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Gender</td>
+        <td><b>Male:</b> {{genderMale}} | <b>Female:</b> {{genderFemale}}</td>
+      </tr>
+      <tr>
+        <td>Age</td>
+        <td><b>12:</b> {{age1}} | <b>13:</b> {{age2}} | <b>14:</b> {{age3}} | <b>15:</b> {{age4}} | <b>16:</b> {{age5}} | <b>17:</b> {{age6}} | <b>18:</b> {{age7}}</td>
+      </tr>
+      <tr>
+        <td>What year of school are you currently in?</td>
+        <td><b>1st:</b> {{year1}} | <b>2nd:</b> {{year2}} | <b>3rd:</b> {{year3}} | <b>4th:</b> {{year4}} | <b>5th:</b> {{year5}} | <b>6th:</b> {{year6}}</td>
+      </tr>
+      <tr>
+        <td>Are you a native English speaker?</td>
+        <td><b>Yes:</b> {{nativeSpeakerYes}} | <b>No:</b> {{nativeSpeakerNo}}</td>
+      </tr>
+      <tr>
+        <td>Do you own a personal smartphone?</td>
+        <td><b>Yes:</b> {{ownsSmartphoneYes}} | <b>No:</b> {{ownsSmartphoneNo}}</td>
+      </tr>
+      <tr>
+        <td>How many hours per day do you spend on a smartphone?</td>
+        <td><b>Less than 1:</b> {{smartphonehours1}} | <b>Between 1-3:</b> {{smartphonehours2}} | <b>Greater than 3:</b> {{smartphonehours3}} | <b>N/A:</b> {{smartphonehours4}}</td>
+      </tr>
+      <tr>
+        <td>Do you own a personal laptop/desktop PC?</td>
+        <td><b>Yes:</b> {{ownsLaptopYes}} | <b>No:</b> {{ownsLaptopNo}}</td>
+      </tr>
+      <tr>
+        <td>How many hours per day do you spend on a laptop/PC?</td>
+        <td><b>Less than 1:</b> {{laptopHours1}} | <b>Between 1-3:</b> {{laptopHours2}} | <b>Greater than 3:</b> {{laptopHours3}} | <b>N/A:</b> {{laptopHours4}}</td>
+      </tr>
+      <tr>
+        <td>Do you own a personal tablet?</td>
+        <td><b>Yes:</b> {{ownsTabletYes}} | <b>No:</b> {{ownsTabletNo}}</td>
+      </tr>
+      <tr>
+        <td>How many hours per day do you spend on a tablet?</td>
+        <td><b>Less than 1:</b> {{tabletHours1}} | <b>Between 1-3:</b> {{tabletHours2}} | <b>Greater than 3:</b> {{tabletHours3}} | <b>N/A:</b> {{tabletHours4}}</td>
+      </tr>
+      <tr>
+        <td>Have you had previous programming experience?</td>
+        <td><b>Yes:</b> {{programExpYes}} | <b>No:</b> {{programExpNo}}</td>
+      </tr>
+      <tr>
+        <td>How much programming experience do you have?</td>
+        <td><b>Never:</b> {{programExp1}} | <b>Once or Twice:</b> {{programExp2}} | <b>Number of times:</b> {{programExp3}} | <b>For over a Year:</b> {{programExp4}}</td>
+      </tr>
+      <tr>
+        <td>How often do you program?</td>
+        <td><b>Never:</b> {{programOften1}} | <b>Rarely:</b> {{programOften2}} | <b>Neutral:</b> {{programOften3}} | <b>Once in a while:</b> {{programOften4}} | <b>Daily:</b> {{programOften5}}</td>
+      </tr>
+      <tr>
+        <td>Have you ever done any website/app development?</td>
+        <td><b>Yes:</b> {{webDevYes}} | <b>No:</b> {{webDevNo}}</td>
+      </tr>
+      <tr>
+        <td>What level of maths did you take/are you taking for Junior Cert?</td>
+        <td><b>Foundation:</b> {{mathLevel1}} | <b>Ordinary:</b> {{mathLevel2}} | <b>Higher:</b> {{mathLevel3}}</td>
+      </tr>
+      <tr>
+        <td>Do either of your parents work in an IT related job?</td>
+        <td><b>Yes:</b> {{parentITYes}} | <b>No:</b> {{parentITNo}} | <b>Not sure:</b> {{parentITNS}}</td>
+      </tr>
+    </tbody>
+      </div>
+  </table>
+</div>
+</div>
+
+<div class="container">
+<div id="csQuestions" class="collapse">           
+  <table class="table table-hover">
+    <thead> 
+      <tr>
+        <th>Question</th>
+        <th>Response</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+    </tbody>
+      </div>
+  </table>
+</div>
+</div>
+
+
+{% endblock %}

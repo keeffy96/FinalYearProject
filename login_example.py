@@ -148,6 +148,7 @@ def profile():
         userid = users.find_one({'user_id':session['user_id']})['user_id']
         school = users.find_one({'user_id':session['user_id']})['school']
         bebrasCompleted = users.find_one({'user_id':session['user_id']})['bebras1']
+        bebrasCompleted2 = users.find_one({'user_id':session['user_id']})['bebras2']
         userApproved = users.find_one({'user_id':session['user_id']})['approved']
         b1_todo = 1
         approved = 1
@@ -155,7 +156,9 @@ def profile():
             approved = 0
         if bebrasCompleted is 0:
             b1_todo = 0
-        return render_template('profile_page/homePage.html', name=name, surname=surname, userid=userid, school=school, b1_todo=b1_todo, approved=approved)
+        if bebrasCompleted2 is 0:
+            b2_todo = 0
+        return render_template('profile_page/homePage.html', name=name, surname=surname, userid=userid, school=school, b1_todo=b1_todo, b2_todo=b2_todo, approved=approved)
 
     else:
         return redirect(url_for('signIn')) 
@@ -405,7 +408,7 @@ def personalQuestions():
         q23 = request.form['q23']
         q24 = request.form['q24']
         q25 = request.form['q25']
-        q26 = request.form['q25']
+        q26 = request.form['q26']
         personalQuestions.insert({'user_id':session['user_id'],'q1':q1, 'q2':q2, 'q3':q3, 'q4':q4, 'q5':q5, 'q6':q6, 'q7':q7, 'q8':q8, 'q9':q9, 'q10':q10, 'q11':q11, 'q12':q12, 'q13':q13,
          'q14':q14, 'q15':q15, 'q16':q16, 'q17':q17, 'q18':q18, 'q19':q19, 'q20':q20, 'q21':q21, 'q22':q22, 'q23':q23, 'q24':q24, 'q25':q25, 'q26':q26})
         return redirect(url_for('csQuestions'))
@@ -528,7 +531,12 @@ def module1():
     fs = gridfs.GridFS(mongo.db)
     testDB = mongo.db.test
     users = mongo.db.users
-    school = users.find_one({'email':session['email']})['school']
+    if 'email' in session:
+        school = users.find_one({'email':session['email']})['school']
+
+    elif 'user_id' in session:
+        school = users.find_one({'user_id':session['user_id']})['school']
+
     schoolModule = testDB.find_one({'school': school})
     module1 = testDB.find_one({'school': school})['module1']
     array = module1
@@ -540,7 +548,12 @@ def module2():
     fs = gridfs.GridFS(mongo.db)
     testDB = mongo.db.test
     users = mongo.db.users
-    school = users.find_one({'email':session['email']})['school']
+    if 'email' in session:
+        school = users.find_one({'email':session['email']})['school']
+
+    elif 'user_id' in session:
+        school = users.find_one({'user_id':session['user_id']})['school']
+
     schoolModule = testDB.find_one({'school': school})
     module2 = testDB.find_one({'school': school})['module2']
     array = module2
@@ -552,7 +565,12 @@ def module3():
     fs = gridfs.GridFS(mongo.db)
     testDB = mongo.db.test
     users = mongo.db.users
-    school = users.find_one({'email':session['email']})['school']
+    if 'email' in session:
+        school = users.find_one({'email':session['email']})['school']
+
+    elif 'user_id' in session:
+        school = users.find_one({'user_id':session['user_id']})['school']
+
     schoolModule = testDB.find_one({'school': school})
     module3 = testDB.find_one({'school': school})['module3']
     array = module3
@@ -582,6 +600,73 @@ def modules():
 
     #users.update_one({'_id': ObjectId(userid)}, {'$set': {'approved': 1}})
     return redirect(url_for('profile'))
+
+@app.route('/surveyResults')
+def surveyResults():
+    pq = mongo.db.personalQuestions
+    users = mongo.db.users
+    name = users.find_one({'email':session['email']})['name']
+    surname = users.find_one({'email':session['email']})['surname']
+    genderMale = pq.find({'q1': 'Male'}).count()
+    genderFemale = pq.find({'q1': 'Female'}).count()
+    age1 = pq.find({'q2': '12'}).count()
+    age2 = pq.find({'q2': '13'}).count()
+    age3 = pq.find({'q2': '14'}).count()
+    age4 = pq.find({'q2': '15'}).count()
+    age5 = pq.find({'q2': '16'}).count()
+    age6 = pq.find({'q2': '17'}).count()
+    age7 = pq.find({'q2': '18+'}).count()
+    year1 = pq.find({'q3': '1st Year'}).count()
+    year2 = pq.find({'q3': '2nd Year'}).count()
+    year3 = pq.find({'q3': '3rd Year'}).count()
+    year4 = pq.find({'q3': '4th Year'}).count()
+    year5 = pq.find({'q3': '5th Year'}).count()
+    year6 = pq.find({'q3': '6th Year'}).count()
+    nativeSpeakerYes = pq.find({'q4': 'Yes'}).count()
+    nativeSpeakerNo = pq.find({'q4': 'No'}).count()
+    ownsSmartphoneYes = pq.find({'q6': 'Yes'}).count()
+    ownsSmartphoneNo = pq.find({'q6': 'No'}).count()
+    smartphonehours1 = pq.find({'q8': 'Less than one hour'}).count()
+    smartphonehours2 = pq.find({'q8': '1-3 hours'}).count()
+    smartphonehours3 = pq.find({'q8': 'More than 3 hours'}).count()
+    smartphonehours4 = pq.find({'q8': 'N/A'}).count()
+    ownsLaptopYes = pq.find({'q10': 'Yes'}).count()
+    ownsLaptopNo = pq.find({'q10': 'No'}).count()
+    laptopHours1 = pq.find({'q12': 'Less than one hour'}).count()
+    laptopHours2 = pq.find({'q12': '1-3 hours'}).count()
+    laptopHours3 = pq.find({'q12': 'More than 3 hours'}).count()
+    laptopHours4 = pq.find({'q12': 'N/A'}).count()
+    ownsTabletYes = pq.find({'q14': 'Yes'}).count()
+    ownsTabletNo = pq.find({'q14': 'No'}).count()
+    tabletHours1 = pq.find({'q15': 'Less than one hour'}).count()
+    tabletHours2 = pq.find({'q15': '1-3 hours'}).count()
+    tabletHours3 = pq.find({'q15': 'More than 3 hours'}).count()
+    tabletHours4 = pq.find({'q15': 'N/A'}).count()
+    programExpYes = pq.find({'q17': 'Yes'}).count()
+    programExpNo = pq.find({'q17': 'No'}).count()
+    programExp1 = pq.find({'q18': 'Never programmed before'}).count()
+    programExp2 = pq.find({'q18': 'I have done programming once or twice.'}).count()
+    programExp3 = pq.find({'q18': 'I have done programming a number of times'}).count()
+    programExp4 = pq.find({'q18': 'I have been programming for over a year'}).count()
+    programOften1 = pq.find({'q20': 'Never'}).count()
+    programOften2 = pq.find({'q20': 'Rarely'}).count()
+    programOften3 = pq.find({'q20': 'Neutral'}).count()
+    programOften4 = pq.find({'q20': 'Once in a while'}).count()
+    programOften5 = pq.find({'q20': 'Daily'}).count()  
+    webDevYes = pq.find({'q22': 'Yes'}).count()
+    webDevNo = pq.find({'q22': 'No'}).count()
+    mathLevel1 = pq.find({'q25': 'Foundation'}).count()
+    mathLevel2 = pq.find({'q25': 'Ordinary'}).count()
+    mathLevel3 = pq.find({'q25': 'Higher'}).count()
+    parentITYes = pq.find({'q26': 'Yes'}).count()
+    parentITNo = pq.find({'q26': 'No'}).count()
+    parentITNS = pq.find({'q26': 'Not sure'}).count()
+    return render_template('stats.html', name=name, surname=surname, genderMale=genderMale, genderFemale=genderFemale, age1=age1, age2=age2, age3=age3, age4=age4, age5=age5, age6=age6, age7=age7, nativeSpeakerYes=nativeSpeakerYes, nativeSpeakerNo=nativeSpeakerNo, 
+        ownsSmartphoneYes=ownsSmartphoneYes, ownsSmartphoneNo=ownsSmartphoneNo,
+        year1=year1, year2=year2, year3=year3, year4=year4, year5=year5, year6=year6, smartphonehours1=smartphonehours1, smartphonehours2=smartphonehours2, smartphonehours3=smartphonehours3, smartphonehours4=smartphonehours4, ownsLaptopYes=ownsLaptopYes, ownsLaptopNo=ownsLaptopNo, laptopHours1=laptopHours1,
+        laptopHours2=laptopHours2, laptopHours3=laptopHours3, laptopHours4=laptopHours4, ownsTabletYes=ownsTabletYes, ownsTabletNo=ownsTabletNo, tabletHours1=tabletHours1, tabletHours2=tabletHours2, tabletHours3=tabletHours3, tabletHours4=tabletHours4,
+        programExpYes=programExpYes, programExpNo=programExpNo, programOften1=programOften1, programOften2=programOften2, programOften3=programOften3, programOften4=programOften4, programOften5=programOften5, programExp1=programExp1, programExp2=programExp2, programExp3=programExp3, programExp4=programExp4, webDevYes=webDevYes, webDevNo=webDevNo, mathLevel1=mathLevel1, mathLevel2=mathLevel2,
+        mathLevel3=mathLevel3, parentITYes=parentITYes, parentITNo=parentITNo, parentITNS=parentITNS)
 
 if __name__ == '__main__':
     app.run(debug=True)

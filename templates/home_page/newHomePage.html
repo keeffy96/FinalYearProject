@@ -6,11 +6,30 @@
 	#asize {
 		font-size: 16px;
 	}
+
+	@media screen and (min-width : 768px) {
+  		.showHide  
+  		{ 
+  			display: block; 
+  		}
+	}
+
+	@media screen and (min-width : 768px) {
+  		.showHide  
+  		{ 
+  			display: none; 
+  		}
+	}
 </style>
 
 <header id="header">
 	<div class="inner">
 		<a style="font-size: 21px;" href="/" class="logo">CTC Engine</a>
+		<div class="showHide">
+			<a data-toggle="modal" data-target="#registerModal">Sign Up</a>
+			<a href="/signIn">Sign in</a>
+		</div>
+
 		<nav id="nav">
 			<div id="asize">
 				<a href="/">Home</a>
