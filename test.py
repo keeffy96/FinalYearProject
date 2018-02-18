@@ -13,12 +13,27 @@ class flaskTestCase(unittest.TestCase):
 		response = tester.get('/signIn', content_type='html/text')
 		self.assertTrue(b'Sign In' in response.data)
 
-	#testing login page to ensure login behaves correctly given the correct credentials
-	def test_logout_correct(self):
+	#When user no user is logged in make sure redirects handle accordingly
+	def test_profile_redirect_page(self):
 		tester = app.test_client(self)
-		tester.post('/signIn', data=dict(username="keeffy96@gmail.com", password="password"), follow_redirects=True)
-		response = tester.get('/logout', follow_redirects=True)
-		self.assertEqual(response.status_code, 200)
+		response = tester.get('/profile',
+			 follow_redirects=True)
+		self.assertTrue(b'Sign In' in response.data)
+
+	def test_profile_displays_correcly_page(self):
+		tester = app.test_client(self)
+		response = tester.get('/profile',
+			data=dict(name="keeffy96@gmail.com", passw="password"),
+			follow_redirects=True)
+		self.assertIn(b'Computer Science Course: Material', response.data)	
+
+	# #testing login page to ensure login behaves correctly given the correct credentials
+	# def test_logout_correct(self):
+	# 	tester = app.test_client(self)
+	# 	response = tester.get('/profile', 
+	# 		data=dict(username="abc", password="abc"), 
+	# 		follow_redirects=True)
+	# 	self.assertTrue(b'Home Page' in response.data)
 
 if __name__ == '__main__':
 	unittest.main()
