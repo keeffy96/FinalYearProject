@@ -1,0 +1,266 @@
+{% extends "index.html" %}
+{% block body %}
+<style>
+  .bod {
+    border-left: 1px solid grey;
+  }
+</style>
+<nav class="navbar navbar-inverse" style="background-color: #140033">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-2">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          
+          <a class="navbar-brand" href="profile">CTC Engine</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-collapse-2">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="UsersPage"><span class="glyphicon glyphicon-list" data-toggle="tooltip" data-original-title="Users"></span></a></li>
+            <li id="dropdown1" class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ name }} {{surname}} <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="profilePage"><i class="glyphicon glyphicon-user"></i> View profile</a></li>
+              <li><a href="editProfile"><i class="glyphicon glyphicon-cog"></i> Edit Profile</a></li>
+              <li><a href="uploadFiles"><i class="glyphicon glyphicon-upload"></i> Upload Files</a></li>
+              <li><a href="files"><i class="glyphicon glyphicon-file"></i> Files</a></li>
+              <li><a href="logout"><i class="glyphicon glyphicon-log-out"></i> Log out</a></li>
+            </ul>
+          </li>
+          <li><a href="logout"><i class="glyphicon glyphicon-log-out"></i></a></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container -->
+    </nav><!-- /.navbar -->
+
+<div class="container-fluid text-center">    
+  <div class="row content">
+    <div class="col-sm-2 sidenav">
+      <br><br>
+      <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#personalQuestions">View Personal Questions Results</button>
+      <br> <br>
+      <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#csQuestions">View CS Question Results</button>
+      <br> <br>
+      <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#visualizeQuestions">Visualize Data Results</button>
+    </div>
+    
+    <div class="col-sm-10 text-left">
+      <h3><u>User Feedback Report</u></h3>
+      <hr />
+      <div id="personalQuestions" class="collapse in">
+      <table class="table table-hover">
+    <thead> 
+      <tr>
+        <th>Question</th>
+        <th>Response</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Gender</td>
+        <td><b>Male:</b> {{genderMale}} | <b>Female:</b> {{genderFemale}}</td>
+      </tr>
+      <tr>
+        <td>Age</td>
+        <td><b>12:</b> {{age1}} | <b>13:</b> {{age2}} | <b>14:</b> {{age3}} | <b>15:</b> {{age4}} | <b>16:</b> {{age5}} | <b>17:</b> {{age6}} | <b>18:</b> {{age7}}</td>
+      </tr>
+      <tr>
+        <td>What year of school are you currently in?</td>
+        <td><b>1st:</b> {{year1}} | <b>2nd:</b> {{year2}} | <b>3rd:</b> {{year3}} | <b>4th:</b> {{year4}} | <b>5th:</b> {{year5}} | <b>6th:</b> {{year6}}</td>
+      </tr>
+      <tr>
+        <td>Are you a native English speaker?</td>
+        <td><b>Yes:</b> {{nativeSpeakerYes}} | <b>No:</b> {{nativeSpeakerNo}}</td>
+      </tr>
+      <tr>
+        <td>Do you own a personal smartphone?</td>
+        <td><b>Yes:</b> {{ownsSmartphoneYes}} | <b>No:</b> {{ownsSmartphoneNo}}</td>
+      </tr>
+      <tr>
+        <td>How many hours per day do you spend on a smartphone?</td>
+        <td><b>Less than 1:</b> {{smartphonehours1}} | <b>Between 1-3:</b> {{smartphonehours2}} | <b>Greater than 3:</b> {{smartphonehours3}} | <b>N/A:</b> {{smartphonehours4}}</td>
+      </tr>
+      <tr>
+        <td>Do you own a personal laptop/desktop PC?</td>
+        <td><b>Yes:</b> {{ownsLaptopYes}} | <b>No:</b> {{ownsLaptopNo}}</td>
+      </tr>
+      <tr>
+        <td>How many hours per day do you spend on a laptop/PC?</td>
+        <td><b>Less than 1:</b> {{laptopHours1}} | <b>Between 1-3:</b> {{laptopHours2}} | <b>Greater than 3:</b> {{laptopHours3}} | <b>N/A:</b> {{laptopHours4}}</td>
+      </tr>
+      <tr>
+        <td>Do you own a personal tablet?</td>
+        <td><b>Yes:</b> {{ownsTabletYes}} | <b>No:</b> {{ownsTabletNo}}</td>
+      </tr>
+      <tr>
+        <td>How many hours per day do you spend on a tablet?</td>
+        <td><b>Less than 1:</b> {{tabletHours1}} | <b>Between 1-3:</b> {{tabletHours2}} | <b>Greater than 3:</b> {{tabletHours3}} | <b>N/A:</b> {{tabletHours4}}</td>
+      </tr>
+      <tr>
+        <td>Have you had previous programming experience?</td>
+        <td><b>Yes:</b> {{programExpYes}} | <b>No:</b> {{programExpNo}}</td>
+      </tr>
+      <tr>
+        <td>How much programming experience do you have?</td>
+        <td><b>Never:</b> {{programExp1}} | <b>Once or Twice:</b> {{programExp2}} | <b>Number of times:</b> {{programExp3}} | <b>For over a Year:</b> {{programExp4}}</td>
+      </tr>
+      <tr>
+        <td>How often do you program?</td>
+        <td><b>Never:</b> {{programOften1}} | <b>Rarely:</b> {{programOften2}} | <b>Neutral:</b> {{programOften3}} | <b>Once in a while:</b> {{programOften4}} | <b>Daily:</b> {{programOften5}}</td>
+      </tr>
+      <tr>
+        <td>Have you ever done any website/app development?</td>
+        <td><b>Yes:</b> {{webDevYes}} | <b>No:</b> {{webDevNo}}</td>
+      </tr>
+      <tr>
+        <td>What level of maths did you take/are you taking for Junior Cert?</td>
+        <td><b>Foundation:</b> {{mathLevel1}} | <b>Ordinary:</b> {{mathLevel2}} | <b>Higher:</b> {{mathLevel3}}</td>
+      </tr>
+      <tr>
+        <td>Do either of your parents work in an IT related job?</td>
+        <td><b>Yes:</b> {{parentITYes}} | <b>No:</b> {{parentITNo}} | <b>Not sure:</b> {{parentITNS}}</td>
+      </tr>
+    </tbody>
+      </div>
+  </table>
+</div>
+
+<div id="csQuestions" class="collapse">
+  <table class="table table-hover">
+    <thead> 
+      <tr>
+        <th>Question</th>
+        <th>Response</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Would you/have you considered studying Computer Science in college/university?</td>
+        <td><b>Yes: </b>{{q1[0]}} | <b>No: </b>{{q1[1]}} | <b>Maybe: </b>{{q1[2]}}</td>
+      </tr>
+      <tr>
+        <td>Is Computer Science interesting to you?</td>
+        <td><b>Yes: </b>{{q3[0]}} | <b>No: </b>{{q3[1]}} | <b>Maybe: </b>{{q3[2]}}</td>
+      </tr>
+      <tr>
+        <td>Is Computer Science challenging?</td>
+        <td><b>Yes: </b>{{q5[0]}} | <b>No: </b>{{q5[1]}} | <b>Maybe: </b>{{q5[2]}}</td>
+      </tr>
+      <tr>
+        <td>Using the internet is central in Computer Science</td>
+        <td><b>Strongly Disagree: </b>{{q7[0]}} | <b>Disagree: </b>{{q7[1]}} | <b>Neutral: </b>{{q7[2]}} | <b>Agree: </b>{{q7[3]}} | <b>Strongly Agree: </b>{{q7[4]}}</td>
+      </tr>
+      <tr>
+        <td>Using Word, Excel etc. is central in Computer Science </td>
+        <td><b>Strongly Disagree: </b>{{q8[0]}} | <b>Disagree: </b>{{q8[1]}} | <b>Neutral: </b>{{q8[2]}} | <b>Agree: </b>{{q8[3]}} | <b>Strongly Agree: </b>{{q8[4]}}</td>
+      </tr>
+      <tr>
+        <td>Installing software (eg. Windows, iTunes) is central in Computer Science</td>
+        <td><b>Strongly Disagree: </b>{{q9[0]}} | <b>Disagree: </b>{{q9[1]}} | <b>Neutral: </b>{{q9[2]}} | <b>Agree: </b>{{q9[3]}} | <b>Strongly Agree: </b>{{q9[4]}}</td>
+      </tr>
+      <tr>
+        <td>Programming is central in Computer Science</td>
+        <td><b>Strongly Disagree: </b>{{q10[0]}} | <b>Disagree: </b>{{q10[1]}} | <b>Neutral: </b>{{q10[2]}} | <b>Agree: </b>{{q10[3]}} | <b>Strongly Agree: </b>{{q10[4]}}</td>
+      </tr>
+      <tr>
+        <td>Being able to solve different problems is central in Computer Science</td>
+        <td><b>Strongly Disagree: </b>{{q11[0]}} | <b>Disagree: </b>{{q11[1]}} | <b>Neutral: </b>{{q11[2]}} | <b>Agree: </b>{{q11[3]}} | <b>Strongly Agree: </b>{{q11[4]}}</td>
+      </tr>
+      <tr>
+        <td>Computer Science is an area related to maths</td>
+        <td><b>Strongly Disagree: </b>{{q12[0]}} | <b>Disagree: </b>{{q12[1]}} | <b>Neutral: </b>{{q12[2]}} | <b>Agree: </b>{{q12[3]}} | <b>Strongly Agree: </b>{{q12[4]}}</td>
+      </tr>
+      <tr>
+        <td>A computer scientist should be good at working with others</td>
+        <td><b>Strongly Disagree: </b>{{q13[0]}} | <b>Disagree: </b>{{q13[1]}} | <b>Neutral: </b>{{q13[2]}} | <b>Agree: </b>{{q13[3]}} | <b>Strongly Agree: </b>{{q13[4]}}</td>
+      </tr>
+      <tr>
+        <td>Boys/men are more likely to study Computer Science than girls/women</td>
+        <td><b>Strongly Disagree: </b>{{q14[0]}} | <b>Disagree: </b>{{q14[1]}} | <b>Neutral: </b>{{q14[2]}} | <b>Agree: </b>{{q14[3]}} | <b>Strongly Agree: </b>{{q14[4]}}</td>
+      </tr>
+      <tr>
+        <td>Work in Computer Science can be done without a computer</td>
+        <td><b>Strongly Disagree: </b>{{q15[0]}} | <b>Disagree: </b>{{q15[1]}} | <b>Neutral: </b>{{q15[2]}} | <b>Agree: </b>{{q15[3]}} | <b>Strongly Agree: </b>{{q15[4]}}</td>
+      </tr>
+      <tr>
+        <td>Have you ever heard the term Computational Thinking?</td>
+        <td><b>Yes: </b>{{q16[0]}} | <b>No: </b>{{q16[1]}}</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div id="visualizeQuestions" class="collapse">
+    <div class="chart-container" style=" height:400px; width:700px">
+  <canvas id="myChart"></canvas>
+</div>
+  </div>
+</div>
+</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+
+<script>
+var labelq1 = "Using the internet is central in Computer Science";
+var labelq2 = "Using Word, Excel etc. is central in Computer Science";
+var labelq3 = "Installing software (eg. Windows, iTunes) is central in Computer Science";
+var labelq4 = "Programming is central in Computer Science";
+var labelq5 = "Being able to solve different problems is central in Computer Science";
+var labelq6 = "Computer Science is an area related to maths";
+var labelq7 = "A computer scientist should be good at working with others";
+var labelq8 = "Boys/men are more likely to study Computer Science than girls/women";
+var labelq9 = "Work in Computer Science can be done without a computer";
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: [labelq1, labelq2, labelq3, labelq4, labelq5, labelq6, labelq7, labelq8, labelq9],
+    datasets: [
+      {
+        label: 'Strongly Disagree',
+        data: [{{q7[0]}},{{q8[0]}},{{q9[0]}},{{q10[0]}},{{q11[1]}},{{q12[0]}},{{q13[0]}},{{q14[0]}},{{q15[0]}}],
+        backgroundColor: '#EBAAD5', //EBAAD5
+      },
+      {
+        label: 'Disagree',
+        data: [{{q7[1]}},{{q8[1]}},{{q9[1]}},{{q10[1]}},{{q11[2]}},{{q12[1]}},{{q13[1]}},{{q14[1]}},{{q15[1]}}],
+        backgroundColor: '#EBCCD1', //EBCCD1
+      },
+      {
+        label: 'Neutral',
+        data: [{{q7[2]}},{{q8[2]}},{{q9[2]}},{{q10[2]}},{{q11[3]}},{{q12[2]}},{{q13[2]}},{{q14[2]}},{{q15[2]}}],
+        backgroundColor: '#FAEBCC', //FAEBCC
+      },
+      {
+        label: 'Agree',
+        data: [{{q7[3]}},{{q8[3]}},{{q9[3]}},{{q10[3]}},{{q11[4]}},{{q12[3]}},{{q13[3]}},{{q14[3]}},{{q15[3]}}],
+        backgroundColor: '#D6E9C6', 
+      },
+      {
+        label: 'Strongly Agree',
+        data: [{{q7[4]}},{{q8[4]}},{{q9[4]}},{{q10[4]}},{{q11[5]}},{{q12[4]}},{{q13[4]}},{{q14[4]}},{{q15[4]}}],
+        backgroundColor: '#b5ea88',
+      }
+    ]
+  },
+  options: {
+    scales: {
+      xAxes: [{ stacked: true }],
+      yAxes: [{ 
+        display:true,
+        ticks: {
+          beginAtZero: true,
+          steps: 1,
+          max: 20
+        }, 
+        stacked: true }]
+    }
+  }
+});
+</script>
+{% endblock %}

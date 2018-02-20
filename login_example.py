@@ -22,7 +22,7 @@ def dbSetup():
 #Home Page
 @app.route('/')
 def home():
-    return render_template('home_page/newHomePage.html')
+    return render_template('home_page/home.html')
 
 #Student Register
 @app.route('/studentRegister', methods=['POST', 'GET'])
@@ -124,7 +124,7 @@ def login():
 def logout():
     session.pop('email', None)
     session.pop('user_id', None)
-    return render_template('home_page/newHomePage.html')
+    return render_template('home_page/home.html')
 
 #Users Home Page
 @app.route('/profile')
@@ -603,6 +603,7 @@ def modules():
 
 @app.route('/surveyResults')
 def surveyResults():
+    #personal questions
     pq = mongo.db.personalQuestions
     users = mongo.db.users
     name = users.find_one({'email':session['email']})['name']
@@ -661,20 +662,68 @@ def surveyResults():
     parentITYes = pq.find({'q26': 'Yes'}).count()
     parentITNo = pq.find({'q26': 'No'}).count()
     parentITNS = pq.find({'q26': 'Not sure'}).count()
-    return render_template('stats.html', name=name, surname=surname, genderMale=genderMale, genderFemale=genderFemale, age1=age1, age2=age2, age3=age3, age4=age4, age5=age5, age6=age6, age7=age7, nativeSpeakerYes=nativeSpeakerYes, nativeSpeakerNo=nativeSpeakerNo, 
+
+    #csQuestions
+    cs = mongo.db.csQuestions
+    result1 = ['Strongly Disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly agree']
+    result2 = ['Yes', 'No', 'Maybe']
+    result3 = ['Yes', 'No']
+    q1 = []
+    q3 = []
+    q5 = []
+    q7 = []
+    q8 = []
+    q9 = []
+    q10 = []
+    q11 = []
+    q12 = []
+    q13 = []
+    q14 = []
+    q15 = []
+    q16 = []
+
+    for i in range(len(result1)) :
+        count7 = cs.find({'q7': result1[i]}).count()
+        count8 = cs.find({'q8': result1[i]}).count()
+        count9 = cs.find({'q9': result1[i]}).count()
+        count10 = cs.find({'q10': result1[i]}).count()
+        count11 = cs.find({'q11': result1[i]}).count()
+        count12 = cs.find({'q12': result1[i]}).count()
+        count13 = cs.find({'q13': result1[i]}).count()
+        count14 = cs.find({'q14': result1[i]}).count()
+        count15 = cs.find({'q15': result1[i]}).count()
+
+        q7.append(count7)
+        q8.append(count8)
+        q9.append(count9)
+        q10.append(count10)
+        q11.append(count11)
+        q12.append(count12)
+        q13.append(count13)
+        q14.append(count14)
+        q15.append(count15)
+
+    for i in range(len(result2)) :
+        count1 = cs.find({'q1': result2[i]}).count()
+        count3 = cs.find({'q3': result2[i]}).count()
+        count5 = cs.find({'q5': result2[i]}).count()
+
+        q1.append(count1)
+        q3.append(count3)
+        q5.append(count5)
+
+    for i in range(len(result3)) :
+        count16 = cs.find({'q16': result3[i]}).count()
+
+        q16.append(count16)
+
+    return render_template('profile_page/stats.html', name=name, surname=surname, genderMale=genderMale, genderFemale=genderFemale, age1=age1, age2=age2, age3=age3, age4=age4, age5=age5, age6=age6, age7=age7, nativeSpeakerYes=nativeSpeakerYes, nativeSpeakerNo=nativeSpeakerNo, 
         ownsSmartphoneYes=ownsSmartphoneYes, ownsSmartphoneNo=ownsSmartphoneNo,
         year1=year1, year2=year2, year3=year3, year4=year4, year5=year5, year6=year6, smartphonehours1=smartphonehours1, smartphonehours2=smartphonehours2, smartphonehours3=smartphonehours3, smartphonehours4=smartphonehours4, ownsLaptopYes=ownsLaptopYes, ownsLaptopNo=ownsLaptopNo, laptopHours1=laptopHours1,
         laptopHours2=laptopHours2, laptopHours3=laptopHours3, laptopHours4=laptopHours4, ownsTabletYes=ownsTabletYes, ownsTabletNo=ownsTabletNo, tabletHours1=tabletHours1, tabletHours2=tabletHours2, tabletHours3=tabletHours3, tabletHours4=tabletHours4,
         programExpYes=programExpYes, programExpNo=programExpNo, programOften1=programOften1, programOften2=programOften2, programOften3=programOften3, programOften4=programOften4, programOften5=programOften5, programExp1=programExp1, programExp2=programExp2, programExp3=programExp3, programExp4=programExp4, webDevYes=webDevYes, webDevNo=webDevNo, mathLevel1=mathLevel1, mathLevel2=mathLevel2,
-        mathLevel3=mathLevel3, parentITYes=parentITYes, parentITNo=parentITNo, parentITNS=parentITNS)
+        mathLevel3=mathLevel3, parentITYes=parentITYes, parentITNo=parentITNo, parentITNS=parentITNS,
+        q1=q1, q3=q3, q5=q5, q7=q7, q8=q8, q9=q9, q10=q10, q11=q11, q12=q12, q13=q13, q14=q14, q15=q15, q16=q16)
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
-#moduledatabase with each module filenames
-#will contain valid
-#and rejected
-#teacher will be able to remove from class and update 
-
-#By default teacher will have all files, then can remove when registered
