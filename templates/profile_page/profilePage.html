@@ -32,19 +32,45 @@
       </div><!-- /.container -->
     </nav><!-- /.navbar -->
 
-<div class="jumbotron">
-	<h2><b><u>Results in Bebras Test 1:</u></b></h2>
-	<h1>Bebras Quiz <div class="chart-container" style="float: right; height:220px; width:230px">
-      <canvas id="myChart"></canvas>
-    </div></h1> 
+<div class="container">
+  <div class="jumbotron">
+    <h2><b><u>Results in Bebras Test 1:</u></b></h2>
+    <div class="row">
+      <div class="col-md-6">
+        <h2>Bebras Quiz</h2> 
+      </div>
+
+      <div class="col-md-6">
+        <div class="chart-container" style="width: 200px;">
+      <canvas id="result1"></canvas>
+    </div> 
+      </div>
+    </div>
+  </div>
 </div>
 
-<div class="jumbotron">
-	<h2><b><u>Something about the user</u></b></h2>
+<div class="container">
+  <div class="jumbotron">
+    <h2><b><u>Results in Bebras Test 2:</u></b></h2>
+    <div class="row">
+      <div class="col-md-6">
+        <h2>Bebras Quiz 2</h2> 
+      </div>
+
+      <div class="col-md-6">
+        <div class="chart-container" style="width: 150px;">
+      <canvas id="myChart"></canvas>
+    </div> 
+      </div>
+    </div>
+  </div>
 </div>
+
+
+
 
 <script type="text/javascript">
-var ctx = document.getElementById('myChart').getContext('2d');
+var ctx = document.getElementById('result1').getContext('2d');
 
 var myDoughnutChart = new Chart(ctx, {
     type: 'doughnut',

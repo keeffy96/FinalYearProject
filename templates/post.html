@@ -1,0 +1,88 @@
+{% extends "index.html" %}
+{% block body %}
+
+<script type="text/javascript">
+	window.onload = function() {
+		document.getElementById("button").click();
+		console.log("Hello")
+	}
+
+
+</script>
+
+<nav class="navbar navbar-inverse" style="background-color: #140033">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-2">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          
+          <a class="navbar-brand" href="profile">CTC Engine</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-collapse-2">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="UsersPage"><span class="glyphicon glyphicon-list" data-toggle="tooltip" data-original-title="Users"></span></a></li>
+            <li id="dropdown1" class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ name }} {{surname}} <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="profilePage"><i class="glyphicon glyphicon-user"></i> View profile</a></li>
+              <li><a href="editProfile"><i class="glyphicon glyphicon-cog"></i> Edit Profile</a></li>
+              <li><a href="uploadFiles"><i class="glyphicon glyphicon-upload"></i> Upload Files</a></li>
+              <li><a href="files"><i class="glyphicon glyphicon-file"></i> Files</a></li>
+              <li><a href="logout"><i class="glyphicon glyphicon-log-out"></i> Log out</a></li>
+            </ul>
+          </li>
+          <li><a href="logout"><i class="glyphicon glyphicon-log-out"></i></a></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container -->
+    </nav><!-- /.navbar -->
+
+<div class="container">
+	<button type="button" style="float: right;" id="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">Post a comment</button><br><br><br>
+	<table class="table table-hover table-responsive">
+    <tr style="pointer-events: none;">
+      <th>User</th>
+      <th>Comment</th>
+    </tr>
+
+  {% for user in userTable %}
+  <tr>
+    <td>{{ user["userID"] }}<br><h6>{{ user["uploadedTime"] }}</h6></td>
+    <td>{{ user["description"] }}</td>
+  </tr>
+  {% endfor %}
+  </table>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+	<form id="postForm" class="form-horizontal" role="form" method=POST action="{{ url_for('posts') }}">
+	<div class="modal-dialog">
+			<div class="modal-content">
+				
+				<div class="modal-header">
+					<h4 class="modal-title">Post a Comment</h4>
+				</div>
+
+				<div class="modal-body">
+					<textarea class="form-control" name="post" rows="5" id="comment"></textarea>
+				</div>
+
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-success">Post</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+
+
+
+{% endblock %}

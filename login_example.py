@@ -7,6 +7,7 @@ from werkzeug import secure_filename
 import bcrypt
 import gridfs
 import random
+import datetime
 
 app = Flask(__name__)
 app.secret_key = 'mysecret'
@@ -131,6 +132,7 @@ def logout():
 def profile():
     users = mongo.db.users
     babras1 = mongo.db.babras1
+    postDB = mongo.db.post
     if 'email' in session:
         name = users.find_one({'email':session['email']})['name']
         surname = users.find_one({'email':session['email']})['surname']
@@ -140,7 +142,9 @@ def profile():
         uType = "instructor"
         if userType == "admin":
             uType = "admin"
-        return render_template('profile_page/homePage.html', name=name, surname=surname, userid=userid, school=school, userType=userType, uType=uType)
+        
+        userTable = postDB.find().sort("uploadedTime",-1).limit(5)
+        return render_template('profile_page/homePage.html', name=name, surname=surname, userid=userid, school=school, userType=userType, uType=uType, userTable=userTable)
     
     elif 'user_id' in session:
         name = users.find_one({'user_id':session['user_id']})['name']
@@ -151,6 +155,7 @@ def profile():
         bebrasCompleted2 = users.find_one({'user_id':session['user_id']})['bebras2']
         userApproved = users.find_one({'user_id':session['user_id']})['approved']
         b1_todo = 1
+        b2_todo = 1
         approved = 1
         if userApproved is 0:
             approved = 0
@@ -251,7 +256,7 @@ def result():
     users = mongo.db.users
     user_id = users.find_one({'user_id':session['user_id']})['user_id']   
     result = babras1.find_one({'user_id': user_id})['finalResult']
-    return render_template('bebras_test/bebras1Results.html', user_id=user_id, result=result)
+    return render_template('bebras_test/bebrasResults.html', user_id=user_id, result=result)
 
 #Bebras2 Results
 @app.route('/bebras2Result')
@@ -260,7 +265,7 @@ def bebras2Result():
     users = mongo.db.users
     user_id = users.find_one({'user_id':session['user_id']})['user_id']   
     result = bebras2.find_one({'user_id': user_id})['finalResult']
-    return render_template('bebras_test/bebras1Results.html', user_id=user_id, result=result)
+    return render_template('bebras_test/bebrasResults.html', user_id=user_id, result=result)
 
 #Teacher Approves Student Page
 @app.route('/UsersPage')
@@ -321,14 +326,24 @@ def studentProgress():
     result = babras1.find_one({'user_id': selectedUser})['finalResult']
     result2 = bebras2.find_one({'user_id': selectedUser})['finalResult']
 
-    approved = "Yes"
+    completedTest1 = ""
+    completedTest2 = ""
+
     if selectedUserBebras is 0:
-        approved = "No"
+        completedTest1 = "No"
+    else:
+        completedTest1 = "Yes"
+
     if selectedUserBebras2 is 0:
-        approved = "No"
-    return render_template('profile_page/studentCheck.html', selectedUser=selectedUser, selectedUserName=selectedUserName, selectedUserSurname=selectedUserSurname, result=result, result2=result2, approved=approved, 
+        completedTest2 = "No"
+    else: 
+        completedTest2 = "Yes"
+
+
+    return render_template('profile_page/studentCheck.html', selectedUser=selectedUser, selectedUserName=selectedUserName, selectedUserSurname=selectedUserSurname, result=result, result2=result2, completedTest2=completedTest2, 
         a1=a1, a2=a2, a3=a3, a4=a4, a5=a5, a6=a6, a7=a7, a8=a8, a9=a9, a10=a10, a11=a11, a12=a12, a13=a13,
-        ba1=ba1, ba2=ba2, ba3=ba3, ba4=ba4, ba5=ba5, ba6=ba6, ba7=ba7, ba8=ba8, ba9=ba9, ba10=ba10, ba11=ba11, ba12=ba12, ba13=ba13, name=name, surname=surname)
+        ba1=ba1, ba2=ba2, ba3=ba3, ba4=ba4, ba5=ba5, ba6=ba6, ba7=ba7, ba8=ba8, ba9=ba9, ba10=ba10, ba11=ba11, ba12=ba12, ba13=ba13, name=name, surname=surname,
+        completedTest1=completedTest1)
 
 #Approve Student
 @app.route('/toBeApproved')
@@ -391,60 +406,28 @@ def personalQuestions():
         q6 = request.form['q6']
         q7 = request.form['q7']
         q8 = request.form['q8']
-        q9 = request.form['q9']
+        q9 = request.form.getlist('q9')
         q10 = request.form['q10']
         q11 = request.form['q11']
         q12 = request.form['q12']
-        q13 = request.form['q13']
+        q13 = request.form.getlist('q13')
         q14 = request.form['q14']
         q15 = request.form['q15']
-        q16 = request.form['q16']
+        q16 = request.form.getlist('q16')
         q17 = request.form['q17']
         q18 = request.form['q18']
-        q19 = request.form['q19']
+        q19 = request.form.getlist('q19')
         q20 = request.form['q20']
         q21 = request.form['q21']
         q22 = request.form['q22']
-        q23 = request.form['q23']
-        q24 = request.form['q24']
+        q23 = request.form.getlist('q23')
+        q24 = request.form.getlist('q24')
         q25 = request.form['q25']
         q26 = request.form['q26']
         personalQuestions.insert({'user_id':session['user_id'],'q1':q1, 'q2':q2, 'q3':q3, 'q4':q4, 'q5':q5, 'q6':q6, 'q7':q7, 'q8':q8, 'q9':q9, 'q10':q10, 'q11':q11, 'q12':q12, 'q13':q13,
          'q14':q14, 'q15':q15, 'q16':q16, 'q17':q17, 'q18':q18, 'q19':q19, 'q20':q20, 'q21':q21, 'q22':q22, 'q23':q23, 'q24':q24, 'q25':q25, 'q26':q26})
         return redirect(url_for('csQuestions'))
     return render_template('survey/personalQuestions.html')
-
-
-@app.route('/testProfile')
-def testProfile():
-    users = mongo.db.users
-    babras1 = mongo.db.babras1
-    if 'email' in session:
-        name = users.find_one({'email':session['email']})['name']
-        surname = users.find_one({'email':session['email']})['surname']
-        instructorSchool = users.find_one({'email':session['email']})['school']
-        userType = users.find_one({'email':session['email']})['user_type']
-        uType = "instructor"
-        if userType == "admin":
-            uType = "admin"
-        return render_template('profile_page/profile.html', name=name, surname=surname, instructorSchool=instructorSchool, userType=userType, uType=uType)
-
-    elif 'user_id' in session:
-        name = users.find_one({'user_id':session['user_id']})['name']
-        surname = users.find_one({'user_id':session['user_id']})['surname']
-        userid = users.find_one({'user_id':session['user_id']})['user_id']
-        bebrasCompleted = users.find_one({'user_id':session['user_id']})['bebras1']
-        userApproved = users.find_one({'user_id':session['user_id']})['approved']
-        b1_todo = 1
-        approved = 1
-        if userApproved is 0:
-            approved = 0
-        if bebrasCompleted is 0:
-            b1_todo = 0
-        return render_template('profile_page/profile.html', name=name, surname=surname, userid=userid, b1_todo=b1_todo, approved=approved)
-
-    else:
-        return redirect(url_for('signIn')) 
 
 
 @app.errorhandler(404)
@@ -725,5 +708,35 @@ def surveyResults():
         mathLevel3=mathLevel3, parentITYes=parentITYes, parentITNo=parentITNo, parentITNS=parentITNS,
         q1=q1, q3=q3, q5=q5, q7=q7, q8=q8, q9=q9, q10=q10, q11=q11, q12=q12, q13=q13, q14=q14, q15=q15, q16=q16)
 
+@app.route('/posts', methods=['POST', 'GET'])
+def posts():
+    postDB = mongo.db.post
+    users = mongo.db.users
+    name = users.find_one({'email':session['email']})['name']
+    surname = users.find_one({'email':session['email']})['surname']
+    userTable = postDB.find().sort("uploadedTime",-1)
+
+    if request.method == 'POST':
+        email = session['email']
+        description = request.form['post']
+        now = datetime.datetime.now()
+        time = now.strftime("%Y-%m-%d %H:%M")
+        postDB.insert({'userID': email,'description': description, 'uploadedTime': time})
+        userTable = postDB.find().sort("uploadedTime",-1)
+        return render_template('post.html', userTable=userTable)
+    return render_template('post.html', userTable=userTable, name=name, surname=surname)  
+
 if __name__ == '__main__':
     app.run(debug=True)
+
+#     #Student Register
+# @app.route('/studentRegister', methods=['POST', 'GET'])
+# def studentRegister():
+#     if request.method == 'POST':
+#         users = mongo.db.users
+#         babras1 = mongo.db.babras1
+#         bebras2 = mongo.db.bebras2
+#         user_type = 'student'
+#         school = request.form['school']
+#         name = request.form['name']
+#         surname = request.form['surname'] 
