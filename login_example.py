@@ -13,11 +13,11 @@ import datetime
 
 app = Flask(__name__)
 # the toolbar is only enabled in debug mode:
-app.debug = False
+# app.debug = False
 app.secret_key = 'mysecret'
 
-toolbar = DebugToolbarExtension(app)
-app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
+# toolbar = DebugToolbarExtension(app)
+# app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'pptx', 'docx'])
 app.config['MONGO_URI'] = 'mongodb://keeffy96:password@ds115625.mlab.com:15625/mongologinexample'
