@@ -35,19 +35,18 @@
   <div class="container">
   <table class="table table-hover table-responsive">
     <tr style="pointer-events: none;">
-      <th>Downloadable</th>
-      <th>Open in new tab</th>
+      <th>All Files</th>
+      <th></th>
     </tr>
 
   {% for file in files %}
   <tr>
-    <td><a href="files/{{ file['_id'] }}" download>{{file['filename']}}</a></td>
-    <td><a href="files/{{ file['_id'] }}" target="_blank" >{{file['filename']}}</a></td>
+    <td><a href="allfiles/{{ file['_id'] }}" target="_blank">{{file['filename']}}</a></td>
+    <td><a href="allfiles/{{ file['_id'] }}" class="btn btn-primary" download><span style="font-size: 14px;" class="glyphicon glyphicon-download"></span></a></td>
   </tr>
 
   {% endfor %}
   </table>
 </div>
-
 
 {% endblock %}

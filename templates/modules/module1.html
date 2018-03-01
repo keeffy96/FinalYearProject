@@ -1,5 +1,14 @@
 {% extends "index.html" %}
 {% block body %}
+<script>
+  // var suffix = str.endsWith("docx");
+var table = document.getElementById("mytab1");
+for (var i = 1, row; row = table.rows[i]; i++) {
+   for (var j = 0, col; col = row.cells[j]; j++) {
+    console.log("hello")
+   }  
+}
+</script>
 
 <nav class="navbar navbar-inverse">
       <div class="container">
@@ -30,7 +39,7 @@
     	</div>
 
     	<div class="jumbotron">
-    		<table class="table table-hover table-responsive">
+    		<table id="mytab1" class="table table-hover table-responsive">
     			<tr style="pointer-events: none;">
     				<th>Course Files</th>
 			    </tr>
@@ -38,12 +47,41 @@
 			    {% for user in files %}
 			    <tr>
 			    	<td>
-			    		<span class="glyphicon glyphicon-file"></span><a href="files/{{ user['_id'] }}" download><h5 style="display: inline;"> {{user['filename']}}</h5></a>
+			    		<span class="glyphicon glyphicon-file"></span><a href="allfiles/{{ user['_id'] }}" download><h5 style="display: inline;"> {{user['filename']}}</h5></a>
 			    	</td>
 			    </tr>
 			    {% endfor %}
 			</table>
     	</div>
     </div>
+
+<script>
+//   // var suffix = str.endsWith("docx");
+//   var x = document.getElementById("myTable").rows.length;
+// var table = document.getElementById("mytab1");
+// for (var i = 1, row; row = table.rows[i]; i++) {
+//    for (var j = 0, col; col = row.cells[j]; j++) {
+//     console.log("hello")
+//    }  
+// }
+
+// var table = document.getElementById("mytab1");
+// for (var i = 1, row; row = table.rows[i]; i++) {
+//    for (var j = 0, col; col = row.cells[j]; j++) {
+// //     if(row.cells[j].endsWith("docx"))
+// //     {
+// //       console.log("Hello")
+// //     }
+    
+// //    }  
+// // }
+// if((document.getElementById("mytab1").rows[1].cells.item(0).innerHTML).includes("docx"))
+// {
+//   alert(document.getElementById("mytab1").rows[1].cells.item(0).innerHTML);
+// }
+
+
+
+</script>
 
 {% endblock %}

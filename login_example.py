@@ -4,13 +4,20 @@ from pymongo import MongoClient
 from bson import ObjectId
 from gridfs.errors import NoFile
 from werkzeug import secure_filename
+from flask_debugtoolbar import DebugToolbarExtension
+import zipfile
 import bcrypt
 import gridfs
 import random
 import datetime
 
 app = Flask(__name__)
+# the toolbar is only enabled in debug mode:
+app.debug = False
 app.secret_key = 'mysecret'
+
+toolbar = DebugToolbarExtension(app)
+app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'pptx', 'docx'])
 app.config['MONGO_URI'] = 'mongodb://keeffy96:password@ds115625.mlab.com:15625/mongologinexample'
@@ -455,15 +462,6 @@ def upload_file():
             return render_template('files/uploadedFiles.html', name=name, surname=surname)            
     return render_template('files/uploadFile.html', name=name, surname=surname)
 
-# @app.route('/files')
-# def list_gridfs_files():
-#     fs = gridfs.GridFS(mongo.db)
-#     files = [fs.get_last_version(file) for file in fs.list()]
-#     userTable = fs.list()
-#     file_list = "\n".join(['<li><a href="%s">%s</a></li>' % (url_for('serve_gridfs_file', oid=str(file._id)), file.name) for file in files])
-
-#     return (file_list, render_template('files/uploadedFiles.html', files=files, file_list=file_list))
-
 @app.route('/allfiles')
 def list_gridfs_files():
     fs = gridfs.GridFS(mongo.db)
@@ -501,13 +499,16 @@ def serve_gridfs_file(oid):
 #Create a module within that module will be an array of filenames
 #Call that array in a loop and ez
 @app.route('/files')
-def test():
+def files():
     fs = gridfs.GridFS(mongo.db)
     users = mongo.db.users
     name = users.find_one({'email':session['email']})['name']
     surname = users.find_one({'email':session['email']})['surname']
     files = [fs.get_last_version(file) for file in fs.list()]
-    return render_template('files/files.html',files=files, name=name, surname=surname)
+    file_list = "\n".join(['<li><a href="%s">%s</a></li>' % \
+        (url_for('serve_gridfs_file', oid=str(file._id)), file.name) \
+        for file in files])
+    return render_template('files/files.html',file_list=file_list, files=files, name=name, surname=surname)
 
 @app.route('/module1')
 def module1():
@@ -571,17 +572,16 @@ def module4():
 def modules():
     testDB = mongo.db.test
     users = mongo.db.users
-    school = "Kilcock"
-    module1 = ['5a7b3d2bd3f7ef0009f9e37f.pdf', 'Week_1.1_MN304_Welcome_and_Introduction.pdf', 'lab1.pdf']
-    module1Unused = ['5a7b3d2bd3f7ef0009f9e37f.pdf']
-    module2 = ['4th_year_CSSE_Thesis_template.docx', 'Week_1.1_MN304_Welcome_and_Introduction.pdf', 'lab1.pdf']
-    module2Unused = []
-    module3 = ['4th_year_CSSE_Thesis_template.docx', '5a7b3d2bd3f7ef0009f9e37f.pdf', 'lab1.pdf']
-    module3Unused = []
+    school = "Maynooth"
+    module1 = ['Algorithms_1_Lesson_Plan.docx', 'Algorithms_1_Lesson_Plan.pdf', 'Algorithms_2_Lesson_Plan.docx','Algorithms_2_Lesson_Plan.pdf','Cryptography_2_Lesson_Plan.pdf',
+    'Cryptography_3_Lesson_Plan.docx','Cryptography_3_Lesson_Plan.pdf','Cryptography_4_Lesson_Plan.docx','Cryptography_4_Lesson_Plan.pdf','Cryptography_Lesson_Plan.docx','Cryptography_Lesson_Plan.pdf',
+    'Intro_to_Comp_Thinking_Lesson_Plan.docx','Intro_to_Comp_Thinking_Lesson_Plan.pdf','Intro_to_Computer_Science_Lesson_Plan.docx','Intro_to_Computer_Science_Lesson_Plan.pdf','Introduction_to_Computational_Thinking.pptx',
+    'Introduction_to_Computer_Science.pptx']
+    module2 = ['Cat_and_Mouse_Teachers_Guide.docx','Cat_and_Mouse_Teachers_Guide.pdf','Cat_and_Mouse_Tutorial.docx','Cat_and_Mouse_Tutorial.pdf','Pong_Teachers_Guide.docx','Pong_Teachers_Guide.pdf','Pong_full.docx',
+    'Pong_step-by-step_Tutorial.docx','Pong_step-by-step_Tutorial.pdf','Pong_tutorial.docx','Pong_tutorial.pdf','Scratch_Fruit_basket_game.pdf','Scratch_project.docx','Scratch_project.pdf','Start_an_Account.pdf']
+    module3 = ['1_Introduction.pptx','2_Variables_and_Expressions.pptx','3_Strings.pptx','4_Keyboard_Input.pptx','Lab_1.docx','Lab_1.pdf','Lab_1_Teachers_Guide.docx','Lab_1_Teachers_Guide.pdf','Lab_2.docx','Lab_2.pdf',
+    'Lab_2_Teachers_guide.docx','Lab_2_Teachers_guide.pdf','Python_project.docx','Python_project.pdf']
     testDB.insert({'school': school,'module1': module1, 'module2': module2, 'module3': module3})
-    testDB.update_one({'school': school}, {'$set': {'module1Unused': module1Unused}})
-
-    #users.update_one({'_id': ObjectId(userid)}, {'$set': {'approved': 1}})
     return redirect(url_for('profile'))
 
 @app.route('/surveyResults')
@@ -726,17 +726,28 @@ def posts():
         return render_template('post.html', userTable=userTable)
     return render_template('post.html', userTable=userTable, name=name, surname=surname)  
 
+@app.route('/testingPage')
+def testPage():
+    try:
+        import zlib
+        compression = zipfile.ZIP_DEFLATED
+    except:
+        compression = zipfile.ZIP_STORED
+
+    modes = { zipfile.ZIP_DEFLATED: 'deflated',
+          zipfile.ZIP_STORED:   'stored',
+          }
+
+    print('creating archive')
+    zf = zipfile.ZipFile('Lesson1.zip', mode='w')
+    try:
+        print('adding README.txt with compression mode', modes[compression])
+        zf.write('../Login_Example/static/img/', compress_type=compression)
+    finally:
+        print('closing')
+        zf.close()
+    
+    return render_template('testingPage.html', zf=zf)
+
 if __name__ == '__main__':
     app.run(debug=True)
-
-#     #Student Register
-# @app.route('/studentRegister', methods=['POST', 'GET'])
-# def studentRegister():
-#     if request.method == 'POST':
-#         users = mongo.db.users
-#         babras1 = mongo.db.babras1
-#         bebras2 = mongo.db.bebras2
-#         user_type = 'student'
-#         school = request.form['school']
-#         name = request.form['name']
-#         surname = request.form['surname'] 
