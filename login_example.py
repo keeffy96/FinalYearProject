@@ -4,7 +4,7 @@ from pymongo import MongoClient
 from bson import ObjectId
 from gridfs.errors import NoFile
 from werkzeug import secure_filename
-from flask_debugtoolbar import DebugToolbarExtension
+# from flask_debugtoolbar import DebugToolbarExtension
 import zipfile
 import bcrypt
 import gridfs
