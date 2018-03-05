@@ -135,6 +135,7 @@
   
 <div class="container text-center" style="background-color: #dbd8d9;">    
   <div class="row">
+    
     <div class="col-sm-3">
       <div class="well">
         <h5><span class="glyphicon glyphicon-user"></span> {{name}} {{surname}}</h5>
@@ -171,6 +172,7 @@
 	</div>
       </div>
     </div>
+    
     <div class="col-sm-6">
     
       <div class="row">
@@ -242,27 +244,32 @@
         {% endif %}
 
       </div>
+
+      <div style="overflow: hidden; overflow: scroll; max-height: 400px;" class="thumbnail well">
+        <h5><b>Searched Files:</b></h5>
+        <hr />
+
+        <table class="table table-hover table-responsive">
+          <tr style="pointer-events: none;">
+          </tr>
+
+          {% for user in files %}
+          <tr>
+            <td style="float: left;">
+              <span class="glyphicon glyphicon-file"></span>
+              <a href="allfiles/{{ user['_id'] }}" download>
+                <h6 style="display: inline;"> {{user['filename']}}</h6>
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+
+      </div>
+
+
     </div>
   </div>
-</div>
-
-<div class="container">
-  <table class="table table-hover table-responsive">
-    <tr style="pointer-events: none;">
-      <th>Searhed Files</th>
-    </tr>
-
-    {% for user in files %}
-    <tr>
-      <td>
-        <span class="glyphicon glyphicon-file"></span>
-        <a href="allfiles/{{ user['_id'] }}" download>
-          <h5 style="display: inline;"> {{user['filename']}}</h5>
-        </a>
-      </td>
-    </tr>
-    {% endfor %}
-  </table>
 </div>
 
 <div class="modal fade" id="fileModal" role="dialog">
