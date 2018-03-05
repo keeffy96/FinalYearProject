@@ -32,6 +32,27 @@ def dbSetup():
 def home():
     return render_template('home_page/home.html')
 
+#About Page
+@app.route('/about')
+def about():
+    return render_template('home_page/about.html')
+
+#forStudents Page
+@app.route('/forStudents')
+def forStudents():
+    return render_template('home_page/forStudents.html')
+
+#forTeachers Page
+@app.route('/forTeachers')
+def forTeachers():
+    return render_template('home_page/forTeachers.html')
+
+#forParents Page
+@app.route('/forParents')
+def forParents():
+    return render_template('home_page/forParents.html')
+
+
 #Student Register
 @app.route('/studentRegister', methods=['POST', 'GET'])
 def studentRegister():
@@ -134,12 +155,30 @@ def logout():
     session.pop('user_id', None)
     return render_template('home_page/home.html')
 
+# @app.route('/search', methods=['POST', 'GET'])
+# def search():
+#     fs = gridfs.GridFS(mongo.db)
+#     testDB = mongo.db.test    
+
+#     if request.method == 'POST':
+#         allFiles = fs.list()
+#         search = request.form['search'].title()
+#         inDB = list((s for s in allFiles if search in s))
+#         files = [fs.get_last_version(file) for file in inDB]
+#         return render_template('search.html', inDB=inDB, files=files)
+
+#     return render_template('search.html')
+
 #Users Home Page
-@app.route('/profile')
+@app.route('/profile', methods=['POST', 'GET'])
 def profile():
     users = mongo.db.users
     babras1 = mongo.db.babras1
     postDB = mongo.db.post
+
+    fs = gridfs.GridFS(mongo.db)
+    testDB = mongo.db.test
+
     if 'email' in session:
         name = users.find_one({'email':session['email']})['name']
         surname = users.find_one({'email':session['email']})['surname']
@@ -151,6 +190,14 @@ def profile():
             uType = "admin"
         
         userTable = postDB.find().sort("uploadedTime",-1).limit(5)
+
+        #file search
+        if request.method == 'POST':
+            allFiles = fs.list()
+            search = request.form['search'].title()
+            inDB = list((s for s in allFiles if search in s))
+            files = [fs.get_last_version(file) for file in inDB]
+            return render_template('profile_page/homePage.html', files=files, name=name, surname=surname, userid=userid, school=school, userType=userType, uType=uType, userTable=userTable)
         return render_template('profile_page/homePage.html', name=name, surname=surname, userid=userid, school=school, userType=userType, uType=uType, userTable=userTable)
     
     elif 'user_id' in session:
@@ -170,6 +217,14 @@ def profile():
             b1_todo = 0
         if bebrasCompleted2 is 0:
             b2_todo = 0
+
+        #file search
+        if request.method == 'POST':
+            allFiles = fs.list()
+            search = request.form['search'].title()
+            inDB = list((s for s in allFiles if search in s))
+            files = [fs.get_last_version(file) for file in inDB]
+            return render_template('profile_page/homePage.html', files=files, name=name, surname=surname, userid=userid, school=school, b1_todo=b1_todo, b2_todo=b2_todo, approved=approved)
         return render_template('profile_page/homePage.html', name=name, surname=surname, userid=userid, school=school, b1_todo=b1_todo, b2_todo=b2_todo, approved=approved)
 
     else:
@@ -516,16 +571,20 @@ def module1():
     testDB = mongo.db.test
     users = mongo.db.users
     if 'email' in session:
+        name = users.find_one({'email':session['email']})['name']
+        surname = users.find_one({'email':session['email']})['surname']
         school = users.find_one({'email':session['email']})['school']
 
     elif 'user_id' in session:
+        name = users.find_one({'user_id':session['user_id']})['name']
+        surname = users.find_one({'user_id':session['user_id']})['surname']
         school = users.find_one({'user_id':session['user_id']})['school']
 
     schoolModule = testDB.find_one({'school': school})
     module1 = testDB.find_one({'school': school})['module1']
     array = module1
     files = [fs.get_last_version(file) for file in array]
-    return render_template('modules/module1.html' , files=files)
+    return render_template('modules/module1.html' , files=files, name=name, surname=surname)
 
 @app.route('/module2')
 def module2():
@@ -533,16 +592,20 @@ def module2():
     testDB = mongo.db.test
     users = mongo.db.users
     if 'email' in session:
+        name = users.find_one({'email':session['email']})['name']
+        surname = users.find_one({'email':session['email']})['surname']
         school = users.find_one({'email':session['email']})['school']
 
     elif 'user_id' in session:
+        name = users.find_one({'user_id':session['user_id']})['name']
+        surname = users.find_one({'user_id':session['user_id']})['surname']
         school = users.find_one({'user_id':session['user_id']})['school']
 
     schoolModule = testDB.find_one({'school': school})
     module2 = testDB.find_one({'school': school})['module2']
     array = module2
     files = [fs.get_last_version(file) for file in array]
-    return render_template('modules/module2.html', files=files)
+    return render_template('modules/module2.html', files=files, name=name, surname=surname)
 
 @app.route('/module3')
 def module3():
@@ -550,23 +613,20 @@ def module3():
     testDB = mongo.db.test
     users = mongo.db.users
     if 'email' in session:
+        name = users.find_one({'email':session['email']})['name']
+        surname = users.find_one({'email':session['email']})['surname']
         school = users.find_one({'email':session['email']})['school']
 
     elif 'user_id' in session:
+        name = users.find_one({'user_id':session['user_id']})['name']
+        surname = users.find_one({'user_id':session['user_id']})['surname']
         school = users.find_one({'user_id':session['user_id']})['school']
 
     schoolModule = testDB.find_one({'school': school})
     module3 = testDB.find_one({'school': school})['module3']
     array = module3
     files = [fs.get_last_version(file) for file in array]
-    return render_template('modules/module3.html' , files=files)
-
-@app.route('/module4')
-def module4():
-    fs = gridfs.GridFS(mongo.db)
-    array = ['4th_year_CSSE_Thesis_template.docx']
-    files = [fs.get_last_version(file) for file in array]
-    return render_template('modules/module4.html', files=files)
+    return render_template('modules/module3.html' , files=files, name=name, surname=surname)
 
 @app.route('/modules', methods=['POST','GET'])
 def modules():
@@ -723,8 +783,48 @@ def posts():
         time = now.strftime("%Y-%m-%d %H:%M")
         postDB.insert({'userID': email,'description': description, 'uploadedTime': time})
         userTable = postDB.find().sort("uploadedTime",-1)
-        return render_template('post.html', userTable=userTable)
-    return render_template('post.html', userTable=userTable, name=name, surname=surname)  
+        return render_template('profile_page/post.html', userTable=userTable)
+    return render_template('profile_page/post.html', userTable=userTable, name=name, surname=surname)
+
+@app.route('/search', methods=['POST', 'GET'])
+def search():
+    fs = gridfs.GridFS(mongo.db)
+    testDB = mongo.db.test    
+
+    if request.method == 'POST':
+        allFiles = fs.list()
+        search = request.form['search'].title()
+        inDB = list((s for s in allFiles if search in s))
+        files = [fs.get_last_version(file) for file in inDB]
+        return render_template('search.html', inDB=inDB, files=files)
+
+    return render_template('search.html')
+
+# @app.route('/search', methods=['POST', 'GET'])
+# def search():
+#     fs = gridfs.GridFS(mongo.db)
+#     testDB = mongo.db.test
+#     allFiles = fs.list()
+
+#     if request.method == 'POST':
+#         search = request.form['search'].title()
+#         inDB = list((s for s in allFiles if search in s))
+#         files = [fs.get_last_version(file) for file in inDB]
+#         return render_template('search.html', files=files)
+
+#     return render_template('search.html')
+
+# @app.route('/process', methods=['POST'])
+# def process():
+#     fs = gridfs.GridFS(mongo.db)
+#     testDB = mongo.db.test
+#     allFiles = fs.list()
+#     search = request.form['search'].title()
+#     inDB = list((s for s in allFiles if search in s))
+#     files = [fs.get_last_version(file) for file in inDB]
+
+#     return jsonify({'filesMatched': inDB})
+
 
 @app.route('/testingPage')
 def testPage():
