@@ -197,7 +197,8 @@ def profile():
             search = request.form['search'].title()
             inDB = list((s for s in allFiles if search in s))
             files = [fs.get_last_version(file) for file in inDB]
-            return render_template('profile_page/homePage.html', files=files, name=name, surname=surname, userid=userid, school=school, userType=userType, uType=uType, userTable=userTable)
+            length = len(files)
+            return render_template('profile_page/homePage.html', length=length, files=files, name=name, surname=surname, userid=userid, school=school, userType=userType, uType=uType, userTable=userTable)
         return render_template('profile_page/homePage.html', name=name, surname=surname, userid=userid, school=school, userType=userType, uType=uType, userTable=userTable)
     
     elif 'user_id' in session:

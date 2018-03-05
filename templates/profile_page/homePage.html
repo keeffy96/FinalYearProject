@@ -265,6 +265,13 @@
           {% endfor %}
         </table>
 
+        {% if length == 0 %}
+          <div class="alert alert-danger">
+          <strong>Sorry</strong> No file found<br> matching that name.
+          </div>
+    
+          {% endif %}
+
       </div>
 
 
