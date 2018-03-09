@@ -49,16 +49,22 @@
 <section id="one" class="wrapper">
 	<div class="inner">
 		<div class="flex flex-3">
-			<article>
+			<article >
 				<header>
 					<h3>For students</h3>
 				</header>
 
-				<p>Blah blah blah</p>
+				<p>
+					Do you like solving problems? Designing and creating things? <br><br>
+					This course will help introduce you to the exciting world of Computer Science. Computers play a big part in all our lives, from the device you’re reading this on, to our transport, our schools and workplaces as well as our free time. <br><br>
 
-				<footer>
-					<a href="forStudents" class="button special">More</a>
-				</footer>
+					From the <a href="http://www.spacex.com/" target="blank">Space X rocket project</a>, to the latest video games and special effects, to this picture of a <a href="http://endless.horse/" target="blank"> horse that never ends </a>. These were all designed and made in some part by Computer Scientists. <br><br>
+
+					This course will allow you to learn the basic skills and knowledge to get started on your own projects and ideas. You’ll learn programming, website design, cryptography and lots more! <br><br>
+
+					Sign up <a href="studentRegister">here</a> to get started!
+				</p>
+
 			</article>
 
 			<article>
@@ -66,23 +72,21 @@
 					<h3>For teachers</h3>
 				</header>
 
-				<p>Blah blah blah</p>
+				<p>
+					Computer Science is a subject that’s been around for many years now, ever since Alan Turing designed the first real computer during WWII and even back to the ancient Greeks. Even though this is true it has taken a long time to enter mainstream education. Thankfully this is changing and in Ireland it will now be a Leaving Certificate subject in the coming years as well as being introduced to the Junior Cycle as a short course. <br><br> 
 
-				<footer>
-					<a href="forTeachers" class="button special">More</a>
-				</footer>
-			</article>
+					There is a big desire from schools, students and administrative groups to see more students involved in Computer Science related courses as the demand for jobs continues to rise. As well as this programming and Computational Thinking are seen more and more as vital skills that should be taught to children. <br><br>
 
-			<article>
-				<header>
-					<h3>For parents</h3>
-				</header>
+					One of the main issues we’ve seen for teachers is a lack of training and resourcing, the passion and desire is there but the tools to put that enthusiasm to use hasn’t always been there. To help bridge that gap we have been working to develop a course which can allow you to introduce your students and schools to this exciting subject with little prior knowledge and with as little fuss as possible! <br><br>
 
-				<p>Blah blah blah</p>
+					<input type="button" id="btnShow" value="See more">
 
-				<footer>
-					<a href="forParents" class="button special">More</a>
-				</footer>
+					<div id="parentDiv" style="display: none;">
+						You’ll find lesson plans, exercise sheets, PowerPoint slides, assessment tools and loads more on this website. The course is aimed at Transition Year students but it very flexible and can be used throughout secondary school and many classes will also suit upper primary school. <br><br>
+
+						The course is designed to be as flexible as possible to suit your timetable, knowledge and facilities. We are on hand to help tailor a program that suits you and to give you any additional support you might have. We also want to your input so if there’s any topics you think are missing or if you have resources you’ve used in the past that might benefit others we’ll incorporate them.
+					</div>
+				</p>
 			</article>
 		</div>
 	</div>
@@ -135,23 +139,21 @@
 					<h3>Compuational thinking</h3>
 				</header>
 
-				<p>Computational Thinking is described as a "universally applicable attitude and skill set everyone, not just computer scientists, would be eager to learn and use"
-Many definitions of Computational Thinking agree and all touch on the truth of what it is. One of the first defines it as solving problems, designing systems, and understanding human behaviour, by drawing on the concepts fundamental to computer science. 
-We see Computational Thinking as more than just a problem solving technique. It involves seeing a problem from multiple angles, using human creativity and the power of computers to create systems and solutions to real-life problems. 
-One of the main aims of this course is to introduce students to this idea of Computational Thinking. This includes introducing them to ideas such as Algorithms, Decomposition, Abstraction and many more. Through fun, engaging and challenging activities students will use and develop these skills often without even realising it! As well as learning foundational Computer Science topics they will develop these cross-discipline skills which will help them in all walks of life. They’ll do this both individually, on computers, in teams and in interactive and hands-on ways!
-</p>
+				<p>
+					Computational Thinking is described as a "universally applicable attitude and skill set everyone, not just computer scientists, would be eager to learn and use" Many definitions of Computational Thinking agree and all touch on the truth of what it is. One of the first defines it as solving problems, designing systems, and understanding human behaviour, by drawing on the concepts fundamental to computer science. We see Computational Thinking as more than just a problem solving technique. It involves seeing a problem from multiple angles, using human creativity and the power of computers to create systems and solutions to real-life problems. One of the main aims of this course is to introduce students to this idea of Computational Thinking. This includes introducing them to ideas such as Algorithms, Decomposition, Abstraction and many more. Through fun, engaging and challenging activities students will use and develop these skills often without even realising it! As well as learning foundational Computer Science topics they will develop these cross-discipline skills which will help them in all walks of life. They’ll do this both individually, on computers, in teams and in interactive and hands-on ways!
+				</p>
 			</article>
 
 			<article>
 				<div class="image fit">
-					<img src="/static/img/homePage/dataAnalytics.jpg" alt="Pic 02" />
+					<img src="/static/img/homePage/csImage2.jpg" alt="Pic 02" />
 				</div>
 
 				<header>
-					<h3>Data Analytics</h3>
+					<h3>Computer Science</h3>
 				</header>
 
-				<p>Say something</p>
+				<p>Computers have become a part of everybody’s daily life, and the study of them has become more and more popular. Computer Science isn’t just about programming, or fixing computers or designing websites, it’s about understanding how computer systems can work to solve real-world problems. The hope is that this course will introduce students to the exciting and wide-reaching subject that is Computer Science in a fun, engaging and impactful way. Students will learn key skills including programming and web development as well as seeing how Computer Science can help people in all kinds of unexpected ways.</p>
 			</article>
 		</div>
 	</div>
@@ -238,4 +240,19 @@ One of the main aims of this course is to introduce students to this idea of Com
     </div>
   </div>
 </div>
+
+<script>
+	var button = document.getElementById('btnShow');
+
+	btnShow.onclick = function() {
+    	var x = document.getElementById('parentDiv');
+    	if (x.style.display === "none") {
+    		button.value = "See less";
+    		x.style.display = "block";
+    	} else {
+    		button.value = "See more";
+    		x.style.display = "none";
+    	}
+    }
+</script>
 {% endblock %}

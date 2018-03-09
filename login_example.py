@@ -155,20 +155,6 @@ def logout():
     session.pop('user_id', None)
     return render_template('home_page/home.html')
 
-# @app.route('/search', methods=['POST', 'GET'])
-# def search():
-#     fs = gridfs.GridFS(mongo.db)
-#     testDB = mongo.db.test    
-
-#     if request.method == 'POST':
-#         allFiles = fs.list()
-#         search = request.form['search'].title()
-#         inDB = list((s for s in allFiles if search in s))
-#         files = [fs.get_last_version(file) for file in inDB]
-#         return render_template('search.html', inDB=inDB, files=files)
-
-#     return render_template('search.html')
-
 #Users Home Page
 @app.route('/profile', methods=['POST', 'GET'])
 def profile():

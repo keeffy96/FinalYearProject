@@ -1,14 +1,8 @@
 {% extends "index.html" %}
 {% block body %}
-<script>
-  // var suffix = str.endsWith("docx");
-var table = document.getElementById("mytab1");
-for (var i = 1, row; row = table.rows[i]; i++) {
-   for (var j = 0, col; col = row.cells[j]; j++) {
-    console.log("hello")
-   }  
-}
-</script>
+<script src="/static/js/jszip.js"></script>
+<script src="/static/js/jszip-utils.js"></script>
+<script src="http://purl.eligrey.com/github/FileSaver.js/blob/master/src/FileSaver.js"></script>
 
 {% if 'user_id' in session %}
 <nav class="navbar navbar-inverse" style="background-color: #140033">
@@ -90,7 +84,7 @@ for (var i = 1, row; row = table.rows[i]; i++) {
 			    {% for user in files %}
 			    <tr>
 			    	<td>
-			    		<span class="glyphicon glyphicon-file"></span><a href="allfiles/{{ user['_id'] }}" download><h5 style="display: inline;"> {{user['filename']}}</h5></a>
+			    		<span class="glyphicon glyphicon-file"></span><a id="abc" href="allfiles/{{ user['_id'] }}" download><h5 style="display: inline;"> {{user['filename']}}</h5></a>
 			    	</td>
 			    </tr>
 			    {% endfor %}
@@ -98,33 +92,77 @@ for (var i = 1, row; row = table.rows[i]; i++) {
     	</div>
     </div>
 
+    <button onclick="downloadAll(window.links)">Test me!</button>
+    <button onclick="downloadZIP(window.links)">Test me! Zip</button>
+
 <script>
-//   // var suffix = str.endsWith("docx");
-//   var x = document.getElementById("myTable").rows.length;
-// var table = document.getElementById("mytab1");
-// for (var i = 1, row; row = table.rows[i]; i++) {
-//    for (var j = 0, col; col = row.cells[j]; j++) {
-//     console.log("hello")
-//    }  
-// }
+  // var rowCount = document.getElementById('mytab1').rows.length;
+  // console.log(rowCount);
 
-// var table = document.getElementById("mytab1");
-// for (var i = 1, row; row = table.rows[i]; i++) {
-//    for (var j = 0, col; col = row.cells[j]; j++) {
-// //     if(row.cells[j].endsWith("docx"))
-// //     {
-// //       console.log("Hello")
-// //     }
-    
-// //    }  
-// // }
-// if((document.getElementById("mytab1").rows[1].cells.item(0).innerHTML).includes("docx"))
-// {
-//   alert(document.getElementById("mytab1").rows[1].cells.item(0).innerHTML);
-// }
+  // var link = document.getElementById("abc").getAttribute("href");
+  // console.log(link);
 
 
+var array = []
+var tableID = document.getElementById('mytab1')
+var rowLen = tableID.rows.length;
+for (var i=1; i < rowLen; i++) {
+  var cells = tableID.rows.item(i).cells;
+  var cellLen = cells.length;
+  for(var j=0; j < cellLen; j++) {
+    var x = cells.item(j).innerHTML;
+    var string1 = x.substring(x.lastIndexOf("href=")+6,x.lastIndexOf("download")-2);
+    console.log(string1);
+    array.push(string1);
+  }
+}
 
+console.log(array);
+
+  var links = array;
+
+function downloadAll(urls) {
+  var link = document.createElement('a');
+
+  link.setAttribute('download', "Concepts and Introduction"+ ".zip");
+  link.style.display = 'none';
+
+  document.body.appendChild(link);
+
+  for (var i = 0; i < urls.length; i++) {
+    link.setAttribute('href', urls[i]);
+    link.click();
+  }
+
+  document.body.removeChild(link);
+}
+
+function downloadZIP(urls) {
+  var zip = new JSZip();
+var count = 0;
+var zipFilename = "zipFilename.zip";
+var urls = array;
+
+urls.forEach(function(url){
+  var filename = "filename";
+  // loading a file and add it in a zip file
+  JSZipUtils.getBinaryContent(url, function (err, data) {
+     if(err) {
+        throw err; // or handle the error
+     }
+     zip.file(filename, data, {binary:true});
+     count++;
+     if (count == urls.length) {
+       zip.generateAsync({type:'blob'}).then(function(content) {
+      saveAs(content, zipFilename);
+   });
+     }
+  });
+});
+}
 </script>
+
+<!-- https://www.youtube.com/watch?v=ILolEDZV-NY
+ -->
 
 {% endblock %}
