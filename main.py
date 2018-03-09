@@ -4,7 +4,6 @@ from pymongo import MongoClient
 from bson import ObjectId
 from gridfs.errors import NoFile
 from werkzeug import secure_filename
-# from flask_debugtoolbar import DebugToolbarExtension
 import zipfile
 import bcrypt
 import gridfs
@@ -12,20 +11,11 @@ import random
 import datetime
 
 app = Flask(__name__)
-# the toolbar is only enabled in debug mode:
-# app.debug = False
 app.secret_key = 'mysecret'
-
-# toolbar = DebugToolbarExtension(app)
-# app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'pptx', 'docx'])
 app.config['MONGO_URI'] = 'mongodb://keeffy96:password@ds115625.mlab.com:15625/mongologinexample'
 mongo = PyMongo(app)
-
-def dbSetup():
-    db = mongo.db
-    fs = gridfs.GridFS(mongo.db)
 
 #Home Page
 @app.route('/')
@@ -51,7 +41,6 @@ def forTeachers():
 @app.route('/forParents')
 def forParents():
     return render_template('home_page/forParents.html')
-
 
 #Student Register
 @app.route('/studentRegister', methods=['POST', 'GET'])
@@ -88,7 +77,6 @@ def studentRegister():
         babras1.insert({'user_id': user_id, 'answer1': q1, 'answer2': q2, 'answer3': q3, 'answer4': q4, 'answer5': q5, 'answer6': q6, 'answer7': q7, 'answer8': q8, 'answer9': q9, 'answer10': q10, 'answer11': q11, 'answer12': q12, 'answer13': q13, 'finalResult' : grade})
         bebras2.insert({'user_id': user_id, 'answer1': q1, 'answer2': q2, 'answer3': q3, 'answer4': q4, 'answer5': q5, 'answer6': q6, 'answer7': q7, 'answer8': q8, 'answer9': q9, 'answer10': q10, 'answer11': q11, 'answer12': q12, 'answer13': q13, 'finalResult' : grade})
         return redirect(url_for('personalQuestions'))
-
     return render_template('user_authentication/studentRegister.html')
 
 #Teacher Register
@@ -111,7 +99,6 @@ def register():
             return redirect(url_for('signIn'))
         
         return 'That email already exists!'
-
     return render_template('user_authentication/register.html')
 
 #Login
@@ -144,8 +131,6 @@ def login():
         if bcrypt.hashpw(request.form['pass'].encode('utf-8'), login1['password']) == login1['password'] :
             session['user_id'] = request.form['email']
             return redirect(url_for('signIn'))
-
-    #Render template to be changed, just testing login1 attribute
     return render_template('user_authentication/signIn.html', incorrectDetails=incorrectDetails)
 
 #Logout
@@ -478,13 +463,6 @@ def personalQuestions():
         return redirect(url_for('csQuestions'))
     return render_template('survey/personalQuestions.html')
 
-
-@app.errorhandler(404)
-def page_not_found(e):
-    return render_template('error_pages/404.html'), 404
-
-
-
 def allowed_file(filename):
     return '.' in filename and \
             filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
@@ -538,8 +516,7 @@ def serve_gridfs_file(oid):
     except NoFile:
         abort(404)
 
-#Create a module within that module will be an array of filenames
-#Call that array in a loop and ez
+#Display all files in Database
 @app.route('/files')
 def files():
     fs = gridfs.GridFS(mongo.db)
@@ -552,6 +529,7 @@ def files():
         for file in files])
     return render_template('files/files.html',file_list=file_list, files=files, name=name, surname=surname)
 
+#Module1
 @app.route('/module1')
 def module1():
     fs = gridfs.GridFS(mongo.db)
@@ -770,7 +748,7 @@ def posts():
         time = now.strftime("%Y-%m-%d %H:%M")
         postDB.insert({'userID': email,'description': description, 'uploadedTime': time})
         userTable = postDB.find().sort("uploadedTime",-1)
-        return render_template('profile_page/post.html', userTable=userTable)
+        return render_template('profile_page/post.html', name=name, surname=surname, userTable=userTable)
     return render_template('profile_page/post.html', userTable=userTable, name=name, surname=surname)
 
 @app.route('/search', methods=['POST', 'GET'])
@@ -787,54 +765,9 @@ def search():
 
     return render_template('search.html')
 
-# @app.route('/search', methods=['POST', 'GET'])
-# def search():
-#     fs = gridfs.GridFS(mongo.db)
-#     testDB = mongo.db.test
-#     allFiles = fs.list()
-
-#     if request.method == 'POST':
-#         search = request.form['search'].title()
-#         inDB = list((s for s in allFiles if search in s))
-#         files = [fs.get_last_version(file) for file in inDB]
-#         return render_template('search.html', files=files)
-
-#     return render_template('search.html')
-
-# @app.route('/process', methods=['POST'])
-# def process():
-#     fs = gridfs.GridFS(mongo.db)
-#     testDB = mongo.db.test
-#     allFiles = fs.list()
-#     search = request.form['search'].title()
-#     inDB = list((s for s in allFiles if search in s))
-#     files = [fs.get_last_version(file) for file in inDB]
-
-#     return jsonify({'filesMatched': inDB})
-
-
-@app.route('/testingPage')
-def testPage():
-    try:
-        import zlib
-        compression = zipfile.ZIP_DEFLATED
-    except:
-        compression = zipfile.ZIP_STORED
-
-    modes = { zipfile.ZIP_DEFLATED: 'deflated',
-          zipfile.ZIP_STORED:   'stored',
-          }
-
-    print('creating archive')
-    zf = zipfile.ZipFile('Lesson1.zip', mode='w')
-    try:
-        print('adding README.txt with compression mode', modes[compression])
-        zf.write('../Login_Example/static/img/', compress_type=compression)
-    finally:
-        print('closing')
-        zf.close()
-    
-    return render_template('testingPage.html', zf=zf)
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('error_pages/404.html'), 404
 
 if __name__ == '__main__':
     app.run(debug=True)

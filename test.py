@@ -1,4 +1,4 @@
-from login_example import app
+from main import app
 import unittest
 
 class flaskTestCase(unittest.TestCase):
@@ -22,7 +22,7 @@ class flaskTestCase(unittest.TestCase):
 		response = tester.get('/signIn',
 			data=dict(email="keeffy96@gmail.com", password="password"),
 			follow_redirects=True)
-		self.assertIn(b'Sign Ina', response.data)
+		self.assertIn(b'Sign In', response.data)
 
 
 
