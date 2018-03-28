@@ -123,12 +123,12 @@ def login():
     incorrectDetails = "Invalid login, please try again"
 
     if login:
-        if bcrypt.hashpw(request.form['pass'].encode('utf-8'), login['password']) == login['password'] :
+        if bcrypt.hashpw(request.form['password'].encode('utf-8'), login['password']) == login['password'] :
             session['email'] = request.form['email']
             return redirect(url_for('signIn'))
 
     if login1:
-        if bcrypt.hashpw(request.form['pass'].encode('utf-8'), login1['password']) == login1['password'] :
+        if bcrypt.hashpw(request.form['password'].encode('utf-8'), login1['password']) == login1['password'] :
             session['user_id'] = request.form['email']
             return redirect(url_for('signIn'))
     return render_template('user_authentication/signIn.html', incorrectDetails=incorrectDetails)

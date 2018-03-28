@@ -1,38 +1,45 @@
 {% extends "index.html" %}
 {% block body %}
 {% if uType == "admin" %}
-<nav class="navbar navbar-inverse" style="background-color: #140033">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-2">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="profile">CS2Go</a>
-        </div>
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="navbar-collapse-2">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="UsersPage"><span class="glyphicon glyphicon-list" data-toggle="tooltip" data-original-title="Users"></span></a></li>
-            <li id="dropdown1" class="dropdown">
-            <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ name }} {{surname}} <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li><a href="profilePage"><i class="glyphicon glyphicon-user"></i> View profile</a></li>
-              <li><a href="editProfile"><i class="glyphicon glyphicon-cog"></i> Edit Profile</a></li>
-              <li><a href="uploadFiles"><i class="glyphicon glyphicon-upload"></i> Upload Files</a></li>
-              <li><a href="files"><i class="glyphicon glyphicon-file"></i> Files</a></li>
-              <li><a href="logout"><i class="glyphicon glyphicon-log-out"></i> Log out</a></li>
-            </ul>
-          </li>
-          <li><a href="logout"><i class="glyphicon glyphicon-log-out"></i></a></li>
-          </ul>
-        </div><!-- /.navbar-collapse -->
-      </div><!-- /.container -->
-    </nav><!-- /.navbar -->
+<nav id="navbarColor" class="navbar navbar-inverse">
+  <div class="container">
 
-    <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-2">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+      <a class="navbar-brand" href="profile">CS2Go</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="navbar-collapse-2">
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <a href="UsersPage">
+            <span class="glyphicon glyphicon-list" data-toggle="tooltip" data-original-title="Users"></span>
+          </a>
+        </li>
+        
+        <li id="dropdown1" class="dropdown">
+          <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ name }} {{surname}} <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="profilePage"><i class="glyphicon glyphicon-user"></i> View profile</a></li>
+            <li><a href="editProfile"><i class="glyphicon glyphicon-cog"></i> Edit Profile</a></li>
+            <li><a href="uploadFiles"><i class="glyphicon glyphicon-upload"></i> Upload Files</a></li>
+            <li><a href="files"><i class="glyphicon glyphicon-file"></i> Files</a></li>
+            <li><a href="logout"><i class="glyphicon glyphicon-log-out"></i> Log out</a></li>
+          </ul>
+        </li>
+        <li><a href="logout"><i class="glyphicon glyphicon-log-out"></i></a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
   <table class="table table-hover table-responsive">
     <tr style="pointer-events: none;">
       <th>School</th>
@@ -40,94 +47,99 @@
       <th>User Type</th>
     </tr>
 
-  {% for user in userTableAdmin %}
-  <tr>
-    {% if user["user_type"] == 'admin' %}
-    {% elif user["user_type"] == 'instructor' %}
-    <td>{{ user["school"] }}</td>
-    <td>-</td>
-    <td>{{ user["user_type"] }}</td>
-    {% else %}
-    <td>{{ user["school"] }}</td>
-    <td>{{ user["user_id"] }}</td>
-    <td>{{ user["user_type"] }}</td>
-    {% endif %}
-  </tr>
+    {% for user in userTableAdmin %}
+    <tr>
+      {% if user["user_type"] == 'admin' %}
+      {% elif user["user_type"] == 'instructor' %}
+      <td>{{ user["school"] }}</td>
+      <td>-</td>
+      <td>{{ user["user_type"] }}</td>
+      {% else %}
+      <td>{{ user["school"] }}</td>
+      <td>{{ user["user_id"] }}</td>
+      <td>{{ user["user_type"] }}</td>
+      {% endif %}
+    </tr>
 
-  {% endfor %}
+    {% endfor %}
   </table>
 </div>
 
 {% else %}
-<nav class="navbar navbar-inverse" style="background-color: #140033">
-      <div class="container">
-        <div class="navbar-header">
-        	<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-2">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="profile">CS2Go</a>
-        </div>
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="navbar-collapse-2">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="UsersPage"><span class="glyphicon glyphicon-list" data-toggle="tooltip" data-original-title="Users"></span></a></li>
-            <li id="dropdown1" class="dropdown">
-            <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ name }} {{surname}} <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li><a href="profilePage"><i class="glyphicon glyphicon-user"></i> View profile</a></li>
-              <li><a href="editProfile"><i class="glyphicon glyphicon-cog"></i> Edit Profile</a></li>
-              <li><a href="uploadFiles"><i class="glyphicon glyphicon-upload"></i> Upload Files</a></li>
-              <li><a href="files"><i class="glyphicon glyphicon-file"></i> Files</a></li>
-              <li><a href="logout"><i class="glyphicon glyphicon-log-out"></i> Log out</a></li>
-            </ul>
-          </li>
-          <li><a href="logout"><i class="glyphicon glyphicon-log-out"></i></a></li>
-          </ul>
-        </div><!-- /.navbar-collapse -->
-      </div><!-- /.container -->
-    </nav><!-- /.navbar -->
+<nav id="navbarColor" class="navbar navbar-inverse">
+  <div class="container">
+    <div class="navbar-header">
+     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-2">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="profile">CS2Go</a>
+  </div>
+
+  <div class="collapse navbar-collapse" id="navbar-collapse-2">
+    <ul class="nav navbar-nav navbar-right">
+      <li>
+        <a href="UsersPage">
+          <span class="glyphicon glyphicon-list" data-toggle="tooltip" data-original-title="Users"></span>
+        </a>
+      </li>
+
+      <li id="dropdown1" class="dropdown">
+        <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ name }} {{surname}} <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><a href="profilePage"><i class="glyphicon glyphicon-user"></i> View profile</a></li>
+          <li><a href="editProfile"><i class="glyphicon glyphicon-cog"></i> Edit Profile</a></li>
+          <li><a href="uploadFiles"><i class="glyphicon glyphicon-upload"></i> Upload Files</a></li>
+          <li><a href="files"><i class="glyphicon glyphicon-file"></i> Files</a></li>
+          <li><a href="logout"><i class="glyphicon glyphicon-log-out"></i> Log out</a></li>
+        </ul>
+      </li>
+      <li><a href="logout"><i class="glyphicon glyphicon-log-out"></i></a></li>
+    </ul>
+  </div>
+</div>
+</nav>
 
 <div class="container">
   <h3 style="display: inline-block;">Users table</h3>
   <div class="dropdown" style="float: right;">
     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="glyphicon glyphicon-list"></span>
-    <span class="caret"></span></button>
-    <ul class="dropdown-menu">
-      <li><a href="update">All</a></li>
-      <li><a href="toBeApproved">To be approved</a></li>
-    </ul>
+      <span class="caret"></span></button>
+      <ul class="dropdown-menu">
+        <li><a href="update">All</a></li>
+        <li><a href="toBeApproved">To be approved</a></li>
+      </ul>
+    </div>
   </div>
-</div>
 
-<div class="container">
-	<table class="table table-hover table-responsive">
-		<tr style="pointer-events: none;">
-			<th>School</th>
-			<th>Name</th>
-			<th>Surname</th>
-			<!--<th>Approved</th>-->
-			<th>UserID</th>
-			<th style="text-align: center;">Approve student</th>
-		</tr>
+  <div class="container">
+   <table class="table table-hover table-responsive">
+    <tr style="pointer-events: none;">
+     <th>School</th>
+     <th>Name</th>
+     <th>Surname</th>
+     <th>UserID</th>
+     <th style="text-align: center;">Approve student</th>
+   </tr>
 
-	{% for user in userTable %}
-	<tr style="cursor: pointer;" onclick="document.location = '/studentProgress?_id={{user['_id']}}';">
-		<td>{{ user["school"] }}</td>
-		<td>{{ user["name"] }}</td>
-		<td>{{ user["surname"] }}</td>
-		<td>{{ user["user_id"] }}</td>
+   {% for user in userTable %}
+   <tr style="cursor: pointer;" onclick="document.location = '/studentProgress?_id={{user['_id']}}';">
+    <td>{{ user["school"] }}</td>
+    <td>{{ user["name"] }}</td>
+    <td>{{ user["surname"] }}</td>
+    <td>{{ user["user_id"] }}</td>
     {% if user['approved'] == 0 %}
-		<td style="text-align: center;"><a href="/update?_id={{user['_id']}}"><button style="color: black;" type="submit"><span class="glyphicon glyphicon-ok"></button></a></td>
-    {% else %}
-    <td></td>
-    {% endif %}
-	</tr>
+    <td style="text-align: center;"><a href="/update?_id={{user['_id']}}"><button style="color: black;" type="submit"><span class="glyphicon glyphicon-ok"></button></a></td>
+      {% else %}
+      <td></td>
+      {% endif %}
+    </tr>
 
-	{% endfor %}
-	</table>
+    {% endfor %}
+  </table>
 </div>
 {% endif %}
+
 {% endblock %}

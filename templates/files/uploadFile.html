@@ -1,51 +1,58 @@
 {% extends "index.html" %}
 {% block body %}
-<nav class="navbar navbar-inverse" style="background-color: #140033">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-2">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          
-          <a class="navbar-brand" href="profile">CS2Go</a>
-        </div>
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="navbar-collapse-2">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="UsersPage"><span class="glyphicon glyphicon-list" data-toggle="tooltip" data-original-title="Users"></span></a></li>
-            <li id="dropdown1" class="dropdown">
-            <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ name }} {{surname}} <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li><a href="profilePage"><i class="glyphicon glyphicon-user"></i> View profile</a></li>
-              <li><a href="editProfile"><i class="glyphicon glyphicon-cog"></i> Edit Profile</a></li>
-              <li><a href="uploadFiles"><i class="glyphicon glyphicon-upload"></i> Upload Files</a></li>
-              <li><a href="files"><i class="glyphicon glyphicon-file"></i> Files</a></li>
-              <li><a href="logout"><i class="glyphicon glyphicon-log-out"></i> Log out</a></li>
-            </ul>
-          </li>
-          <li><a href="logout"><i class="glyphicon glyphicon-log-out"></i></a></li>
+<nav id="navbarColor" class="navbar navbar-inverse">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-2">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+      <a class="navbar-brand" href="profile">CS2Go</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="navbar-collapse-2">
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <a href="UsersPage">
+            <span class="glyphicon glyphicon-list" data-toggle="tooltip" data-original-title="Users"></span>
+          </a>
+        </li>
+
+        <li id="dropdown1" class="dropdown">
+          <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ name }} {{surname}} <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="profilePage"><i class="glyphicon glyphicon-user"></i> View profile</a></li>
+            <li><a href="editProfile"><i class="glyphicon glyphicon-cog"></i> Edit Profile</a></li>
+            <li><a href="uploadFiles"><i class="glyphicon glyphicon-upload"></i> Upload Files</a></li>
+            <li><a href="files"><i class="glyphicon glyphicon-file"></i> Files</a></li>
+            <li><a href="logout"><i class="glyphicon glyphicon-log-out"></i> Log out</a></li>
           </ul>
-        </div><!-- /.navbar-collapse -->
-      </div><!-- /.container -->
-    </nav><!-- /.navbar -->
+        </li>
+
+        <li><a href="logout"><i class="glyphicon glyphicon-log-out"></i></a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
 <div class="container">
-    <div class="panel panel-default">
-        <div class="panel-heading"><strong>Upload Files</strong></div>
-        <div class="panel-body">
-            <h4>Select files from your computer</h4>
-            <form action="" method="post" enctype="multipart/form-data">
-                <input type="file" name="file">
-                <br>
-                <input class="btn btn-sm btn-primary" type="submit" value="Upload">
-            </form>
-            <br>
-            <a href="test">All files</a>
-        </div>
+  <div class="panel panel-default">
+    <div class="panel-heading"><strong>Upload Files</strong></div>
+
+    <div class="panel-body">
+      <h4>Select files from your computer</h4>
+      
+      <form action="" method="post" enctype="multipart/form-data">
+        <input type="file" name="file"><br>
+        <input class="btn btn-sm btn-primary" type="submit" value="Upload">
+      </form><br>
+
+      <a href="test">All files</a>
     </div>
+  </div>
 </div>
 
 {% endblock %}

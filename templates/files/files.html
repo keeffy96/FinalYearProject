@@ -1,51 +1,64 @@
 {% extends "index.html" %}
 {% block body %}
-<nav class="navbar navbar-inverse" style="background-color: #140033">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-2">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          
-          <a class="navbar-brand" href="profile">CS2Go</a>
-        </div>
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="navbar-collapse-2">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="UsersPage"><span class="glyphicon glyphicon-list" data-toggle="tooltip" data-original-title="Users"></span></a></li>
-            <li id="dropdown1" class="dropdown">
-            <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ name }} {{surname}} <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li><a href="profilePage"><i class="glyphicon glyphicon-user"></i> View profile</a></li>
-              <li><a href="editProfile"><i class="glyphicon glyphicon-cog"></i> Edit Profile</a></li>
-              <li><a href="uploadFiles"><i class="glyphicon glyphicon-upload"></i> Upload Files</a></li>
-              <li><a href="files"><i class="glyphicon glyphicon-file"></i> Files</a></li>
-              <li><a href="logout"><i class="glyphicon glyphicon-log-out"></i> Log out</a></li>
-            </ul>
-          </li>
-          <li><a href="logout"><i class="glyphicon glyphicon-log-out"></i></a></li>
-          </ul>
-        </div><!-- /.navbar-collapse -->
-      </div><!-- /.container -->
-    </nav><!-- /.navbar -->
-
+<nav id="navbarColor" class="navbar navbar-inverse">
   <div class="container">
+    <div class="navbar-header">
+      
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-2">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+      <a class="navbar-brand" href="profile">CS2Go</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="navbar-collapse-2">
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <a href="UsersPage">
+            <span class="glyphicon glyphicon-list" data-toggle="tooltip" data-original-title="Users"></span>
+          </a>
+        </li>
+
+        <li id="dropdown1" class="dropdown">
+          <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ name }} {{surname}} <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="profilePage"><i class="glyphicon glyphicon-user"></i> View profile</a></li>
+            <li><a href="editProfile"><i class="glyphicon glyphicon-cog"></i> Edit Profile</a></li>
+            <li><a href="uploadFiles"><i class="glyphicon glyphicon-upload"></i> Upload Files</a></li>
+            <li><a href="logout"><i class="glyphicon glyphicon-log-out"></i> Log out</a></li>
+          </ul>
+        </li>
+
+        <li><a href="logout"><i class="glyphicon glyphicon-log-out"></i></a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
   <table class="table table-hover table-responsive">
+    
     <tr style="pointer-events: none;">
       <th>All Files</th>
       <th></th>
     </tr>
 
-  {% for file in files %}
-  <tr>
-    <td><a href="allfiles/{{ file['_id'] }}" target="_blank">{{file['filename']}}</a></td>
-    <td><a href="allfiles/{{ file['_id'] }}" class="btn btn-primary" download><span style="font-size: 14px;" class="glyphicon glyphicon-download"></span></a></td>
-  </tr>
+    {% for file in files %}
+    <tr>
+      <td>
+        <a href="allfiles/{{ file['_id'] }}" data-toggle="tooltip" title="Click to open" target="_blank">{{file['filename']}}</a>
+      </td>
+      <td>
+        <a href="allfiles/{{ file['_id'] }}" data-toggle="tooltip" title="Click to download" class="btn btn-primary" download>
+          <span style="font-size: 14px;" class="glyphicon glyphicon-download"></span>
+        </a>
+      </td>
+    </tr>
+    {% endfor %}
 
-  {% endfor %}
   </table>
 </div>
 
