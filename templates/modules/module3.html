@@ -24,7 +24,6 @@
         <li class="dropdown">
           <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ name }} {{surname}} <b class="caret"></b></a>
           <ul class="dropdown-menu">
-            <li><a href="profilePage"><i class="glyphicon glyphicon-user"></i> View profile</a></li>
             <li><a href="editProfile"><i class="glyphicon glyphicon-cog"></i> Edit Profile</a></li>
             <li><a href="logout"><i class="glyphicon glyphicon-log-out"></i> Log out</a></li>
           </ul>
@@ -55,7 +54,11 @@
 
     <div class="collapse navbar-collapse" id="navbar-collapse-2">
       <ul class="nav navbar-nav navbar-right">
-        <li><a data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-comment"></span></a></li>
+        <li>
+          <a data-toggle="tooltip" title="View discussion forum" href="posts">
+            <span class="glyphicon glyphicon-comment"></span>
+          </a>
+        </li>
 
         <li><a href="files"><span class="glyphicon glyphicon-file"></span></a></li>
         <li><a href="UsersPage"><span class="glyphicon glyphicon-list" data-toggle="tooltip" data-original-title="Users"></span></a></li>
@@ -63,7 +66,6 @@
         <li id="dropdown1" class="dropdown">
           <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ name }} {{surname}} <b class="caret"></b></a>
           <ul class="dropdown-menu">
-            <li><a href="profilePage"><i class="glyphicon glyphicon-user"></i> View profile</a></li>
             <li><a href="editProfile"><i class="glyphicon glyphicon-cog"></i> Edit Profile</a></li>
             <li><a href="uploadFiles"><i class="glyphicon glyphicon-upload"></i> Upload Files</a></li>
             <li><a href="files"><i class="glyphicon glyphicon-file"></i> Files</a></li>
