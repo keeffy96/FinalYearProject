@@ -12,16 +12,22 @@
         <span class="icon-bar"></span>
       </button>
 
-      <a class="navbar-brand" href="profile">CS2Go</a>
+      <a style="float: right;" class="navbar-brand" href="profile">
+          <img src="/static/img/cs2GoIcon.png" style="width: 17.5%; float: left;">
+          &nbsp;&nbsp;CS2Go
+        </a>
     </div>
 
     <div class="collapse navbar-collapse" id="navbar-collapse-2">
       <ul class="nav navbar-nav navbar-right">
         <li>
-          <a href="UsersPage">
-            <span class="glyphicon glyphicon-list" data-toggle="tooltip" data-original-title="Users"></span>
+          <a data-toggle="modal" data-target="#myModal">
+            <span class="glyphicon glyphicon-comment"></span>
           </a>
         </li>
+        
+        <li><a data-toggle="tooltip" title="View all files" href="files"><span class="glyphicon glyphicon-file"></span></a></li>
+        <li><a data-toggle="tooltip" title="View students" href="UsersPage"><span class="glyphicon glyphicon-list" data-toggle="tooltip" data-original-title="Users"></span></a></li>
         
         <li id="dropdown1" class="dropdown">
           <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ name }} {{surname}} <b class="caret"></b></a>
@@ -75,16 +81,22 @@
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand" href="profile">CS2Go</a>
+    <a style="float: right;" class="navbar-brand" href="profile">
+          <img src="/static/img/cs2GoIcon.png" style="width: 17.5%; float: left;">
+          &nbsp;&nbsp;CS2Go
+        </a>
   </div>
 
   <div class="collapse navbar-collapse" id="navbar-collapse-2">
     <ul class="nav navbar-nav navbar-right">
       <li>
-        <a href="UsersPage">
-          <span class="glyphicon glyphicon-list" data-toggle="tooltip" data-original-title="Users"></span>
-        </a>
-      </li>
+          <a data-toggle="modal" data-target="#myModal">
+            <span class="glyphicon glyphicon-comment"></span>
+          </a>
+        </li>
+        
+        <li><a data-toggle="tooltip" title="View all files" href="files"><span class="glyphicon glyphicon-file"></span></a></li>
+        <li><a data-toggle="tooltip" title="View students" href="UsersPage"><span class="glyphicon glyphicon-list" data-toggle="tooltip" data-original-title="Users"></span></a></li>
 
       <li id="dropdown1" class="dropdown">
         <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ name }} {{surname}} <b class="caret"></b></a>
@@ -122,6 +134,7 @@
      <th>Surname</th>
      <th>UserID</th>
      <th style="text-align: center;">Approve student</th>
+     <th></th>
    </tr>
 
    {% for user in userTable %}
@@ -131,10 +144,16 @@
     <td>{{ user["surname"] }}</td>
     <td>{{ user["user_id"] }}</td>
     {% if user['approved'] == 0 %}
-    <td style="text-align: center;"><a href="/update?_id={{user['_id']}}"><button style="color: black;" type="submit"><span class="glyphicon glyphicon-ok"></button></a></td>
+    <td style="text-align: center;"><a data-toggle="tooltip" title="Approve student to class" href="/update?_id={{user['_id']}}"><button style="color: black;" type="submit"><span class="glyphicon glyphicon-ok"></button></a></td>
       {% else %}
       <td></td>
       {% endif %}
+
+    <td style="text-align: center; width: 10px;">
+      <a data-toggle="tooltip" title="Delete Student" href="/remove?_id={{user['_id']}}">
+        <span style="color: #ec405c;" class="glyphicon glyphicon-remove"></span>
+      </a>
+    </td>
     </tr>
 
     {% endfor %}

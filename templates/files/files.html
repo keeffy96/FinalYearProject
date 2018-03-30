@@ -11,16 +11,22 @@
         <span class="icon-bar"></span>
       </button>
 
-      <a class="navbar-brand" href="profile">CS2Go</a>
+      <a style="float: right;" class="navbar-brand" href="profile">
+          <img src="/static/img/cs2GoIcon.png" style="width: 17.5%; float: left;">
+          &nbsp;&nbsp;CS2Go
+        </a>
     </div>
 
     <div class="collapse navbar-collapse" id="navbar-collapse-2">
       <ul class="nav navbar-nav navbar-right">
         <li>
-          <a href="UsersPage">
-            <span class="glyphicon glyphicon-list" data-toggle="tooltip" data-original-title="Users"></span>
+          <a data-toggle="modal" data-target="#myModal">
+            <span class="glyphicon glyphicon-comment"></span>
           </a>
         </li>
+        
+        <li><a data-toggle="tooltip" title="View all files" href="files"><span class="glyphicon glyphicon-file"></span></a></li>
+        <li><a data-toggle="tooltip" title="View students" href="UsersPage"><span class="glyphicon glyphicon-list" data-toggle="tooltip" data-original-title="Users"></span></a></li>
 
         <li id="dropdown1" class="dropdown">
           <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ name }} {{surname}} <b class="caret"></b></a>
@@ -44,6 +50,7 @@
     <tr style="pointer-events: none;">
       <th>All Files</th>
       <th></th>
+      <th>Add</th>
     </tr>
 
     {% for file in files %}
@@ -56,10 +63,26 @@
           <span style="font-size: 14px;" class="glyphicon glyphicon-download"></span>
         </a>
       </td>
+      <td>
+        <li style="list-style-type: none;" class="dropdown">
+          <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+            <span style="color: black; padding-top: 8px;" class="glyphicon glyphicon-option-vertical"></span> 
+            <b class="caret"></b>
+          </a>
+          
+          <ul style="margin-left: -50px;" class="dropdown-menu">
+            <li style="text-align: center; border-bottom: 1px solid;"><a href=""></a><b>Add files to lesson</b></li>
+            <li><a href="/addModule1?_id={{ file['_id'] }}"><i class="glyphicon glyphicon-file"></i> Concepts and Introduction</a></li>
+            <li><a href="/addModule2?_id={{ file['_id'] }}"><i class="glyphicon glyphicon-file"></i> Scratch</a></li>
+            <li><a href="/addModule3?_id={{ file['_id'] }}"><i class="glyphicon glyphicon-file"></i> Python</a></li>
+          </ul>
+        </li>
+      </td>
     </tr>
     {% endfor %}
-
   </table>
 </div>
+
+{{filename}}
 
 {% endblock %}

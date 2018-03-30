@@ -10,16 +10,22 @@
         <span class="icon-bar"></span>
       </button>
 
-      <a class="navbar-brand" href="profile">CS2Go</a>
+      <a style="float: right;" class="navbar-brand" href="profile">
+          <img src="/static/img/cs2GoIcon.png" style="width: 17.5%; float: left;">
+          &nbsp;&nbsp;CS2Go
+        </a>
     </div>
 
     <div class="collapse navbar-collapse" id="navbar-collapse-2">
       <ul class="nav navbar-nav navbar-right">
         <li>
-          <a href="UsersPage">
-            <span class="glyphicon glyphicon-list" data-toggle="tooltip" data-original-title="Users"></span>
+          <a data-toggle="modal" data-target="#myModal">
+            <span class="glyphicon glyphicon-comment"></span>
           </a>
         </li>
+        
+        <li><a data-toggle="tooltip" title="View all files" href="files"><span class="glyphicon glyphicon-file"></span></a></li>
+        <li><a data-toggle="tooltip" title="View students" href="UsersPage"><span class="glyphicon glyphicon-list" data-toggle="tooltip" data-original-title="Users"></span></a></li>
 
         <li id="dropdown1" class="dropdown">
           <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ name }} {{surname}} <b class="caret"></b></a>

@@ -4,7 +4,6 @@ from pymongo import MongoClient
 from bson import ObjectId
 from gridfs.errors import NoFile
 from werkzeug import secure_filename
-import zipfile
 import bcrypt
 import gridfs
 import random
@@ -119,7 +118,7 @@ def signIn():
 def login():
     users = mongo.db.users
     login = users.find_one({'email' : request.form['email']})
-    login1 = users.find_one({'user_id' : request.form['email']})
+    login1 = users.find_one({'user_id' : request.form['email'].title()})
     incorrectDetails = "Invalid login, please try again"
 
     if login:
@@ -205,16 +204,17 @@ def profile():
 #Edit Profile
 @app.route('/editProfile', methods=['POST', 'GET'])
 def editProfile():
+    users = mongo.db.users
+    name = users.find_one({'email':session['email']})['name']
+    surname = users.find_one({'email':session['email']})['surname']
+
     if request.method == 'POST':
-        users = mongo.db.users
         name = request.form['name']
         surname = request.form['surname']
-        name = users.find_one({'email':session['email']})['name']
-        surname = users.find_one({'email':session['email']})['surname']
         users.update_one({'email':session['email']}, {'$set': {'name': name, 'surname': surname}})
         return redirect(url_for('profile'))
     
-    return render_template('profile_page/editProfile.html')
+    return render_template('profile_page/editProfile.html', name=name, surname=surname)
 
 #View user Profile
 @app.route('/profilePage', methods=['POST', 'GET'])
@@ -395,6 +395,14 @@ def update():
     users = mongo.db.users
     userid = request.args.get("_id")
     users.update_one({'_id': ObjectId(userid)}, {'$set': {'approved': 1}})
+    return redirect(url_for('UsersPage'))
+
+#Update student to Class
+@app.route('/remove')
+def remove():
+    users = mongo.db.users
+    userid = request.args.get("_id")
+    users.remove({'_id': ObjectId(userid)})
     return redirect(url_for('UsersPage'))
 
 #Student CSQuestions
@@ -597,7 +605,7 @@ def module3():
 def modules():
     testDB = mongo.db.test
     users = mongo.db.users
-    school = "Maynooth"
+    school = "Kilcock"
     module1 = ['Algorithms_1_Lesson_Plan.docx', 'Algorithms_1_Lesson_Plan.pdf', 'Algorithms_2_Lesson_Plan.docx','Algorithms_2_Lesson_Plan.pdf','Cryptography_2_Lesson_Plan.pdf',
     'Cryptography_3_Lesson_Plan.docx','Cryptography_3_Lesson_Plan.pdf','Cryptography_4_Lesson_Plan.docx','Cryptography_4_Lesson_Plan.pdf','Cryptography_Lesson_Plan.docx','Cryptography_Lesson_Plan.pdf',
     'Intro_to_Comp_Thinking_Lesson_Plan.docx','Intro_to_Comp_Thinking_Lesson_Plan.pdf','Intro_to_Computer_Science_Lesson_Plan.docx','Intro_to_Computer_Science_Lesson_Plan.pdf','Introduction_to_Computational_Thinking.pptx',
@@ -608,6 +616,43 @@ def modules():
     'Lab_2_Teachers_guide.docx','Lab_2_Teachers_guide.pdf','Python_project.docx','Python_project.pdf']
     testDB.insert({'school': school,'module1': module1, 'module2': module2, 'module3': module3})
     return redirect(url_for('profile'))
+
+@app.route('/addModule1')
+def addModule1():
+    testDB = mongo.db.test
+    users = mongo.db.users
+    fs = gridfs.GridFS(mongo.db)
+    school = users.find_one({'email':session['email']})['school']
+    fileID = ObjectId(request.args.get('_id'))
+    f = fs.get_last_version(_id=ObjectId(fileID))
+    name = f.filename
+    testDB.update_one({'school': school}, {'$push': {'module1': name }})
+    return redirect(url_for('files'))
+
+@app.route('/addModule2')
+def addModule2():
+    testDB = mongo.db.test
+    users = mongo.db.users
+    fs = gridfs.GridFS(mongo.db)
+    school = users.find_one({'email':session['email']})['school']
+    fileID = ObjectId(request.args.get('_id'))
+    f = fs.get_last_version(_id=ObjectId(fileID))
+    name = f.filename
+    testDB.update_one({'school': school}, {'$push': {'module2': name }})
+    return redirect(url_for('files'))
+
+@app.route('/addModule3')
+def addModule3(): 
+    testDB = mongo.db.test
+    users = mongo.db.users
+    fs = gridfs.GridFS(mongo.db)
+    school = users.find_one({'email':session['email']})['school']
+    fileID = ObjectId(request.args.get('_id'))
+    f = fs.get_last_version(_id=ObjectId(fileID))
+    name = f.filename
+    testDB.update_one({'school': school}, {'$push': {'module3': name }})
+    return redirect(url_for('files'))
+
 
 @app.route('/surveyResults')
 def surveyResults():

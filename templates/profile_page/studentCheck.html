@@ -12,16 +12,22 @@
         <span class="icon-bar"></span>
       </button>
 
-      <a class="navbar-brand" href="profile">CS2Go</a>
+      <a style="float: right;" class="navbar-brand" href="profile">
+          <img src="/static/img/cs2GoIcon.png" style="width: 17.5%; float: left;">
+          &nbsp;&nbsp;CS2Go
+        </a>
     </div>
 
     <div class="collapse navbar-collapse" id="navbar-collapse-2">
       <ul class="nav navbar-nav navbar-right">
         <li>
-          <a href="UsersPage">
-            <span class="glyphicon glyphicon-list" data-toggle="tooltip" data-original-title="Users"></span>
+          <a data-toggle="modal" data-target="#myModal">
+            <span class="glyphicon glyphicon-comment"></span>
           </a>
         </li>
+        
+        <li><a data-toggle="tooltip" title="View all files" href="files"><span class="glyphicon glyphicon-file"></span></a></li>
+        <li><a data-toggle="tooltip" title="View students" href="UsersPage"><span class="glyphicon glyphicon-list" data-toggle="tooltip" data-original-title="Users"></span></a></li>
 
         <li id="dropdown1" class="dropdown">
           <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ name }} {{surname}} <b class="caret"></b></a>
@@ -51,34 +57,52 @@
 	</div>
 
 	<div class="jumbotron">
-		<h2><b><u>Results:</u></b></h2>
-		<h4>Bebras Test 1 Completed: {{result}}
-      {% if result == 'N/A' %}
-      
-      {% else %}%
-      
-      {% endif %} 
+    <h2><b><u>Results:</u></b></h2>
+    <div class="container">           
+      <table class="table table-condensed">
+        
+        <thead>
+          <tr>
+            <th>Bebras Test</th>
+            <th>Result</th>
+            <th></th>
+          </tr>
+        </thead>
 
-      <a data-toggle="modal" title="View results" data-target="#largeModal">
-        <span style="color: #337ab7;" class="glyphicon glyphicon-info-sign"></span>
-      </a>
-    </h4>
+        <tbody>
+          <tr>
+            <td>Bebras Test 1 Completed:</td>
+            <td>{{result}}
+                {% if result == 'N/A' %}
+                {% else %}%
+                {% endif %}
+            </td>
+            <td>
+              <button data-toggle="modal" data-target="#largeModal" style="float: right;" class="btn btn-primary">
+                <a href="UsersPage"></a>
+                <span style="color: white;" class="glyphicon glyphicon-info-sign"></span>&nbsp;See results
+              </button> 
+            </td>
+          </tr>
 
-    <h4>Bebras Test 2 Completed: {{result2}}
-      {% if result == 'N/A' %}
+          <tr>
+            <td>Bebras Test 2 Completed:</td>
+            <td>{{result2}}
+                {% if result2 == 'N/A' %}
+                {% else %}%
+                {% endif %}
+            </td>
+            <td>
+              <button data-toggle="modal" data-target="#largeModalBebras2" style="float: right;" class="btn btn-primary">
+                <a href="UsersPage"></a>
+                <span style="color: white;" class="glyphicon glyphicon-info-sign"></span>&nbsp;See results
+              </button> 
+            </td>
+          </tr>
 
-      {% else %}%
-      {% endif %} 
-
-      <a data-toggle="modal" data-target="#largeModalBebras2" title="View results">
-        <span style="color: #337ab7;" class="glyphicon glyphicon-info-sign"></span>
-      </a>
-    </h4>
-  </div>
-
-  <div class="jumbotron">
-    <h2><b><u>Student Feedback:</u></b></h2>
-    <h4>To be implemented</h4>
+        </tbody>
+      </table>
+    </div>
   </div>
 
   <a href="UsersPage"><input class="btn btn-primary" type="button" value="Back to Users Page"/></a>
