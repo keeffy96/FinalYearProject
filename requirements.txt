@@ -16,7 +16,7 @@ itsdangerous==0.24
 Jinja2==2.9.6
 MarkupSafe==1.0
 mccabe==0.6.1
-numpy==1.13.3
+numpy==1.22.0
 pew==1.1.0
 pipenv==8.3.2
 psutil==5.3.1
